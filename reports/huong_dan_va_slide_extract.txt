@@ -1,0 +1,412 @@
+===== FILE: docs\Huong dan do an.pdf =====
+PAGES: 4
+LINES: 8
+
+--- HEAD (first 120 lines) ---
+Biên soạn: ThS. Nguyễn Thị Anh Thư DATA MINING & DATA SCIENCE HƯỚNG DẪN ĐỒ ÁN CUỐI KỲ
+Biên soạn: ThS. Nguyễn Thị Anh Thư
+1 MỤC LỤC
+1. Mục tiêu .................................................................................................................. 2 2. Yêu cầu ................................................................................................................... 2 3. Hướng dẫn thực hiện ............................................................................................... 3
+Biên soạn: ThS. Nguyễn Thị Anh Thư
+2 1. Mục tiêu Hiểu rõ kiến thức quan trọng về nền tảng lý thuyết của dữ liệu lớn và các vấn đề trong quá trình khai phá dữ liệu lớn trong doanh nghiệp. Đồng thời, tìm hiểu về các phương pháp khai phá dữ liệu lớn phổ biến hiện tại, cách thức đánh giá kết quả khai phá và ứng dụng vào thực tế cho doanh nghiệp: - Tổng quan về dữ liệu lớn (big data), đặc điểm và kiến trúc dữ liệu lớn. Đồng thời, tìm hiểu về các vấn đề trong quá trình quản lý và khai phá dữ liệu lớn trong doanh nghiệp. - Các phương pháp tìm hiểu, phân tích, tiền xử lý và khai phá dữ liệu lớn thông qua các công nghệ phổ biến hiện tại trong doanh nghiệp. Sau đó, triển khai các phương pháp đánh giá và phân tích kết quả đạt được. Từ đó, nắm rõ cách thức ứng dụng kết quả khai phá dữ liệu lớn vào thực tế cho doanh nghiệp. Đồng thời, phát triển các kỹ năng mềm cần thiết cho sinh viên khi tham gia vào một dự án gồm: - Kỹ năng giao tiếp, hợp tác, kết nối hiệu quả với các cá nhân và tập thể trong thực tế. - Kỹ năng báo cáo chuyên nghiệp. - Kỹ năng thuyết trình một cách hiệu quả và hấp dẫn. 2. Yêu cầu - Nhiệm vụ của nhóm là triển khai đề tài khai thác dữ liệu trên kiến trúc dữ liệu lớn thực tế trong doanh nghiệp. Từ đó, phát triển một hệ thống thông minh ứng dụng trí tuệ nhân tạo (ứng dụng BI phân tích và kiểm soát chất lượng dữ liệu ®  ứng dụng thực tế cho người dùng ở dạng web hoặc application) nhằm nâng cao hiệu quả hoạt động. - Sản phẩm: Báo cáo đề tài (docx, pptx), bộ dữ liệu thực nghiệm, toàn bộ source code và video thuyết trình về tất cả sản phẩm (tất cả thành viên tham gia báo cáo trong video, mở camera).
+Biên soạn: ThS. Nguyễn Thị Anh Thư
+3 3. Hướng dẫn thực hiện Báo cáo đề tài: - Tổng quan: giới thiệu, định nghĩa bài toán (input và output), ứng dụng, khó khăn và thách thức, mục tiêu và phạm vi thực hiện. - Các công trình nghiên cứu liên quan: phân tích kết quả khảo sát, xác định định hướng triển khai đề tài. - Cơ sở lý thuyết: trình bày nền tảng lý thuyết và các công nghệ sẽ áp dụng. - Phân tích bộ dữ liệu: Tìm hiểu dữ liệu, Chuẩn bị dữ liệu, Phân tích vấn đề. - Phương pháp đề xuất: framework miêu tả các bước thực hiện tổng quan từ input đến output của bài toán, thiết kế kiến trúc dữ liệu lớn có thể triển khai framework đề xuất (thành phần và công nghệ triển khai), hệ thống thông minh ứng dụng trí tuệ nhân tạo dành cho người dùng (nếu có). - Thực nghiệm: miêu tả bộ dữ liệu, phương pháp tổ chức dữ liệu thực nghiệm, độ đo đánh giá, kịch bản thực nghiệm theo thời gian trên kiến trúc dữ liệu lớn và đánh giá kết quả thực nghiệm. - Kết luận và hướng phát triển: đánh giá ưu nhược điểm của phương pháp đề xuất và xác định định hướng phát triển tiềm năng. 4. Yêu cầu đồ án: o Cơ bản: Xây dựng ứng dụng BI cho bài toán đề tài đồ án (tập trung vào giám sát dữ liệu input, độ đo chất lượng dữ liệu, áp dụng các phương pháp Machine learning trong tài liệu tham khảo). o Nâng cao: Đáp ứng toàn bộ yêu cầu của đồ án cơ bản và đồng thời có phát triển cải tiến mới như sau: • Áp dụng các phương pháp cải thiện chất lượng dữ liệu như: điền khuyết dữ liệu, tăng cường dữ liệu và làm giàu dữ liệu. • Nghiên cứu cải tiến phương pháp ML/DL và triển khai thêm chức năng demo cho output bài toán. • Triển khai thực nghiệm trên kiến trúc dữ liệu lớn.
+
+--- KEY MATCHES (first 260 matches) ---
+Biên soạn: ThS. Nguyễn Thị Anh Thư DATA MINING & DATA SCIENCE HƯỚNG DẪN ĐỒ ÁN CUỐI KỲ
+1. Mục tiêu .................................................................................................................. 2 2. Yêu cầu ................................................................................................................... 2 3. Hướng dẫn thực hiện ............................................................................................... 3
+2 1. Mục tiêu Hiểu rõ kiến thức quan trọng về nền tảng lý thuyết của dữ liệu lớn và các vấn đề trong quá trình khai phá dữ liệu lớn trong doanh nghiệp. Đồng thời, tìm hiểu về các phương pháp khai phá dữ liệu lớn phổ biến hiện tại, cách thức đánh giá kết quả khai phá và ứng dụng vào thực tế cho doanh nghiệp: - Tổng quan về dữ liệu lớn (big data), đặc điểm và kiến trúc dữ liệu lớn. Đồng thời, tìm hiểu về các vấn đề trong quá trình quản lý và khai phá dữ liệu lớn trong doanh nghiệp. - Các phương pháp tìm hiểu, phân tích, tiền xử lý và khai phá dữ liệu lớn thông qua các công nghệ phổ biến hiện tại trong doanh nghiệp. Sau đó, triển khai các phương pháp đánh giá và phân tích kết quả đạt được. Từ đó, nắm rõ cách thức ứng dụng kết quả khai phá dữ liệu lớn vào thực tế cho doanh nghiệp. Đồng thời, phát triển các kỹ năng mềm cần thiết cho sinh viên khi tham gia vào một dự án gồm: - Kỹ năng giao tiếp, hợp tác, kết nối hiệu quả với các cá nhân và tập thể trong thực tế. - Kỹ năng báo cáo chuyên nghiệp. - Kỹ năng thuyết trình một cách hiệu quả và hấp dẫn. 2. Yêu cầu - Nhiệm vụ của nhóm là triển khai đề tài khai thác dữ liệu trên kiến trúc dữ liệu lớn thực tế trong doanh nghiệp. Từ đó, phát triển một hệ thống thông minh ứng dụng trí tuệ nhân tạo (ứng dụng BI phân tích và kiểm soát chất lượng dữ liệu ®  ứng dụng thực tế cho người dùng ở dạng web hoặc application) nhằm nâng cao hiệu quả hoạt động. - Sản phẩm: Báo cáo đề tài (docx, pptx), bộ dữ liệu thực nghiệm, toàn bộ source code và video thuyết trình về tất cả sản phẩm (tất cả thành viên tham gia báo cáo trong video, mở camera).
+3 3. Hướng dẫn thực hiện Báo cáo đề tài: - Tổng quan: giới thiệu, định nghĩa bài toán (input và output), ứng dụng, khó khăn và thách thức, mục tiêu và phạm vi thực hiện. - Các công trình nghiên cứu liên quan: phân tích kết quả khảo sát, xác định định hướng triển khai đề tài. - Cơ sở lý thuyết: trình bày nền tảng lý thuyết và các công nghệ sẽ áp dụng. - Phân tích bộ dữ liệu: Tìm hiểu dữ liệu, Chuẩn bị dữ liệu, Phân tích vấn đề. - Phương pháp đề xuất: framework miêu tả các bước thực hiện tổng quan từ input đến output của bài toán, thiết kế kiến trúc dữ liệu lớn có thể triển khai framework đề xuất (thành phần và công nghệ triển khai), hệ thống thông minh ứng dụng trí tuệ nhân tạo dành cho người dùng (nếu có). - Thực nghiệm: miêu tả bộ dữ liệu, phương pháp tổ chức dữ liệu thực nghiệm, độ đo đánh giá, kịch bản thực nghiệm theo thời gian trên kiến trúc dữ liệu lớn và đánh giá kết quả thực nghiệm. - Kết luận và hướng phát triển: đánh giá ưu nhược điểm của phương pháp đề xuất và xác định định hướng phát triển tiềm năng. 4. Yêu cầu đồ án: o Cơ bản: Xây dựng ứng dụng BI cho bài toán đề tài đồ án (tập trung vào giám sát dữ liệu input, độ đo chất lượng dữ liệu, áp dụng các phương pháp Machine learning trong tài liệu tham khảo). o Nâng cao: Đáp ứng toàn bộ yêu cầu của đồ án cơ bản và đồng thời có phát triển cải tiến mới như sau: • Áp dụng các phương pháp cải thiện chất lượng dữ liệu như: điền khuyết dữ liệu, tăng cường dữ liệu và làm giàu dữ liệu. • Nghiên cứu cải tiến phương pháp ML/DL và triển khai thêm chức năng demo cho output bài toán. • Triển khai thực nghiệm trên kiến trúc dữ liệu lớn.
+
+MATCH_COUNT_WRITTEN: 4
+
+===== FILE: docs\combine_slide.pdf =====
+PAGES: 416
+LINES: 5212
+
+--- HEAD (first 120 lines) ---
+ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
+KHAI PHÁ DỮ LIỆU TRONG
+DOANH NGHIỆP
+Biên soạn: ThS. Nguyễn Thị Anh Thư
+Nội dung
+1. Mục tiêu
+2. Chương  trình
+3. Hình  thức kiểm  tra và đánh  giá
+4. Hình  thức học
+5. Quy định chung
+2
+1. Mục tiêu
+3Kỹ năng
+làm việc
+nhóm và
+giao tiếpỨng dụng
+doanh
+nghiệpKhai phá
+dữ liệuDữ liệu
+lớn
+2. Chương trình
+CHƯƠNG 1:Tổng quan vềkhai phádữliệuvàứngdụng doanh nghiệp
+CHƯƠNG 2:Kiến trúcdữliệulớntrong doanh nghiệp
+CHƯƠNG 3:Chuẩn bịdữliệu
+CHƯƠNG 4:Chất lượng dữliệu
+CHƯƠNG 5:Phân tíchdữliệuchodoanh nghiệp
+CHƯƠNG 6:Công nghệ khai phádữliệutrong doanh nghiệp
+CHƯƠNG 7:Hệthống phân loạichodoanh nghiệp
+CHƯƠNG 8:Hệthống phân cụm chodoanh nghiệp
+CHƯƠNG 9:Hệthống khai pháluậtkếthợpchodoanh nghiệp
+CHƯƠNG 10:Phân tíchhồiquyvàchuỗi thờigian chodoanh nghiệp
+CHƯƠNG 11:Bức tranh tổng quan vềdữliệulớntrong doanh nghiệp
+4
+3. Hình thức kiểm tra và đánh giá
+5Thành phần đánh giá Tỷ lệ (%)
+A1. Quá trình  (bài tập) 20%
+A2. Giữa  kỳ
+A3. Thực  hành 30%
+A4. Đồ án cuối kỳ 50%
+Bài tập trên lớp, bài tập thực hành và đồ án cuối kỳ thực hiện theo nhóm.
+4. Hình thức học
+6➢Hoạt  động  học tập theo nhóm :
+▪Phân  chia nhóm  với số lượng  thành  viên:
+▪3~5 người (sỉ số < 50)
+▪5~7 người  (sỉ số  50).
+▪7~15 người  (sỉ số  100).
+▪Mỗi nhóm  chọn  một nhóm  trưởng  điều hành  hoạt động .
+5. Quy định chung
+7➢Tất cả sản phẩm  lưu trên drive  của nhóm .
+➢Mỗi nhóm đăng kýmộtaccount đểtạodrive lưutrữ.
+➢Tạo folder  theo tên nhóm  gồm các thư mục con sau:
+➢Bàitậptrênlớp:Toàn bộfilebàitậpnhóm .
+➢Thực hành :Thuyết minh đềtài(docx, pptx),video  thuyết  trình (tấtcảthành
+viên tham giabáocáotrong video,mởcamera ).
+➢Đồánmônhọc:Báo cáođồán(docx, pptx),video  thuyết  trình (tấtcảthành
+viên tham giabáocáotrong video,mởcamera ) và toàn bộ sản phẩm  đề tài.
+➢Bảng phân công vàkếhoạchthựchiện.
+Question & Answer
+ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
+TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
+CHƯƠNG 1
+Tổng quan về khai phá dữ liệu và
+ứng dụng doanh nghiệp
+Biên soạn: ThS. Nguyễn Thị Anh Thư
+Nộidung
+1.Giới thiệu
+2.Ứng dụng
+3.Quy trình khám phátrithức
+4.Công nghệ vàhệsinh thái
+5.Bàitập
+6.Tổng kết
+2
+1. Giới thiệu
+Data
+Data
+miningBig
+data
+Data
+science
+3
+1. Giới thiệu
+Dữliệu làtậphợpcácsựkiện, sốliệu, hoặc thông tinđược thuthập vàlưutrữ
+dưới dạng cóthểhiểu vàsửdụng được .
+Dữliệucóthểđược biểu diễn dưới nhiều dạng khác nhau, baogồm:
+➢Số:doanh sốbánhàng, nhiệt độ,tuổitác.
+➢Chữ:tên,địachỉ,môtảsảnphẩm .
+➢Hìnhảnh:ảnhchụp, ảnhX-quang, bảnđồ.
+➢Âmthanh :lờinói,tiếng nhạc, tiếng ồnmôitrường .
+➢Video :phim, chương trình truyền hình, camera giám sát.
+4
+1. Giới thiệu
+Cóhailoạidữliệuchính :
+5•Dữ liệu có thể được đo lường và biểu diễn bằng số.
+•Dữ liệu có thể được biểu diễn dưới dạng số nguyên,
+số thập phân, tỷ lệ hoặc phần trăm.Dữ liệu
+định lượng
+•Dữ liệu không thể được đo lường bằng số và thường
+được biểu diễn bằng chữ hoặc hình ảnh .
+•Ví dụ: Văn bản, hình ảnh, âm thanh, …Dữ liệu
+định tính
+1. Giới thiệu
+Data mining (Khai phádữliệu) làmột lĩnh vựcliênngành thuộc khoa họcmáy tính,
+sửdụng cáckỹthuật thống kê,họcmáy vàquản lýcơsởdữliệuđểtrích xuất kiến thức
+vàthông tinhữuíchtừdữliệulớn.
+Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
+➢Đưa radựđoán :Dựđoán xuhướng tương laivàđưaraquyết định sáng suốt hơn.
+➢Khám phátrithức :Xác định cácmẫu vàmối quan hệẩntrong dữliệumàcóthể
+không được nhìn thấy rõràng.
+➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
+➢Tốiưuhóaquytrình :Xác định cácyếutốảnhhưởng đếnhiệu quảhoạt động vàđề
+xuất cácgiảipháp cảitiến.
+6
+1. Giới thiệu
+Dữ liệu lớn (b ig data )làtất cả thông
+tin, định lượng và theo dõi.
+7
+Big data lưu thông tin về
+mọi khía cạnh trong cuộc
+sống.Tất cả
+
+--- KEY MATCHES (first 260 matches) ---
+1. Mục tiêu
+1. Mục tiêu
+nhóm và
+3. Hình thức kiểm tra và đánh giá
+5Thành phần đánh giá Tỷ lệ (%)
+A4. Đồ án cuối kỳ 50%
+Bài tập trên lớp, bài tập thực hành và đồ án cuối kỳ thực hiện theo nhóm.
+6➢Hoạt  động  học tập theo nhóm :
+▪Phân  chia nhóm  với số lượng  thành  viên:
+▪Mỗi nhóm  chọn  một nhóm  trưởng  điều hành  hoạt động .
+7➢Tất cả sản phẩm  lưu trên drive  của nhóm .
+➢Mỗi nhóm đăng kýmộtaccount đểtạodrive lưutrữ.
+➢Tạo folder  theo tên nhóm  gồm các thư mục con sau:
+➢Bàitậptrênlớp:Toàn bộfilebàitậpnhóm .
+➢Đồánmônhọc:Báo cáođồán(docx, pptx),video  thuyết  trình (tấtcảthành
+Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
+➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
+Mục tiêu của Data
+➢Điều phối vàquản trịdữliệu:Chỉhuyvàtựđộng hóacácbước khác nhau
+Kiểu xử lýTheo nhóm
+Ví dụBáo cáo tài
+➢Phân tíchtổhợp: So sánh các nhóm  cá nhân  theo thời gian.
+➢Phân tích cụm: Nhóm  các điểm  dữ liệu thành  các cụm dựa trên sự giống  nhau  của
+việc thực hiện các bước
+Chuẩn bị dữ liệu là một bước quan
+nhưng đây là bước quan trọng để
+➢plyr:Cung cấpcáchàm đểthao tácdữliệutheo nhóm, tómtắtvàchuyển đổidữ
+➢Là một bước quan trọng .
+•Lựachọn phương pháp phùhợpvớidữliệuvàmục tiêu.
+➢Sử dụng  các mô hình thống  kê để dự đoán  giá trị của biến mục tiêu.
+➢Là một bước quan trọng .
+➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
+➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
+➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
+•sklearn .feature_extraction .DictVectorizer :Chuyển đổicáctừđiển sang matrậnthưa thớtvớicác
+➢Tương  tự các bước  trực quan  hóa dữ liệu trong  quá trình  “Khám  phá dữ liệu” .
+➢Đánh giáhiệu quả môhình :Chia tậpdữliệuthành tậphuấn luyện vàtậpkiểm
+tragiúp đánh giáhiệu quảthực tếcủamôhình trêndữliệuchưa từng gặp.
+➢Chia theo thời gian (time -based split) :Phương pháp nàychia tậpdữliệutheo
+khai thác của nhóm.
+cấp các bước  cải thiện  chất lượng  dữ liệu.
+Mỗi tiêuchícóthểđược đánh giátheo cảhaiphương pháp chủquan vàkhách
+11Đánh giá chủ quan Đánh giá khách quan
+về các tiêu chí (dimension) như tính
+thang điểm.•Chuyển đổi các tiêu chí (dimension) như
+chuẩn, khoảng tin cậy để đánh giá độ
+Mỗi tiêuchícóthểđược đánh giátheo cảhaiphương pháp chủquan vàkhách
+12Đánh giá chủ quan Đánh giá khách quan
+•Không yêu cầu kiến thức  chuyên môn
+•Có thể đánh giá các yếu tố khó định
+•Dựa trên các tiêu chí cụ thể .
+thức của người đánh giá .
+•Yêu cầu kiến thức chuyên môn cao .
+•Khó đánh giá các yếu tố khó định
+dữ liệu áp dụng  trên các tiêu chí sau:
+➢Hướng dẫncácbước cụthểđểthực hiện triển khai thực tế
+TDQM Liên tục đánh giá, cải thiện và duy trì chất lượng dữ liệu . -
+AIMQ Đánh giá và cải thiện chất lượng tổng thể của thông tin trong một tổ chức. -
+DQA Cung cấp một cách tiếp cận có hệ thống để đánh giá  khách quan chất lượng dữ liệu .Có
+CDQ Đánh giá và cải thiện chất lượng dữ liệu cho nguồn dữ liệu có cấu trúc và web . Có
+DQPA Xác định dữ liệu liên quan và đánh giá chất lượng dữ liệu. -
+HDQM Đánh giá và cải thiện chất lượng dữ liệu trong tổ chức  cầnquản lý  nhiều loại dữ liệu .-
+DQAF Đánh giá chất lượng dữ liệu thống kê . -
+HDQF -EF Đánh giá chất lượng dữ liệu trong các công cụ dấu chân sinh thái (EF). -
+IDQ-MDM Quy trình 5bước đảm bảo chất lượng dữ liệu trong Quản lý dữ liệu chủ(MDM) . Có
+25012 Cung cấp cấu trúc được tiêu chuẩn hóa để đánh giá chất lượng dữ liệu  khi xử lý các
+RWDQF Đánh giá chất lượng của dữ liệu trong thế giới thực (RWD) vềnghiên cứu ung thư. -
+Độ chính xác – Đánh giá khách quan
+•Hệ số tương quan: Đánh giá mối liên hệ giữa các biến trong tập dữ liệu.
+•Đánh giá mức độ ảnh hưởng của lỗi dữ liệu đến kết quả phân tích.
+Tính đầy đủ  – Đánh giá khách quan
+•Phân tích phân bố: Đánh giá sự phân bố của dữ liệu để xác định các giá trị bị thiếu một cách có
+•Đánh giá mức độ ảnh hưởng của dữ liệu thiếu đến kết quả phân tích.
+Tính nhất quán – Đánh giá khách quan
+•Phân tích độ tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem chúng có nhất
+•Đánh giá mức độ ảnh hưởng của các giá trị không nhất quán đến kết quả phân tích.
+Tính kịp thời – Đánh giá khách quan
+•Đánh giá mức độ ảnh hưởng của độ trễ đến việc ra quyết định.
+•Sử dụng các mô hình mô phỏng: Sử dụng các mô hình mô phỏng để đánh giá tác động của độ trễ đến
+Tính hợp lệ – Đánh giá khách quan
+•Phân tích tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem dữ liệu có hợp
+•Đánh giá mức độ ảnh hưởng của các giá trị không hợp lệ đến kết quả phân tích.
+Tính duy nhất – Đánh giá khách quan
+•Phân tích độ tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem
+•Đánh giá mức độ ảnh hưởng của các giá trị không duy nhất đến kết quả phân tích.
+➢Đánh giá và đảm bảo chất lượng
+của nhóm.
+dashboards, báo cáo,
+➢Phân tích nhóm :Giúp phân chia dữliệuthành cácnhóm khác nhau dựatrên
+trung bình (mean) củahainhóm dữliệu.
+◦Giảthuyết null(H0):Không cósựkhác biệtgiữa hainhóm .
+◦Giảthuyết thay thế(H1):Cósựkhác biệtgiữa hainhóm .
+nhóm .
+giátrịtrung bình (mean) củahainhóm dữliệu.
+➢Xác định sự khác  biệt giữa các nhóm : So sánh giá trị trung  bình của hai hoặc
+nhiều  nhóm  dữ liệu để xác định liệu có sự khác  biệt thống  kê đáng  kể hay không .
+◦Hai nhóm  khách  hàng  với mức tuổi tác khác  nhau .
+◦Kiểm  tra xem liệu có sự khác  biệt về thunhập giữa hai nhóm  này hay không .
+•Lựachọn phương pháp phùhợpvớidữliệuvàmục tiêu.
+dashboards, báo cáo,
+Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
+➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
+nhãn sẵn(training data) .
+nhóm cácdữliệu tương đồng vào cùng một
+➢Phân chia dữliệuthành cácnhóm cóýnghĩa .
+◦Mục tiêulàkhám phácácmẫu ẩntrong dữliệu.
+◦Phân cụm (Clustering) :Nhóm cácđiểm dữliệucóđặcđiểm tương tựnhau vàocùng mộtnhóm .
+◦Khó khăn trong việc đánh giáhiệu quảmôhình.
+➢Self-training :Môhình họctừcácdựđoán củachính nó.
+➢Co-training :Sửdụng haimôhình khác nhau đểhọctừnhau .
+Self-training
+Bước 1:Thuthập dữliệu
+Bước 2:Huấn luyện môhình banđầu
+Bước 3:Dựđoán nhãn chodữliệuchưa được gắnnhãn
+Bước 4:Cậpnhật môhình
+◦Sửdụng cácdựđoán từbước 3đểcậpnhật môhình.
+Bước 5:Lặplạicácbước 3và4
+◦Lặplạicácbước 3và4chođếnkhiđạtđược hiệu quảmong muốn .
+Self-training
+Bước 1:Thuthập dữliệu
+Bước 2:Huấn luyện môhình banđầu
+Bước 3:Dựđoán nhãn chodữliệuchưa được gắnnhãn
+Bước 4:Cậpnhật môhình
+◦Sửdụng cácdựđoán từbước 3đểcậpnhật môhình.
+Bước 5:Lặplạicácbước 3và4
+◦Lặplạicácbước 3và4chođếnkhiđạtđược hiệu quảmong muốn .
+learning đểhọccách tương tácvớingười dùng vàđạtđược mục tiêumong muốn .
+dùng đạtđược mục tiêuvàbịphạt nếuhành động không hiệu quả.
+bàitoán (nhiệm vụnguồn) đểgiảiquyết mộtbàitoán khác (nhiệm vụmục tiêu).
+giao sang môhình nhiệm vụmục tiêu.
+◦Huấn luyện môhình trên nhiệm vụmục tiêu:Môhình nhiệm vụmục tiêuđược huấn
+luyện trênmộttậpdữliệunhỏhơnchonhiệm vụmục tiêu.
+◦Cảithiện hiệu quảmôhình vớilượng dữliệuítchonhiệm vụmục tiêu.
+◦Cóthểápdụng chocáctrường hợpdữliệuchonhiệm vụmục tiêuđắtđỏhoặc khóthu
+➢Bước 1:Huấn luyện môhình BERT trêntậpdữliệunguồn .
+➢Bước 2:Chuyển giao kiến thức từmôhình BERT sang môhình nhiệm vụmục
+➢Bước 3:Huấn luyện môhình nhiệm vụmục tiêuvớilượng dữliệunhỏhơn.
+◦Nhiệm vụmục tiêu:Phân loạicâutrảlờitrênforum làtíchcựchaytiêucực.
+◦Tập dữliệumục tiêu:10.000câutrảlờitrênforum vớinhãn tíchcựchoặc tiêucực.
+◦Bước 1:Huấn luyện môhình BERT trêntậpdữliệutweet .
+◦Bước 2:Chuyển giao kiến thức từmôhình BERT sang môhình phân loạicâutrảlờiforum .
+◦Bước 3:Huấn luyện môhình phân loạicâutrảlờiforum với10.000câutrảlờitrênforum .
+nhãnHiệu quả cao, dễ hiểuYêu cầu dữ liệu có
+trong dữ liệuKhó đánh giá hiệu
+4.Đánh giáhiệu quả
+tượng vào các nhóm dựa trên các đặc
+nhãn sẵn(training data) .
+loại để đánh giá khả năng trả nợ của người vay.Hệ thống phân
+phân loạiĐánh giá hiệu
+1. Xác định mục tiêu và yêu cầu
+Bước đầu tiên là xác định mục tiêu và yêu cầu của hệ thống phân loại. Cần xác
+Bước tiếp theo là thu thập dữ liệu để huấn luyện thuật toán phân loại. Dữ liệu thu
+6. Đánh giá hiệu quả
+Hiệu quả của thuật toán phân loại được đánh giá trên tập kiểm tra và tập xác thực. Nếu
+hiệu quả không đạt yêu cầu, cần điều chỉnh các tham số của thuật toán hoặc thử một
+và đánh giá hiệu quả. Hệ thống phân loại có thể được triển khai dưới dạng một
+Cần cập nhật dữ liệu huấn luyện và đánh giá hiệu quả của hệ thống phân loại
+Hiệu quả với tập dữ liệu nhỏ . Ít yêu cầu về dữ liệu .
+Ít yêu cầu về dữ liệu . Ít bị ảnh hưởng bởi nhiễu .
+Ít yêu cầu về dữ liệu . Tốc độ huấn luyện và dự đoán nhanh .
+Hiệu quả với tập dữ liệu nhỏ . Ít yêu cầu về dữ liệu .
+Sử dụng các kỹ thuật tối ưu hóa để tăng tốc độ huấn luyện và hiệu suất . Sử dụng Category -aware features .
+Sử dụng Category -aware features để xử lý dữ liệu phi số .
+Nhược điểm Yêu cầu lượng dữ liệu lớn để huấn luyện hiệu quả .
+Ý tưởng Học mối quan hệ tuần tự giữa các phần tử trong dữ liệu .
+Ưu điểm Hiệu quả cao với dữ liệu tuần tự.
+Nhược điểm Yêu cầu lượng dữ liệu lớn để huấn luyện hiệu quả .
+4. Đánh giá hiệu quả
+•Có khả năng thanh toán trong mô hình đánh giá tín dụng.
+•Không có khả năng thanh toán trong mô hình đánh giá tín dụng.
+Việc xác định lớp tích cực và tiêu cực phụ thuộc vào mục tiêu cụ thể của bài toán phân loại.
+(PPV) để đánh giá toàn diện hiệu quả mô hình
+•F1 Score tích hợp thông tin từ cả Precision và Recall, giúp đánh giá khả năng tổng thể của mô hình trong
+•F1 Score giúp giải quyết vấn đề thiên vị (bias) trong việc đánh giá mô hình, thường xảy ra khi sử dụng chỉ
+Ngưỡng phân loại chia các mẫu dữ liệu thành hai nhóm:
+•Nhóm tích cực nếu giá trị dự đoán lớn hơn hoặc bằng ngưỡng phân loại.
+•Nhóm tiêu cực nếu giá trị dự đoán nhỏ hơn ngưỡng phân loại.
+•Có thể sử dụng đường cong ROC (ROC Curve) để đánh giá hiệu quả của mô hình phân loại
+Cách đánh giá mô hình phân loại đa lớp dựa trên Macro -F1:
+Cách đánh giá mô hình phân loại đa lớp dựa trên Micro -F1:
+Làmột chỉsốđánh giáhiệu suất củamôhình phân loạiđalớp, đặcbiệthữu íchtrong các
+Cách đánh giá mô hình phân loại đa lớp dựa trên Weighted -F1:
+➢Có thể điều chỉnh trọng số của các lớp để phù hợp với mục đích đánh giá.
+•Mô hình phân loại: Mô hình phân loại đã được huấn luyện và đánh giá hiệu quả.
+•Mô hình phân loại được triển khai trên server và ứng dụng sẽ gửi yêu cầu đến server để
+•Tạo API: API được tạo ra để nhận yêu cầu từ ứng dụng và gửi kết quả phân loại.
+•Gọi API: Ứng dụng gửi yêu cầu đến API và nhận kết quả phân loại .
+phân hoặc đa lớp. Đánh giá hiệu quả của mô hình phân lớp.
+➢Vận dụng vào tập dữ liệu khai thác của nhóm.
+Hệ thống phân tích, gom nhóm và
+4.Đánh giáhiệu quả
+nhóm riêng biệt (gọi là cụm) mà
+nhóm cácdữliệu tương đồng vào cùng một
+➢Phân chia dữliệuthành cácnhóm cóýnghĩa .
+➢Phân khúc khách hàng :Phân chia khách hàng thành cácnhóm cóđặcđiểm, sở
+nhắm mục tiêu quảng cáovàchiến lược tiếp thịhiệu quảhơn, đồng thời phát
+triển sảnphẩm vàdịch vụphùhợpvớinhucầucủatừng nhóm khách hàng .
+cụm cóthểphát hiện rarằng một nhóm khách hàng nhất định đang mua nhiều
+phân cụm cóthểphát hiện rarằng mộtsốkhách hàng đãnộpnhiều yêucầubảo
+phân cụmĐánh giá hiệu
+1. Xác định  mục tiêu và yêu cầu:
+➢Xác định rõ mục tiêu sử dụng  hệ thống  phân  cụm. Mục tiêu này sẽ giúp lựa
+➢Xác định các yêu cầu về hiệu suất, độ chính  xác, khả năng  mở rộng,  v.v. của hệ
+➢Lựa chọn thuật toán phùhợpdựatrên mục tiêusửdụng, đặcđiểm củadữliệu
+➢Chia dữliệuthành tậphuấn luyện vàtậpđánh giá.
+6.Đánh giáhiệu quả:
+➢Đánh giáhiệu quảcủamôhình phân cụm trêntậpđánh giá.
+➢Sửdụng cácchỉsốđánh giánhư Silhouette Coefficient, Calinski -Harabasz
+Index, Davies -Bouldin Index, v.v.đểđánh giáchất lượng củacáccụm.
+triển khaiYêu cầu số lượng cụm được xác
+4. Đánh giá hiệu quả
+Đánh giá nội
+Đánh giá bên
+Phụ thuộc vào nhiều yếu tố : loại dữ liệu, mục tiêu phân
+nhóm và thông tin có sẵn .
+1.Sửdụng thuật toán gom nhóm :
+➢Cóthểsửdụng mộtthuật toán gom nhóm đểphân chia tậpdữliệuthành cáccụm vàgán
+Đánh giá nội bộ
+cụm củanósovớicáccụm lâncận.Giátrịcaohơnchothấy sựphân nhóm tốt
+Đánh giá nội bộ
+cụm củanósovớicáccụm lâncận.Giátrịcaohơnchothấy sựphân nhóm tốt
+➢s(i)<0:Điểm icóthểđược phân nhóm tốthơnvàomộtcụm khác .
+chothấy sựphân nhóm tốthơn.
+Đánh giá nội bộ
+cácđiểm dữliệutrong mỗicụm.Giátrịcaohơnchothấy sựphân nhóm tốthơn.
+Đểtínhtoán CHI chomộttậpdữliệuđược phân nhóm thành kcụm,tathực hiện
+cácbước sau:
+Đánh giá nội bộ
+cácđiểm dữliệutrong mỗicụm.Giátrịcaohơnchothấy sựphân nhóm tốthơn.
+Đánh giá nội bộ
+điểm dữliệutrong mỗicụm.Giátrịthấp hơnchothấy sựphân nhóm tốthơn.
+Đểtínhtoán DBI chomộttậpdữliệuđược phân nhóm thành kcụm,tathực hiện
+cácbước sau:
+Đánh giá nội bộ
+điểm dữliệutrong mỗicụm.Giátrịthấp hơnchothấy sựphân nhóm tốthơn.
+Đánh giá bên ngoài
+caohơnchothấy sựphân nhóm tốthơn.
+Đánh giá bên ngoài
+caohơnchothấy sựphân nhóm tốthơn.
+Đánh giá bên ngoài
+thấy sựphân nhóm tốthơn.
+Đánh giá bên ngoài
+thấy sựphân nhóm tốthơn.
+➢Entropy cóthểphát hiện cáctrường hợpphân nhóm không hiệu quả, ngay cả
+Đánh giá bên ngoài
+nhóm trong việc phân loạicácđiểm dữliệu.Giátrịcaohơn chothấy sựphân
+nhóm tốthơn.
+Đánh giá bên ngoài
+nhóm trong việc phân loạicácđiểm dữliệu.Giátrịcaohơn chothấy sựphân
+nhóm tốthơn.
+➢F1Score, Purity vàEntropy làbachỉsốphổbiến đểđánh giáchất lượng phân
+đánh giátrực quan chất lượng của
+Cách sử dụng biểu đồ để đánh giá chất lượng phân cụm:
+nên được nhóm lại gần nhau và tách biệt với các điểm dữ liệu của các cụm khác.
+elip) thường cho thấy sự phân nhóm hiệu quả hơn so với các cụm có hình dạng không
+➢Đánh giá sự chồng chéo giữa các cụm: Nếu có nhiều điểm dữ liệu nằm giữa các cụm
+phân cụm như Purity, Entropy và F1 Score để có đánh giá toàn diện hơn.
+•Mô hình: Mô hình đã được huấn luyện và đánh giá hiệu quả.
+•Mô hình được triển khai trên server và ứng dụng sẽ gửi yêu cầu đến server để thực hiện
+•Tạo API: API được tạo ra để nhận yêu cầu từ ứng dụng và gửi kết quả.
+
+MATCH_COUNT_WRITTEN: 260
+

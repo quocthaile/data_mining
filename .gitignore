@@ -1,0 +1,74 @@
+# ------------------------------
+# Operating system files
+# ------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ------------------------------
+# Editors and IDEs
+# ------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ------------------------------
+# Python cache and bytecode
+# ------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ------------------------------
+# Python environments
+# ------------------------------
+.venv/
+venv/
+env/
+ENV/
+.Python
+
+# ------------------------------
+# Build and packaging
+# ------------------------------
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+pip-wheel-metadata/
+
+# ------------------------------
+# Jupyter
+# ------------------------------
+.ipynb_checkpoints/
+
+# ------------------------------
+# Logs and temporary files
+# ------------------------------
+*.log
+*.tmp
+*.temp
+
+# ------------------------------
+# Project runtime artifacts
+# ------------------------------
+results/
+output/
+artifacts/
+models/
+*.pkl
+*.joblib
+
+# Large data artifacts (keep raw dataset outside repo)
+*.parquet
+
+# Keep config tracked
+!config/*.json

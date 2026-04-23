@@ -1,0 +1,73 @@
+# Command reference (executed in this workspace)
+# Run from project root: d:/mooccubex
+# Prefer venv Python when available:
+# d:/mooccubex/.venv/Scripts/python.exe <command>
+
+# -------------------------------------------------------------------
+# 0) Dependency commands
+# -------------------------------------------------------------------
+python.exe -m pip install -r dataset/requirements.txt
+# Install project dependencies from requirements.
+
+python.exe -m pip install "catboost>=1.2.0"
+# Install CatBoost for Phase 4 model training.
+
+python.exe -c "import catboost; print(catboost.__version__)"
+# Verify CatBoost is installed and print version.
+
+
+# -------------------------------------------------------------------
+# 1) Run each phase directly
+# -------------------------------------------------------------------
+python.exe experiment/phase_1_time_series_feature_extraction.py
+# Phase 1: time-series feature extraction and base data preparation.
+
+python.exe experiment/phase_2_kmeans_label_validation.py
+# Phase 2: K-Means ground-truth initialization and label validation.
+
+python.exe experiment/phase_3_train_valid_test_split.py
+# Phase 3: train/valid/test split and train-only imbalance handling.
+
+python.exe experiment/phase_4_supervised_model_training.py
+# Phase 4: supervised model training, tuning, and evaluation.
+
+python.exe experiment/phase_5_model_evaluation_metrics.py
+# Phase 5: model-centric evaluation summary from phase4_* artifacts.
+# Also generates consolidated report: results/final_summary_report.txt
+
+python.exe experiment/phase_6_model_interpretability.py
+# Phase 6: model interpretability and SHAP-style explanations.
+# Also appends the phase 6 section to results/final_summary_report.txt
+
+
+# -------------------------------------------------------------------
+# 2) Run by phase via orchestrator
+# -------------------------------------------------------------------
+python.exe experiment/run_experiment_stages.py --phase 4
+# Run only Phase 4 with default model set.
+
+python.exe experiment/run_experiment_stages.py --phase 4 --phase4-models catboost
+# Run only Phase 4 and force CatBoost model.
+
+python.exe experiment/run_experiment_stages.py --phase 5
+# Run Phase 5 (legacy step4 report + model evaluation metrics report).
+# Also generates consolidated report: results/final_summary_report.txt
+
+python.exe experiment/run_experiment_stages.py --phase 5 --phase5-skip-step4-report
+# Run only model-centric Phase 5 report (skip legacy step 4 report).
+
+python.exe experiment/run_experiment_stages.py --phase 6
+# Run Phase 6 interpretability only (requires Phase 4 outputs and Phase 5 summary).
+
+python.exe experiment/run_experiment_stages.py --phase all
+# Run full pipeline in order: 1 -> 2 -> 3 -> 4 -> 5 -> 6.
+
+
+# -------------------------------------------------------------------
+# 3) Smoke-test commands used during implementation
+# -------------------------------------------------------------------
+python.exe experiment/phase_4_supervised_model_training.py --results-dir results --models catboost --cv-folds 2 --n-jobs 1 --primary-metric macro_f1 --max-rows 120
+# Fast CatBoost smoke test on limited rows.
+
+python.exe experiment/run_experiment_stages.py --phase 4 --phase4-models catboost --phase4-cv-folds 2 --phase4-n-jobs 1 --max-rows 120
+# Runner-level CatBoost smoke test on limited rows.
