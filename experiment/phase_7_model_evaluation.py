@@ -35,6 +35,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 @dataclass
 class Phase5Config:
@@ -45,6 +51,9 @@ class Phase5Config:
     class_metrics_csv: Path
     confusion_csv: Path
     feature_importance_csv: Path
+    selected_model_metrics_plot: Path
+    class_metrics_plot: Path
+    metric_checks_plot: Path
     phase2_report_txt: Path
     phase3_report_txt: Path
     phase4_report_txt: Path
@@ -162,6 +171,104 @@ def write_csv(path: Path, fieldnames: Sequence[str], rows: Sequence[Dict[str, An
         writer.writeheader()
         for row in rows:
             writer.writerow(row)
+
+
+def save_bar_plot(
+    path: Path,
+    title: str,
+    labels: Sequence[str],
+    values: Sequence[float],
+    ylabel: str,
+    color: str = "#4c78a8",
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.8 * len(labels) + 2), 5))
+    x = list(range(len(labels)))
+    ax.bar(x, values, color=color)
+    ax.set_title(title)
+    ax.set_ylabel(ylabel)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=25, ha="right")
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_selected_model_metrics_plot(path: Path, summary_row: Dict[str, Any]) -> None:
+    labels = ["valid", "test"]
+    metrics = {
+        "selection": [safe_float(summary_row.get("valid_selection_metric")), safe_float(summary_row.get("test_selection_metric"))],
+        "accuracy": [safe_float(summary_row.get("valid_accuracy")), safe_float(summary_row.get("test_accuracy"))],
+        "macro_f1": [safe_float(summary_row.get("valid_macro_f1")), safe_float(summary_row.get("test_macro_f1"))],
+        "weighted_f1": [safe_float(summary_row.get("valid_weighted_f1")), safe_float(summary_row.get("test_weighted_f1"))],
+        "auc_macro": [safe_float(summary_row.get("valid_auc_macro")), safe_float(summary_row.get("test_auc_macro"))],
+        "recall_low": [safe_float(summary_row.get("valid_recall_low")), safe_float(summary_row.get("test_recall_low"))],
+    }
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(9, 5.5))
+    x = np.arange(len(labels))
+    width = 0.12
+    offsets = np.linspace(-2.5 * width, 2.5 * width, len(metrics))
+    for (metric_name, values), offset in zip(metrics.items(), offsets):
+        ax.bar(x + offset, values, width=width, label=metric_name)
+    ax.set_title("Selected model metrics on valid/test")
+    ax.set_ylabel("Score")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend(ncol=2, fontsize=8)
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_class_metrics_plot(path: Path, class_rows: Sequence[Dict[str, Any]], split_name: str = "test") -> None:
+    filtered = [row for row in class_rows if str(row.get("split")) == split_name]
+    labels = [str(row.get("label")) for row in filtered]
+    precision = [safe_float(row.get("precision")) for row in filtered]
+    recall = [safe_float(row.get("recall")) for row in filtered]
+    f1 = [safe_float(row.get("f1")) for row in filtered]
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 1.0 * len(labels) + 2), 5.5))
+    x = np.arange(len(labels))
+    width = 0.25
+    ax.bar(x - width, precision, width=width, label="precision", color="#4c78a8")
+    ax.bar(x, recall, width=width, label="recall", color="#f58518")
+    ax.bar(x + width, f1, width=width, label="f1", color="#54a24b")
+    ax.set_title(f"Class-wise metrics on {split_name}")
+    ax.set_ylabel("Score")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.legend()
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_metric_checks_plot(path: Path, checks: Sequence[Dict[str, Any]]) -> None:
+    labels = [f"{row['split']}:{row['metric']}" for row in checks]
+    values = [safe_float(row.get("value")) for row in checks]
+    thresholds = [safe_float(row.get("threshold")) for row in checks]
+    colors = ["#54a24b" if str(row.get("status")) == "pass" else "#e45756" for row in checks]
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(9, 1.25 * len(labels) + 2), 5.5))
+    x = np.arange(len(labels))
+    ax.bar(x, values, color=colors, alpha=0.85, label="value")
+    ax.plot(x, thresholds, color="#4c78a8", marker="o", linewidth=1.5, label="threshold")
+    ax.set_title("Metric checks for selected model")
+    ax.set_ylabel("Score")
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=30, ha="right")
+    ax.legend()
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
 
 
 def read_text_lines(path: Path) -> List[str]:
@@ -335,6 +442,9 @@ def build_final_summary_report_text(
     lines.append(f"- {cfg.output_dir / 'phase5_top_features.csv'}")
     lines.append(f"- {cfg.output_dir / 'phase5_metric_checks.csv'}")
     lines.append(f"- {cfg.output_dir / 'phase5_evaluation_report.txt'}")
+    lines.append(f"- {cfg.output_dir / 'phase5_selected_model_metrics.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase5_class_metrics.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase5_metric_checks.png'}")
     lines.append(f"- {cfg.final_summary_txt}")
     lines.append("")
     lines.append(f"Elapsed seconds                : {elapsed_seconds:.2f}")
@@ -516,10 +626,10 @@ def build_report_text(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Phase 5: model-centric evaluation metrics and reporting from Phase 4 outputs."
+        description="Phase 7: select the best trained model and summarize valid/test evaluation metrics."
     )
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
-    parser.add_argument("--output-dir", type=Path, default=Path("results"))
+    parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
+    parser.add_argument("--output-dir", type=Path, default=Path("experiment/results"))
 
     parser.add_argument(
         "--model-comparison-input",
@@ -605,6 +715,9 @@ def main() -> int:
         phase3_report_txt=phase3_report_txt,
         phase4_report_txt=phase4_report_txt,
         final_summary_txt=final_summary_txt,
+        selected_model_metrics_plot=output_dir / "phase5_selected_model_metrics.png",
+        class_metrics_plot=output_dir / "phase5_class_metrics.png",
+        metric_checks_plot=output_dir / "phase5_metric_checks.png",
         selection_metric=args.selection_metric,
         top_features=max(1, int(args.top_features)),
         auc_threshold=float(args.auc_threshold),
@@ -724,6 +837,10 @@ def main() -> int:
             fieldnames=["split", "metric", "value", "threshold", "status", "note"],
             rows=checks,
         )
+
+        save_selected_model_metrics_plot(cfg.selected_model_metrics_plot, summary_row)
+        save_class_metrics_plot(cfg.class_metrics_plot, filtered_class_rows, split_name="test")
+        save_metric_checks_plot(cfg.metric_checks_plot, checks)
 
         report_text = build_report_text(
             cfg=cfg,

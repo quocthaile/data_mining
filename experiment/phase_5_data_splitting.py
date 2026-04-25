@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Phase 3: dataset split + class imbalance handling for supervised training.
+Phase 5: dataset split + class imbalance handling for supervised training.
 
 Scenario alignment goals:
 - Produce train/valid/test splits with leakage-aware options.
@@ -36,7 +36,7 @@ from sklearn.neighbors import NearestNeighbors
 
 
 @dataclass
-class Phase3Config:
+class Phase5Config:
     project_root: Path
     results_dir: Path
     output_dir: Path
@@ -660,7 +660,7 @@ def write_split_dataset_files(
 
     all_columns = list(columns) + ["SplitSet"]
 
-    all_path = output_dir / "stage3_dataset_with_split.csv"
+    all_path = output_dir / "phase5_dataset_with_split.csv"
     with all_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=all_columns)
         writer.writeheader()
@@ -670,9 +670,9 @@ def write_split_dataset_files(
             writer.writerow(row_out)
 
     subset_specs = [
-        ("train", split_result.train_idx, output_dir / "stage3_train.csv"),
-        ("valid", split_result.valid_idx, output_dir / "stage3_valid.csv"),
-        ("test", split_result.test_idx, output_dir / "stage3_test.csv"),
+        ("train", split_result.train_idx, output_dir / "phase5_train.csv"),
+        ("valid", split_result.valid_idx, output_dir / "phase5_valid.csv"),
+        ("test", split_result.test_idx, output_dir / "phase5_test.csv"),
     ]
 
     for split_name, split_idx, path in subset_specs:
@@ -733,7 +733,7 @@ def write_label_distribution_csv(
 
 def write_report(
     path: Path,
-    cfg: Phase3Config,
+    cfg: Phase5Config,
     split_result: SplitResult,
     labels: np.ndarray,
     y_model: np.ndarray,
@@ -755,7 +755,7 @@ def write_report(
     }
 
     with path.open("w", encoding="utf-8") as f:
-        f.write("Phase 3 - Train/Valid/Test Split and Imbalance Handling Report\n")
+        f.write("Phase 5 - Train/Valid/Test Split and Imbalance Handling Report\n")
         f.write("=" * 100 + "\n")
         f.write(f"Generated at                    : {now_text()}\n")
         f.write(f"Input labeled CSV              : {cfg.labeled_csv}\n")
@@ -804,21 +804,21 @@ def write_report(
             f.write(f"- {col}\n")
 
         f.write("\nGenerated files:\n")
-        f.write(f"- {cfg.output_dir / 'stage3_dataset_with_split.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_train.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_valid.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_test.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_train_modeling.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_label_distribution.csv'}\n")
-        f.write(f"- {cfg.output_dir / 'stage3_split_report.txt'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_dataset_with_split.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_train.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_valid.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_test.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_train_modeling.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_label_distribution.csv'}\n")
+        f.write(f"- {cfg.output_dir / 'phase5_split_report.txt'}\n")
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Phase 3: split labeled data and prepare train modeling set with imbalance handling."
+        description="Phase 5: split labeled data and prepare train modeling set with imbalance handling."
     )
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
-    parser.add_argument("--output-dir", type=Path, default=Path("results"))
+    parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
+    parser.add_argument("--output-dir", type=Path, default=Path("experiment/results"))
     parser.add_argument("--input", type=Path, default=Path("step5_standard_labels_kmeans.csv"))
     parser.add_argument("--combined-input", type=Path, default=Path("combined_user_metrics.csv"))
     parser.add_argument(
@@ -885,7 +885,7 @@ def main() -> int:
     labeled_csv = resolve_path_arg(args.input, project_root, results_dir)
     combined_csv = resolve_path_arg(args.combined_input, project_root, results_dir)
 
-    cfg = Phase3Config(
+    cfg = Phase5Config(
         project_root=project_root,
         results_dir=results_dir,
         output_dir=output_dir,
@@ -919,7 +919,7 @@ def main() -> int:
 
     try:
         started = time.time()
-        log("Starting Phase 3: split + imbalance handling")
+        log("Starting Phase 5: split + imbalance handling")
 
         rows, base_columns = load_csv_rows(cfg.labeled_csv, cfg.max_rows, cfg.log_every)
 
@@ -939,9 +939,9 @@ def main() -> int:
                 columns.append(col)
 
         for idx, row in enumerate(rows):
-            row["stage3_row_id"] = str(idx)
-        if "stage3_row_id" not in columns:
-            columns.append("stage3_row_id")
+            row["phase5_row_id"] = str(idx)
+        if "phase5_row_id" not in columns:
+            columns.append("phase5_row_id")
 
         if cfg.label_column not in columns:
             raise RuntimeError(f"Label column not found: {cfg.label_column}")
@@ -951,14 +951,14 @@ def main() -> int:
         if cfg.group_column in columns:
             groups = np.array(
                 [
-                    (row.get(cfg.group_column) or "").strip() or row["stage3_row_id"]
+                    (row.get(cfg.group_column) or "").strip() or row["phase5_row_id"]
                     for row in rows
                 ],
                 dtype=object,
             )
         else:
-            log(f"Group column not found: {cfg.group_column}. Fallback to stage3_row_id")
-            groups = np.array([row["stage3_row_id"] for row in rows], dtype=object)
+            log(f"Group column not found: {cfg.group_column}. Fallback to phase5_row_id")
+            groups = np.array([row["phase5_row_id"] for row in rows], dtype=object)
 
         timestamps = np.zeros(len(rows), dtype=np.float64)
         missing_time_rows = 0
@@ -1028,7 +1028,7 @@ def main() -> int:
             feature_columns = feature_columns_manual
         else:
             excluded: Set[str] = {
-                "stage3_row_id",
+                "phase5_row_id",
                 "SplitSet",
                 "user_id",
                 "school",
@@ -1094,7 +1094,7 @@ def main() -> int:
         )
 
         write_modeling_train_csv(
-            path=cfg.output_dir / "stage3_train_modeling.csv",
+            path=cfg.output_dir / "phase5_train_modeling.csv",
             X_model=X_model,
             y_model=y_model,
             sample_origin=sample_origin,
@@ -1103,14 +1103,14 @@ def main() -> int:
         )
 
         write_label_distribution_csv(
-            path=cfg.output_dir / "stage3_label_distribution.csv",
+            path=cfg.output_dir / "phase5_label_distribution.csv",
             y_all=labels,
             split_result=split_result,
             y_model=y_model,
         )
 
         write_report(
-            path=cfg.output_dir / "stage3_split_report.txt",
+            path=cfg.output_dir / "phase5_split_report.txt",
             cfg=cfg,
             split_result=split_result,
             labels=labels,
@@ -1121,7 +1121,7 @@ def main() -> int:
             elapsed_seconds=time.time() - started,
         )
 
-        log(f"Phase 3 completed in {time.time() - started:.2f}s")
+        log(f"Phase 5 completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")

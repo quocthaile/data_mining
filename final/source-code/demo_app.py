@@ -8,7 +8,7 @@ Sử dụng Flask để tạo giao diện web đơn giản
 
 from flask import Flask, request, jsonify, render_template_string
 import pandas as pd
-import joblib
+import pickle
 import os
 from pathlib import Path
 
@@ -16,16 +16,17 @@ app = Flask(__name__)
 
 # Đường dẫn đến mô hình và dữ liệu
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-MODEL_PATH = PROJECT_ROOT / "results" / "best_model.pkl"
-FEATURE_COLUMNS_PATH = PROJECT_ROOT / "results" / "feature_columns.pkl"
+MODEL_PATH = PROJECT_ROOT / "results" / "phase6" / "phase6_best_model.pkl"
 
 # Load mô hình và cột đặc trưng
 try:
-    model = joblib.load(MODEL_PATH)
-    feature_columns = joblib.load(FEATURE_COLUMNS_PATH)
+    with open(MODEL_PATH, "rb") as f:
+        model_bundle = pickle.load(f)
+    model = model_bundle["estimator"]
+    feature_columns = model_bundle["feature_columns"]
     print("Đã tải mô hình và cột đặc trưng thành công")
-except FileNotFoundError:
-    print("Cảnh báo: Không tìm thấy mô hình hoặc cột đặc trưng. Vui lòng chạy thực nghiệm trước.")
+except Exception as e:
+    print(f"Cảnh báo: Không tìm thấy hoặc có lỗi khi tải mô hình: {e}. Vui lòng chạy thực nghiệm trước.")
     model = None
     feature_columns = None
 

@@ -1,23 +1,26 @@
 #!/usr/bin/env python3
 """
-Phase 6: model interpretability and explanation reporting.
+Phase 8: model interpretability and explanation reporting.
 
 Scenario alignment goals:
-- Explain the selected supervised model from Phase 4.
+- Explain the selected supervised model from Phase 6.
 - Provide global importance and local explanations for selected samples.
 - Prefer SHAP-style explanations for CatBoost models.
 - Keep the final consolidated summary up to date.
 
-Default inputs (from Phase 4 outputs):
-- results/phase4_best_model.pkl
-- results/phase4_best_model_predictions.csv
-- results/stage3_test.csv
+Default inputs (from Phase 6 outputs):
+- results/phase6_best_model.pkl
+- results/phase6_best_model_predictions.csv
+- results/phase5_test.csv
 
 Generated outputs:
-- results/phase6_global_importance.csv
-- results/phase6_classwise_importance.csv
-- results/phase6_local_contributions.csv
-- results/phase6_interpretability_report.txt
+- results/phase8_global_importance.csv
+- results/phase8_classwise_importance.csv
+- results/phase8_local_contributions.csv
+- results/phase8_global_importance.png
+- results/phase8_classwise_importance.png
+- results/phase8_local_contributions.png
+- results/phase8_interpretability_report.txt
 - results/final_summary_report.txt
 """
 
@@ -34,11 +37,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Sequence, Tuple
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 
 
 @dataclass
-class Phase6Config:
+class Phase8Config:
     project_root: Path
     results_dir: Path
     output_dir: Path
@@ -50,6 +57,9 @@ class Phase6Config:
     global_importance_csv: Path
     classwise_importance_csv: Path
     local_contributions_csv: Path
+    global_importance_plot: Path
+    classwise_importance_plot: Path
+    local_contributions_plot: Path
     interpretability_report_txt: Path
     local_error_samples: int
     local_correct_samples: int
@@ -117,6 +127,80 @@ def write_csv(path: Path, fieldnames: Sequence[str], rows: Sequence[Dict[str, An
             writer.writerow(row)
 
 
+def save_global_importance_plot(path: Path, global_rows: Sequence[Dict[str, Any]], top_n: int) -> None:
+    rows = list(global_rows[:top_n])
+    labels = [str(row.get("feature")) for row in rows]
+    values = [safe_float(row.get("mean_abs_contribution")) for row in rows]
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.8 * len(labels) + 2), 5.5))
+    ax.barh(labels[::-1], values[::-1], color="#4c78a8")
+    ax.set_title(f"Top {min(top_n, len(labels))} global feature contributions")
+    ax.set_xlabel("Mean absolute contribution")
+    ax.grid(axis="x", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_classwise_importance_plot(
+    path: Path,
+    classwise_rows: Sequence[Dict[str, Any]],
+    global_rows: Sequence[Dict[str, Any]],
+    classes: Sequence[str],
+    top_n: int,
+) -> None:
+    top_features = [str(row.get("feature")) for row in global_rows[:top_n]]
+    matrix = np.zeros((len(classes), len(top_features)), dtype=np.float64)
+    class_to_idx = {idx: idx for idx in range(len(classes))}
+    feature_to_idx = {feature: idx for idx, feature in enumerate(top_features)}
+    for row in classwise_rows:
+        class_index = int(row.get("class_index", 0))
+        feature = str(row.get("feature"))
+        if class_index in class_to_idx and feature in feature_to_idx:
+            matrix[class_to_idx[class_index], feature_to_idx[feature]] = safe_float(row.get("mean_abs_contribution"))
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.8 * len(top_features) + 2), max(5, 0.8 * len(classes) + 2)))
+    im = ax.imshow(matrix, cmap="Blues")
+    ax.set_title("Class-wise importance on top global features")
+    ax.set_xlabel("Feature")
+    ax.set_ylabel("Class")
+    ax.set_xticks(np.arange(len(top_features)))
+    ax.set_xticklabels(top_features, rotation=30, ha="right")
+    ax.set_yticks(np.arange(len(classes)))
+    ax.set_yticklabels(classes)
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_local_contributions_plot(
+    path: Path,
+    local_rows: Sequence[Dict[str, Any]],
+    sample_rank: int = 1,
+    top_n: int = 10,
+) -> None:
+    rows = [row for row in local_rows if int(row.get("sample_rank", 0)) == sample_rank]
+    if not rows:
+        rows = list(local_rows[:top_n])
+    rows = sorted(rows, key=lambda row: abs(safe_float(row.get("contribution"))), reverse=True)[:top_n]
+    labels = [str(row.get("feature")) for row in rows]
+    values = [safe_float(row.get("contribution")) for row in rows]
+    colors = ["#54a24b" if value >= 0 else "#e45756" for value in values]
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.75 * len(labels) + 2), 5.5))
+    ax.barh(labels[::-1], values[::-1], color=colors[::-1])
+    ax.set_title(f"Local contributions for sample {sample_rank}")
+    ax.set_xlabel("Contribution")
+    ax.grid(axis="x", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
 def read_text_lines(path: Path) -> List[str]:
     if not path.exists():
         return []
@@ -163,7 +247,7 @@ def build_feature_matrix(rows: Sequence[Dict[str, str]], feature_columns: Sequen
 
 
 def sample_identifier(row: Dict[str, str], fallback_index: int) -> str:
-    row_id = (row.get("stage3_row_id") or "").strip()
+    row_id = (row.get("phase5_row_id") or "").strip()
     if row_id:
         return row_id
     user_id = (row.get("user_id") or "").strip()
@@ -208,12 +292,12 @@ def top_feature_strings(
     return format_items(positive), format_items(negative)
 
 
-def append_or_replace_phase6_section(summary_path: Path, section_text: str) -> None:
+def append_or_replace_phase8_section(summary_path: Path, section_text: str) -> None:
     if summary_path.exists():
         lines = read_text_lines(summary_path)
         cutoff = None
         for idx, line in enumerate(lines):
-            if line.strip().startswith("Phase 6 - Model Interpretability"):
+            if line.strip().startswith("Phase 8 - Model Interpretability"):
                 cutoff = idx
                 break
         if cutoff is not None:
@@ -233,7 +317,7 @@ def load_predictions_map(path: Path, max_rows: Optional[int], log_every: int) ->
     for idx, row in enumerate(rows):
         if (row.get("split") or "").strip() != "test":
             continue
-        key = (row.get("stage3_row_id") or "").strip() or (row.get("user_id") or "").strip() or str(idx)
+        key = (row.get("phase5_row_id") or "").strip() or (row.get("user_id") or "").strip() or str(idx)
         normalized = dict(row)
         normalized["true_label"] = normalize_label(normalized.get("true_label"))
         normalized["pred_label"] = normalize_prediction_label(normalized.get("pred_label"))
@@ -493,7 +577,7 @@ def compute_local_rows(
 
 
 def build_report_text(
-    cfg: Phase6Config,
+    cfg: Phase8Config,
     bundle: Dict[str, Any],
     method: str,
     global_rows: Sequence[Dict[str, Any]],
@@ -506,7 +590,7 @@ def build_report_text(
     feature_columns = parse_feature_columns(bundle)
 
     lines: List[str] = []
-    lines.append("Phase 6 - Model Interpretability Report")
+    lines.append("Phase 8 - Model Interpretability Report")
     lines.append("")
     lines.append("Configuration:")
     lines.append(f"- Model bundle                : {cfg.model_bundle_input}")
@@ -559,6 +643,9 @@ def build_report_text(
     lines.append(f"- {cfg.global_importance_csv}")
     lines.append(f"- {cfg.classwise_importance_csv}")
     lines.append(f"- {cfg.local_contributions_csv}")
+    lines.append(f"- {cfg.global_importance_plot}")
+    lines.append(f"- {cfg.classwise_importance_plot}")
+    lines.append(f"- {cfg.local_contributions_plot}")
     lines.append(f"- {cfg.interpretability_report_txt}")
     lines.append(f"- {cfg.final_summary_output}")
     lines.append("")
@@ -568,7 +655,7 @@ def build_report_text(
 
 
 def build_final_summary_section(
-    cfg: Phase6Config,
+    cfg: Phase8Config,
     bundle: Dict[str, Any],
     method: str,
     global_rows: Sequence[Dict[str, Any]],
@@ -578,7 +665,7 @@ def build_final_summary_section(
     top_features = [row["feature"] for row in global_rows[: cfg.top_features]]
     lines: List[str] = []
     lines.append("")
-    lines.append("Phase 6 - Model Interpretability")
+    lines.append("Phase 8 - Model Interpretability")
     lines.append("=" * 100)
     lines.append(f"Selected model               : {model_name}")
     lines.append(f"Interpretability method      : {method}")
@@ -588,6 +675,9 @@ def build_final_summary_section(
     lines.append(f"- {cfg.global_importance_csv}")
     lines.append(f"- {cfg.classwise_importance_csv}")
     lines.append(f"- {cfg.local_contributions_csv}")
+    lines.append(f"- {cfg.global_importance_plot}")
+    lines.append(f"- {cfg.classwise_importance_plot}")
+    lines.append(f"- {cfg.local_contributions_plot}")
     lines.append(f"- {cfg.interpretability_report_txt}")
     lines.append(f"- {cfg.final_summary_output}")
     lines.append("")
@@ -596,17 +686,17 @@ def build_final_summary_section(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Phase 6: model interpretability and explanation reporting from Phase 4 outputs."
+        description="Phase 8: explain the selected model with global, class-wise, and local contributions."
     )
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
-    parser.add_argument("--output-dir", type=Path, default=Path("results"))
-    parser.add_argument("--model-bundle-input", type=Path, default=Path("phase4_best_model.pkl"))
+    parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
+    parser.add_argument("--output-dir", type=Path, default=Path("experiment/results"))
+    parser.add_argument("--model-bundle-input", type=Path, default=Path("phase6_best_model.pkl"))
     parser.add_argument(
         "--predictions-input",
         type=Path,
-        default=Path("phase4_best_model_predictions.csv"),
+        default=Path("phase6_best_model_predictions.csv"),
     )
-    parser.add_argument("--test-input", type=Path, default=Path("stage3_test.csv"))
+    parser.add_argument("--test-input", type=Path, default=Path("phase5_test.csv"))
     parser.add_argument("--final-summary-input", type=Path, default=Path("final_summary_report.txt"))
     parser.add_argument("--final-summary-output", type=Path, default=Path("final_summary_report.txt"))
 
@@ -632,7 +722,7 @@ def main() -> int:
     final_summary_input = resolve_path_arg(args.final_summary_input, project_root, results_dir)
     final_summary_output = resolve_path_arg(args.final_summary_output, project_root, results_dir)
 
-    cfg = Phase6Config(
+    cfg = Phase8Config(
         project_root=project_root,
         results_dir=results_dir,
         output_dir=output_dir,
@@ -641,10 +731,13 @@ def main() -> int:
         test_input=test_input,
         final_summary_input=final_summary_input,
         final_summary_output=final_summary_output,
-        global_importance_csv=output_dir / "phase6_global_importance.csv",
-        classwise_importance_csv=output_dir / "phase6_classwise_importance.csv",
-        local_contributions_csv=output_dir / "phase6_local_contributions.csv",
-        interpretability_report_txt=output_dir / "phase6_interpretability_report.txt",
+        global_importance_csv=output_dir / "phase8_global_importance.csv",
+        classwise_importance_csv=output_dir / "phase8_classwise_importance.csv",
+        local_contributions_csv=output_dir / "phase8_local_contributions.csv",
+        global_importance_plot=output_dir / "phase8_global_importance.png",
+        classwise_importance_plot=output_dir / "phase8_classwise_importance.png",
+        local_contributions_plot=output_dir / "phase8_local_contributions.png",
+        interpretability_report_txt=output_dir / "phase8_interpretability_report.txt",
         local_error_samples=max(0, int(args.local_error_samples)),
         local_correct_samples=max(0, int(args.local_correct_samples)),
         top_features=max(1, int(args.top_features)),
@@ -654,7 +747,7 @@ def main() -> int:
 
     try:
         started = time.time()
-        log("Starting Phase 6: model interpretability")
+        log("Starting Phase 8: model interpretability")
 
         for required in [cfg.model_bundle_input, cfg.predictions_input, cfg.test_input]:
             if not required.exists():
@@ -738,6 +831,21 @@ def main() -> int:
             rows=local_rows,
         )
 
+        save_global_importance_plot(cfg.global_importance_plot, global_rows, cfg.top_features)
+        save_classwise_importance_plot(
+            cfg.classwise_importance_plot,
+            classwise_rows,
+            global_rows,
+            classes,
+            cfg.top_features,
+        )
+        save_local_contributions_plot(
+            cfg.local_contributions_plot,
+            local_rows,
+            sample_rank=1,
+            top_n=cfg.top_features,
+        )
+
         report_text = build_report_text(
             cfg=cfg,
             bundle=bundle,
@@ -756,10 +864,10 @@ def main() -> int:
             global_rows=global_rows,
             sample_summary_rows=sample_summary_rows,
         )
-        append_or_replace_phase6_section(cfg.final_summary_output, summary_section)
+        append_or_replace_phase8_section(cfg.final_summary_output, summary_section)
 
         log(f"Selected model: {bundle.get('model_name', 'N/A')}")
-        log(f"Phase 6 completed in {time.time() - started:.2f}s")
+        log(f"Phase 8 completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")

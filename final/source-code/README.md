@@ -52,15 +52,15 @@ python main_experiment.py --phase all
 ```
 
 Các tùy chọn:
-- `--phase`: Chọn phase cụ thể (1-6) hoặc "all" để chạy tất cả
+- `--phase`: Chọn phase cụ thể (2, 4, 5, 6, 7, 8) hoặc "all" để chạy tất cả
 - `--dataset-dir`: Đường dẫn đến thư mục dữ liệu
 - `--results-dir`: Đường dẫn lưu kết quả
 - `--max-rows`: Giới hạn số hàng để test (tùy chọn)
 
 Ví dụ:
 ```bash
-# Chạy phase 1 và 2
-python main_experiment.py --phase 1 --phase 2
+# Chạy phase 2 và 4
+python main_experiment.py --phase 2 --phase 4
 
 # Chạy với giới hạn dữ liệu
 python main_experiment.py --phase all --max-rows 10000
@@ -68,7 +68,7 @@ python main_experiment.py --phase all --max-rows 10000
 
 ### 2. Chạy ứng dụng demo
 
-Sau khi có mô hình đã train (từ phase 4):
+Sau khi có mô hình đã train (từ phase 6):
 
 ```bash
 python demo_app.py
@@ -83,14 +83,16 @@ Truy cập: http://localhost:5000
 
 ## Kịch bản thực nghiệm
 
-Pipeline thực nghiệm gồm 6 phases:
+Pipeline thực nghiệm gồm 8 phases (theo thứ tự chuẩn hóa luồng dữ liệu):
 
-1. **Phase 1**: Trích xuất đặc trưng chuỗi thời gian từ dữ liệu hoạt động
-2. **Phase 2**: Khởi tạo nhãn ground-truth bằng K-Means và xác thực nhãn
-3. **Phase 3**: Chia tập train/valid/test và xử lý mất cân bằng dữ liệu
-4. **Phase 4**: Huấn luyện mô hình supervised với tối ưu hóa
-5. **Phase 5**: Đánh giá độ đo và báo cáo kết quả
-6. **Phase 6**: Phân tích khả năng giải thích mô hình
+1. **Phase 1**: Làm sạch và chuẩn hóa dữ liệu nguồn
+2. **Phase 2**: Trích xuất đặc trưng chuỗi thời gian từ dữ liệu hoạt động
+3. **Phase 3**: Khám phá và phân tích dữ liệu (EDA)
+4. **Phase 4**: Khởi tạo nhãn ground-truth bằng K-Means và xác thực nhãn
+5. **Phase 5**: Chia tập train/valid/test và xử lý mất cân bằng dữ liệu
+6. **Phase 6**: Huấn luyện mô hình supervised với tối ưu hóa
+7. **Phase 7**: Đánh giá độ đo và báo cáo kết quả
+8. **Phase 8**: Phân tích khả năng giải thích mô hình
 
 ## Kết quả đầu ra
 
@@ -113,7 +115,7 @@ Sau khi chạy thành công, các file kết quả sẽ được lưu trong thư
 
 1. **Lỗi không tìm thấy file dữ liệu**: Kiểm tra đường dẫn `--dataset-dir`
 2. **Lỗi memory**: Giảm `--max-rows` hoặc tăng RAM
-3. **Demo app không load mô hình**: Đảm bảo đã chạy phase 4 thành công
+3. **Demo app không load mô hình**: Đảm bảo đã chạy phase 6 thành công
 
 ## Liên hệ
 

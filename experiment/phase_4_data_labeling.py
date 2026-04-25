@@ -1,5 +1,5 @@
 """
-Phase 4: Ghi nhãn dữ liệu
+Phase 4: Data Labeling
 """
 
 from __future__ import annotations
@@ -44,7 +44,7 @@ def run_command(command: List[str], cwd: Path, label: str) -> None:
         raise RuntimeError(f"{label} failed with exit code {proc.returncode}")
 
 """
-Step 3: Engagement labeling and clustering, aligned with notebook logic.
+Step 4.1: Engagement labeling and clustering, aligned with notebook logic.
 
 Notebook-inspired engagement formula:
 - Build user-week binary activity matrix x_{i,a,w} from Step 2 output.
@@ -57,10 +57,10 @@ Inputs:
 - results/step2_user_week_activity.csv
 
 Outputs:
-- results/step3_student_engagement_results.csv
-- results/step3_activity_weights.csv
-- results/step3_cluster_centers.csv
-- results/step3_analysis_report.txt
+- results/phase4_1_student_engagement_results.csv
+- results/phase4_1_activity_weights.csv
+- results/phase4_1_cluster_centers.csv
+- results/phase4_1_analysis_report.txt
 """
 
 
@@ -183,7 +183,7 @@ def compute_weekly_stats(cfg: Step3Config) -> WeeklyStats:
     if not cfg.weekly_csv.exists():
         raise FileNotFoundError(f"Weekly activity file not found: {cfg.weekly_csv}")
 
-    log("Step 3.1/7: Computing weekly activity weights from step2 output")
+    log("Step 4.1.1/7: Computing weekly activity weights from step2 output")
     unique_users_active = set()
     unique_weeks = set()
     sums = {k: 0 for k in WEEKLY_ACTIVITY_COLUMNS}
@@ -235,7 +235,7 @@ def compute_weekly_stats(cfg: Step3Config) -> WeeklyStats:
 
 
 def compute_user_engagement_scores(cfg: Step3Config, weekly_stats: WeeklyStats) -> Dict[str, float]:
-    log("Step 3.2/7: Computing user engagement scores E")
+    log("Step 4.1.2/7: Computing user engagement scores E")
 
     user_scores: Dict[str, float] = {}
     scanned = 0
@@ -259,7 +259,7 @@ def compute_user_engagement_scores(cfg: Step3Config, weekly_stats: WeeklyStats) 
 
 
 def fit_scaler(cfg: Step3Config) -> Tuple[StandardScaler, int]:
-    log("Step 3.3/7: Fitting StandardScaler on combined features")
+    log("Step 4.1.3/7: Fitting StandardScaler on combined features")
     scaler = StandardScaler()
 
     batch: List[List[float]] = []
@@ -287,10 +287,10 @@ def fit_scaler(cfg: Step3Config) -> Tuple[StandardScaler, int]:
 def fit_kmeans(cfg: Step3Config, scaler: StandardScaler, total_rows: int):
     k = min(max(1, cfg.clusters), total_rows)
     if k == 1:
-        log("Step 3.4/7: Only one cluster possible (k=1)")
+        log("Step 4.1.4/7: Only one cluster possible (k=1)")
         return None, 1
 
-    log(f"Step 3.4/7: Fitting MiniBatchKMeans (k={k})")
+    log(f"Step 4.1.4/7: Fitting MiniBatchKMeans (k={k})")
     kmeans = MiniBatchKMeans(
         n_clusters=k,
         random_state=cfg.random_state,
@@ -341,7 +341,7 @@ def collect_score_distribution(
     cfg: Step3Config,
     user_scores: Dict[str, float],
 ) -> Tuple[float, float, float, float]:
-    log("Step 3.5/7: Computing normalization and label thresholds")
+    log("Step 4.1.5/7: Computing normalization and label thresholds")
     raw_scores: List[float] = []
 
     scanned = 0
@@ -383,7 +383,7 @@ def write_outputs(
     kmeans,
     k: int,
 ) -> Dict[str, Dict]:
-    log("Step 3.6/7: Writing outputs")
+    log("Step 4.1.6/7: Writing outputs")
     cfg.output_dir.mkdir(parents=True, exist_ok=True)
 
     with cfg.output_weights_csv.open("w", encoding="utf-8", newline="") as f:
@@ -502,7 +502,7 @@ def write_outputs(
     }
 
 
-def write_step3_report(
+def write_phase4_1_report(
     cfg: Step3Config,
     weekly_stats: WeeklyStats,
     thresholds: Tuple[float, float, float, float],
@@ -510,14 +510,14 @@ def write_step3_report(
     k: int,
     elapsed_seconds: float,
 ) -> None:
-    log("Step 3.7/7: Writing analysis report")
+    log("Step 4.1.7/7: Writing analysis report")
     min_e, max_e, low_th, high_th = thresholds
     label_counts = output_stats["label_counts"]
     cluster_counts = output_stats["cluster_counts"]
     total_users = sum(label_counts.values())
 
     with cfg.output_report_txt.open("w", encoding="utf-8") as f:
-        f.write("Step 3 - Engagement Analysis Report (Notebook-Aligned)\n")
+        f.write("Step 4.1 - Engagement Analysis Report (Notebook-Aligned)\n")
         f.write("=" * 90 + "\n")
         f.write(f"Generated at           : {now_text()}\n")
         f.write(f"Combined CSV           : {cfg.combined_csv}\n")
@@ -566,20 +566,20 @@ def write_step3_report(
         f.write(f"- Mean E_norm : {output_stats['avg_e_norm']:.6f}\n")
 
 """
-Step 5: Initialize standard labels from K-Means clusters.
+Step 4.2: Initialize standard labels from K-Means clusters.
 
 Purpose:
-- Read Step 3 output that already contains K-Means cluster assignments.
+- Read Step 4.1 output that already contains K-Means cluster assignments.
 - Rank clusters by mean engagement (E_norm) and map them to standard labels.
 - Export row-level initialized labels and a cluster-label mapping summary.
 
 Input:
-- results/step3_student_engagement_results.csv
+- results/phase4_1_student_engagement_results.csv
 
 Outputs:
-- results/step5_standard_labels_kmeans.csv
-- results/step5_kmeans_cluster_label_map.csv
-- results/step5_kmeans_label_init_report.txt
+- results/phase4_2_standard_labels_kmeans.csv
+- results/phase4_2_kmeans_cluster_label_map.csv
+- results/phase4_2_kmeans_label_init_report.txt
 """
 
 
@@ -673,20 +673,20 @@ class KMeansLabelInitializer:
         started = time.time()
         self.cfg.output_dir.mkdir(parents=True, exist_ok=True)
 
-        log("Step 5.1/4: Scanning Step 3 output and summarizing K-Means clusters")
+        log("Step 4.2.1/4: Scanning Step 4.1 output and summarizing K-Means clusters")
         cluster_stats, label_counts_old, total_rows = self._scan_clusters()
 
         if total_rows <= 0:
-            raise RuntimeError("Input Step 3 CSV is empty. Cannot initialize standard labels.")
+            raise RuntimeError("Input Step 4.1 CSV is empty. Cannot initialize standard labels.")
 
-        log("Step 5.2/4: Building cluster-to-standard-label mapping")
+        log("Step 4.2.2/4: Building cluster-to-standard-label mapping")
         cluster_label_map = self._build_cluster_label_map(cluster_stats)
 
-        log("Step 5.3/4: Writing labeled dataset and mapping table")
+        log("Step 4.2.3/4: Writing labeled dataset and mapping table")
         label_counts_new = self._write_labeled_output(cluster_stats, cluster_label_map)
         self._write_cluster_map(cluster_stats, cluster_label_map)
 
-        log("Step 5.4/4: Writing summary report")
+        log("Step 4.2.4/4: Writing summary report")
         self._write_report(
             cluster_stats=cluster_stats,
             cluster_label_map=cluster_label_map,
@@ -838,10 +838,10 @@ class KMeansLabelInitializer:
         )
 
         with self.cfg.output_report_txt.open("w", encoding="utf-8") as f:
-            f.write("Step 5 - Standard Label Initialization from Quantiles\n")
+            f.write("Step 4.2 - Standard Label Initialization from Quantiles\n")
             f.write("=" * 90 + "\n")
             f.write(f"Generated at           : {now_text()}\n")
-            f.write(f"Input Step 3 CSV       : {self.cfg.input_csv}\n")
+            f.write(f"Input Step 4.1 CSV       : {self.cfg.input_csv}\n")
             f.write(f"Total rows             : {total_rows:,}\n")
             f.write(f"Elapsed seconds        : {elapsed:.2f}\n")
             f.write(f"Output labeled CSV     : {self.cfg.output_labeled_csv}\n")
@@ -872,19 +872,19 @@ class KMeansLabelInitializer:
                 f.write(f"- {label:12} {count:>10,} ({pct:6.2f}%)\n")
 
 """
-Step 4: Detailed reporting for the engagement pipeline.
+Step 4.3: Detailed reporting for the engagement pipeline.
 
 Input:
-- results/step3_student_engagement_results.csv
+- results/phase4_1_student_engagement_results.csv
 
 Outputs:
-- results/step4_global_stats.csv
-- results/step4_label_summary.csv
-- results/step4_cluster_summary.csv
-- results/step4_label_cluster_matrix.csv
-- results/step4_school_summary.csv
-- results/step4_top_users.csv
-- results/step4_analysis_report.txt
+- results/phase4_3_global_stats.csv
+- results/phase4_3_label_summary.csv
+- results/phase4_3_cluster_summary.csv
+- results/phase4_3_label_cluster_matrix.csv
+- results/phase4_3_school_summary.csv
+- results/phase4_3_top_users.csv
+- results/phase4_3_analysis_report.txt
 """
 
 
@@ -1063,11 +1063,11 @@ class Step4Reporter:
         started = time.time()
         self.cfg.output_dir.mkdir(parents=True, exist_ok=True)
 
-        log("Step 4.1/3: Scanning Step 3 results")
+        log("Step 4.1/3: Scanning Step 4.1 results")
         state = self._scan_input()
 
         if state.total_rows <= 0:
-            raise RuntimeError("Input Step 3 CSV is empty. Cannot build detailed report.")
+            raise RuntimeError("Input Step 4.1 CSV is empty. Cannot build detailed report.")
 
         log("Step 4.2/3: Writing detailed CSV outputs")
         self._write_global_stats(state)
@@ -1077,7 +1077,7 @@ class Step4Reporter:
         self._write_school_summary(state)
         self._write_top_users(state)
 
-        log("Step 4.3/3: Writing text report")
+        log("Step 4.3.3/3: Writing text report")
         self._write_report(state, elapsed=time.time() - started)
         log(f"Done. Report: {self.cfg.output_report_txt}")
 
@@ -1349,10 +1349,10 @@ class Step4Reporter:
         school_candidates.sort(key=lambda x: (x[1].mean_e_norm(), x[1].count), reverse=True)
 
         with self.cfg.output_report_txt.open("w", encoding="utf-8") as f:
-            f.write("Step 4 - Detailed Engagement Report\n")
+            f.write("Step 4.3 - Detailed Engagement Report\n")
             f.write("=" * 90 + "\n")
             f.write(f"Generated at           : {now_text()}\n")
-            f.write(f"Input Step 3 CSV       : {self.cfg.input_csv}\n")
+            f.write(f"Input Step 4.1 CSV       : {self.cfg.input_csv}\n")
             f.write(f"Total users            : {state.total_rows:,}\n")
             f.write(f"Elapsed seconds        : {elapsed:.2f}\n")
             f.write("\nGenerated files:\n")
@@ -1408,10 +1408,10 @@ def run_engagement_report(
         combined_csv=input_csv,
         weekly_csv=weekly_csv,
         output_dir=output_dir,
-        output_results_csv=(output_dir / "step3_student_engagement_results.csv").resolve(),
-        output_weights_csv=(output_dir / "step3_activity_weights.csv").resolve(),
-        output_centers_csv=(output_dir / "step3_cluster_centers.csv").resolve(),
-        output_report_txt=(output_dir / "step3_analysis_report.txt").resolve(),
+        output_results_csv=(output_dir / "phase4_1_student_engagement_results.csv").resolve(),
+        output_weights_csv=(output_dir / "phase4_1_activity_weights.csv").resolve(),
+        output_centers_csv=(output_dir / "phase4_1_cluster_centers.csv").resolve(),
+        output_report_txt=(output_dir / "phase4_1_analysis_report.txt").resolve(),
         clusters=max(1, clusters),
         batch_size=max(1, batch_size),
         log_every=max(1, log_every),
@@ -1437,7 +1437,7 @@ def run_engagement_report(
         kmeans=kmeans,
         k=k,
     )
-    write_step3_report(
+    write_phase4_1_report(
         cfg=cfg,
         weekly_stats=weekly_stats,
         thresholds=(min_e, max_e, low_th, high_th),
@@ -1457,9 +1457,9 @@ def run_init_standard_labels(
         project_root=output_dir.parent,
         input_csv=input_csv,
         output_dir=output_dir,
-        output_labeled_csv=(output_dir / "step5_standard_labels_kmeans.csv").resolve(),
-        output_cluster_map_csv=(output_dir / "step5_kmeans_cluster_label_map.csv").resolve(),
-        output_report_txt=(output_dir / "step5_kmeans_label_init_report.txt").resolve(),
+        output_labeled_csv=(output_dir / "phase4_2_standard_labels_kmeans.csv").resolve(),
+        output_cluster_map_csv=(output_dir / "phase4_2_kmeans_cluster_label_map.csv").resolve(),
+        output_report_txt=(output_dir / "phase4_2_kmeans_label_init_report.txt").resolve(),
         log_every=max(1, log_every),
         max_rows=max_rows,
     )
@@ -1479,13 +1479,13 @@ def run_detailed_report(
         project_root=output_dir.parent,
         input_csv=input_csv,
         output_dir=output_dir,
-        output_global_stats_csv=(output_dir / "step4_global_stats.csv").resolve(),
-        output_label_summary_csv=(output_dir / "step4_label_summary.csv").resolve(),
-        output_cluster_summary_csv=(output_dir / "step4_cluster_summary.csv").resolve(),
-        output_label_cluster_csv=(output_dir / "step4_label_cluster_matrix.csv").resolve(),
-        output_school_summary_csv=(output_dir / "step4_school_summary.csv").resolve(),
-        output_top_users_csv=(output_dir / "step4_top_users.csv").resolve(),
-        output_report_txt=(output_dir / "step4_analysis_report.txt").resolve(),
+        output_global_stats_csv=(output_dir / "phase4_3_global_stats.csv").resolve(),
+        output_label_summary_csv=(output_dir / "phase4_3_label_summary.csv").resolve(),
+        output_cluster_summary_csv=(output_dir / "phase4_3_cluster_summary.csv").resolve(),
+        output_label_cluster_csv=(output_dir / "phase4_3_label_cluster_matrix.csv").resolve(),
+        output_school_summary_csv=(output_dir / "phase4_3_school_summary.csv").resolve(),
+        output_top_users_csv=(output_dir / "phase4_3_top_users.csv").resolve(),
+        output_report_txt=(output_dir / "phase4_3_analysis_report.txt").resolve(),
         top_users=max(1, top_users),
         min_school_size=max(1, min_school_size),
         top_schools=max(1, top_schools),
@@ -1528,19 +1528,19 @@ FEATURE_COLUMNS = [
 
 
 @dataclass
-class Phase2Config:
+class Phase4Config:
     project_root: Path
     scripts_dir: Path
     results_dir: Path
     combined_csv: Path
     weekly_csv: Path
-    step3_results_csv: Path
-    step3_weights_csv: Path
-    step3_centers_csv: Path
-    step3_report_txt: Path
-    step5_labeled_csv: Path
-    step5_cluster_map_csv: Path
-    step5_report_txt: Path
+    phase4_1_results_csv: Path
+    phase4_1_weights_csv: Path
+    phase4_1_centers_csv: Path
+    phase4_1_report_txt: Path
+    phase4_2_labeled_csv: Path
+    phase4_2_cluster_map_csv: Path
+    phase4_2_report_txt: Path
     output_external_csv: Path
     output_internal_csv: Path
     output_report_txt: Path
@@ -1807,8 +1807,8 @@ def write_report(
         f.write(f"Generated at                    : {now_text()}\n")
         f.write(f"Combined CSV                   : {cfg.combined_csv}\n")
         f.write(f"Weekly CSV                     : {cfg.weekly_csv}\n")
-        f.write(f"Step 3 result CSV              : {cfg.step3_results_csv}\n")
-        f.write(f"Step 5 labeled CSV             : {cfg.step5_labeled_csv}\n")
+        f.write(f"Step 4.1 result CSV              : {cfg.phase4_1_results_csv}\n")
+        f.write(f"Step 4.2 labeled CSV             : {cfg.phase4_2_labeled_csv}\n")
         f.write(f"Elapsed seconds                : {elapsed:.2f}\n")
 
         f.write("\nScenario equations used:\n")
@@ -1846,8 +1846,8 @@ def write_report(
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Phase 4: Ghi nhãn dữ liệu (Data Labeling).")
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
+    parser = argparse.ArgumentParser(description="Phase 4: Data Labeling (Data Labeling).")
+    parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
     parser.add_argument("--combined-input", type=Path, default=Path("combined_user_metrics.csv"))
     parser.add_argument("--weekly-input", type=Path, default=Path("step2_user_week_activity.csv"))
     parser.add_argument("--clusters", type=int, default=3)
@@ -1869,19 +1869,19 @@ def main() -> int:
     combined_csv = resolve_path_arg(args.combined_input, project_root, results_dir)
     weekly_csv = resolve_path_arg(args.weekly_input, project_root, results_dir)
 
-    cfg = Phase2Config(
+    cfg = Phase4Config(
         project_root=project_root,
         scripts_dir=project_root / "experiment",
         results_dir=results_dir,
         combined_csv=combined_csv,
         weekly_csv=weekly_csv,
-        step3_results_csv=(results_dir / "step3_student_engagement_results.csv").resolve(),
-        step3_weights_csv=(results_dir / "step3_activity_weights.csv").resolve(),
-        step3_centers_csv=(results_dir / "step3_cluster_centers.csv").resolve(),
-        step3_report_txt=(results_dir / "step3_analysis_report.txt").resolve(),
-        step5_labeled_csv=(results_dir / "step5_standard_labels_kmeans.csv").resolve(),
-        step5_cluster_map_csv=(results_dir / "step5_kmeans_cluster_label_map.csv").resolve(),
-        step5_report_txt=(results_dir / "step5_kmeans_label_init_report.txt").resolve(),
+        phase4_1_results_csv=(results_dir / "phase4_1_student_engagement_results.csv").resolve(),
+        phase4_1_weights_csv=(results_dir / "phase4_1_activity_weights.csv").resolve(),
+        phase4_1_centers_csv=(results_dir / "phase4_1_cluster_centers.csv").resolve(),
+        phase4_1_report_txt=(results_dir / "phase4_1_analysis_report.txt").resolve(),
+        phase4_2_labeled_csv=(results_dir / "phase4_2_standard_labels_kmeans.csv").resolve(),
+        phase4_2_cluster_map_csv=(results_dir / "phase4_2_kmeans_cluster_label_map.csv").resolve(),
+        phase4_2_report_txt=(results_dir / "phase4_2_kmeans_label_init_report.txt").resolve(),
         output_external_csv=(results_dir / "phase4_external_validation_metrics.csv").resolve(),
         output_internal_csv=(results_dir / "phase4_internal_validation_metrics.csv").resolve(),
         output_report_txt=(results_dir / "phase4_labeling_report.txt").resolve(),
@@ -1896,57 +1896,70 @@ def main() -> int:
 
     try:
         started = time.time()
-        log("Starting Phase 4: Ghi nhãn dữ liệu")
+        log("Starting Phase 4: Data Labeling")
 
-        log("Phase 4.1 - Engagement Report (Ghi nhãn không giám sát - K-Means)")
-        run_engagement_report(
-            input_csv=combined_csv,
-            weekly_csv=weekly_csv,
-            output_dir=results_dir,
-            clusters=args.clusters,
-            batch_size=args.batch_size,
-            q_low=args.q_low,
-            q_high=args.q_high,
-            log_every=max(1, args.log_every),
-            max_rows=args.max_rows
-        )
+        log("Phase 4.1 - Engagement Report (Unsupervised Labeling - K-Means)")
+        if cfg.phase4_1_results_csv.exists():
+            log(f"Skipping engagement report as output file '{cfg.phase4_1_results_csv.name}' already exists.")
+        else:
+            run_engagement_report(
+                input_csv=combined_csv,
+                weekly_csv=weekly_csv,
+                output_dir=results_dir,
+                clusters=args.clusters,
+                batch_size=args.batch_size,
+                q_low=args.q_low,
+                q_high=args.q_high,
+                log_every=max(1, args.log_every),
+                max_rows=args.max_rows
+            )
 
-        log("Phase 4.2 - Standard label initialization (Ghi nhãn có giám sát map)")
-        run_init_standard_labels(
-            input_csv=cfg.step3_results_csv,
-            output_dir=cfg.results_dir,
-            log_every=cfg.log_every,
-            max_rows=cfg.max_rows
-        )
+        log("Phase 4.2 - Standard label initialization (Supervised Label Mapping)")
+        if cfg.phase4_2_labeled_csv.exists():
+            log(f"Skipping standard label initialization as output file '{cfg.phase4_2_labeled_csv.name}' already exists.")
+        else:
+            run_init_standard_labels(
+                input_csv=cfg.phase4_1_results_csv,
+                output_dir=cfg.results_dir,
+                log_every=cfg.log_every,
+                max_rows=cfg.max_rows
+            )
         
-        log("Phase 4.3 - Detailed Report (Khai phá tri thức sau ghi nhãn)")
-        run_detailed_report(
-            input_csv=cfg.step3_results_csv,
-            output_dir=cfg.results_dir,
-            top_users=args.top_users,
-            min_school_size=args.min_school_size,
-            top_schools=args.top_schools,
-            log_every=max(1, args.log_every),
-            max_rows=args.max_rows
-        )
+        log("Phase 4.3 - Detailed Report (Post-labeling Knowledge Discovery)")
+        phase4_3_report_path = (results_dir / "phase4_3_analysis_report.txt").resolve()
+        if phase4_3_report_path.exists():
+            log(f"Skipping detailed report as output file '{phase4_3_report_path.name}' already exists.")
+        else:
+            run_detailed_report(
+                input_csv=cfg.phase4_1_results_csv,
+                output_dir=cfg.results_dir,
+                top_users=args.top_users,
+                min_school_size=args.min_school_size,
+                top_schools=args.top_schools,
+                log_every=max(1, args.log_every),
+                max_rows=args.max_rows
+            )
 
         log("Phase 4.4 - Computing label-based validation metrics")
-        y_true, y_pred, cluster_counts = load_labeled_rows(cfg.step5_labeled_csv, cfg.max_rows)
-        external_metrics = compute_external_metrics(y_true, y_pred)
-        write_external_csv(cfg.output_external_csv, external_metrics)
+        if cfg.output_report_txt.exists():
+            log(f"Skipping validation metrics as output report '{cfg.output_report_txt.name}' already exists.")
+        else:
+            y_true, y_pred, cluster_counts = load_labeled_rows(cfg.phase4_2_labeled_csv, cfg.max_rows)
+            external_metrics = compute_external_metrics(y_true, y_pred)
+            write_external_csv(cfg.output_external_csv, external_metrics)
 
-        X_raw, clusters = load_features_and_clusters(cfg.step3_results_csv, cfg.max_rows)
-        internal_metrics = compute_internal_metrics(X_raw, clusters, cfg.silhouette_sample_size)
-        write_internal_csv(cfg.output_internal_csv, internal_metrics)
+            X_raw, clusters = load_features_and_clusters(cfg.phase4_1_results_csv, cfg.max_rows)
+            internal_metrics = compute_internal_metrics(X_raw, clusters, cfg.silhouette_sample_size)
+            write_internal_csv(cfg.output_internal_csv, internal_metrics)
 
-        write_report(
-            path=cfg.output_report_txt,
-            cfg=cfg,
-            external_metrics=external_metrics,
-            internal_metrics=internal_metrics,
-            cluster_counts=cluster_counts,
-            elapsed=time.time() - started,
-        )
+            write_report(
+                path=cfg.output_report_txt,
+                cfg=cfg,
+                external_metrics=external_metrics,
+                internal_metrics=internal_metrics,
+                cluster_counts=cluster_counts,
+                elapsed=time.time() - started,
+            )
 
         log(f"Phase 4 completed in {time.time() - started:.2f}s")
         return 0

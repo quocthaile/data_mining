@@ -59,19 +59,19 @@ def check_data_files():
 def check_scripts():
     """Kiểm tra các script cần thiết"""
     project_root = Path(__file__).resolve().parents[2]
-    scripts_dir = project_root / "scripts"
-    source_dir = project_root / "final" / "source-code"
+    experiment_dir = project_root / "experiment" # Corrected path to experiment scripts
 
     print("🔍 Kiểm tra script...")
 
     required_scripts = [
-        "scripts/phase_1_time_series_feature_extraction.py",
-        "scripts/phase_2_kmeans_label_validation.py",
-        "scripts/phase_3_train_valid_test_split.py",
-        "scripts/phase_4_supervised_model_training.py",
-        "scripts/phase_5_model_evaluation_metrics.py",
-        "scripts/phase_6_model_interpretability.py",
-        "scripts/step_4_detailed_report.py",
+        "experiment/phase_1_data_cleaning.py",
+        "experiment/phase_2_data_transformation.py",
+        "experiment/phase_3_eda.py",
+        "experiment/phase_4_data_labeling.py",
+        "experiment/phase_5_data_splitting.py",
+        "experiment/phase_6_model_training.py",
+        "experiment/phase_7_model_evaluation.py",
+        "experiment/phase_8_model_interpretability.py",
         "final/source-code/main_experiment.py",
         "final/source-code/demo_app.py"
     ]
@@ -99,8 +99,8 @@ def run_quick_test():
     project_root = Path(__file__).resolve().parents[2]
     main_script = project_root / "final" / "source-code" / "main_experiment.py"
 
-    # Chạy phase 1 với giới hạn dữ liệu nhỏ
-    cmd = [
+    # Chạy phase 2 với giới hạn dữ liệu nhỏ
+    cmd = [ # Changed to Phase 1 for quick test
         sys.executable,
         str(main_script),
         "--phase", "1",

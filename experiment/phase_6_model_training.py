@@ -1,26 +1,26 @@
 #!/usr/bin/env python3
 """
-Phase 4: supervised model training and optimization.
+Phase 6: supervised model training and optimization.
 
 Scenario alignment goals:
-- Train supervised models on Phase 3 train-modeling dataset.
+- Train supervised models on Phase 5 train-modeling dataset.
 - Tune hyperparameters via cross-validation on the train dataset only.
 - Select best model by validation metric, then evaluate on test.
 - Export reproducible artifacts for metrics, confusion matrix, predictions, and model bundle.
 
-Default inputs (from Phase 3 outputs):
-- results/stage3_train_modeling.csv
-- results/stage3_valid.csv
-- results/stage3_test.csv
+Default inputs (from Phase 5 outputs):
+- results/phase5_train_modeling.csv
+- results/phase5_valid.csv
+- results/phase5_test.csv
 
 Generated outputs:
-- results/phase4_model_comparison.csv
-- results/phase4_classification_metrics.csv
-- results/phase4_confusion_matrix.csv
-- results/phase4_best_model_predictions.csv
-- results/phase4_feature_importance.csv
-- results/phase4_best_model.pkl
-- results/phase4_training_report.txt
+- results/phase6_model_comparison.csv
+- results/phase6_classification_metrics.csv
+- results/phase6_confusion_matrix.csv
+- results/phase6_best_model_predictions.csv
+- results/phase6_feature_importance.csv
+- results/phase6_best_model.pkl
+- results/phase6_training_report.txt
 """
 
 from __future__ import annotations
@@ -35,6 +35,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Sequence, Tuple
 
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -51,13 +55,16 @@ from sklearn.preprocessing import StandardScaler
 
 
 @dataclass
-class Phase4Config:
+class Phase6Config:
     project_root: Path
     results_dir: Path
     output_dir: Path
     train_csv: Path
     valid_csv: Path
     test_csv: Path
+    model_comparison_plot: Path
+    confusion_matrix_plot: Path
+    feature_importance_plot: Path
     label_column: str
     sample_origin_column: str
     feature_columns_arg: Optional[str]
@@ -83,7 +90,7 @@ class DatasetSplit:
 class ModelSpec:
     name: str
     estimator: Any
-    param_grid: Dict[str, Sequence[Any]]
+    param_grid: Dict[str, Any]
 
 
 @dataclass
@@ -216,7 +223,7 @@ def infer_feature_columns(
         label_column,
         sample_origin_column,
         "SplitSet",
-        "stage3_row_id",
+        "phase5_row_id",
         "user_id",
         "school",
         "EngagementLabel",
@@ -244,7 +251,7 @@ def build_dataset_split(
     for i, row in enumerate(rows):
         y[i] = normalize_label(row.get(label_column, ""))
         user_ids.append((row.get("user_id") or "").strip())
-        row_id = (row.get("stage3_row_id") or "").strip()
+        row_id = (row.get("phase5_row_id") or "").strip()
         row_ids.append(row_id if row_id else str(i))
 
         for j, col in enumerate(feature_columns):
@@ -597,11 +604,10 @@ def write_csv(path: Path, fieldnames: Sequence[str], rows: Sequence[Dict[str, An
             writer.writerow(row)
 
 
-def write_feature_importance(
-    path: Path,
+def collect_feature_importance_rows(
     estimator: Any,
     feature_columns: Sequence[str],
-) -> None:
+) -> List[Dict[str, Any]]:
     rows: List[Dict[str, Any]] = []
 
     if hasattr(estimator, "feature_importances_"):
@@ -631,21 +637,131 @@ def write_feature_importance(
 
     if rows:
         rows.sort(key=lambda x: float(x["importance"]), reverse=True)
-        write_csv(
-            path=path,
-            fieldnames=["feature", "importance", "method"],
-            rows=rows,
-        )
-    else:
-        write_csv(
-            path=path,
-            fieldnames=["feature", "importance", "method"],
-            rows=[{"feature": "N/A", "importance": 0.0, "method": "not_available"}],
-        )
+        return rows
+
+    return [{"feature": "N/A", "importance": 0.0, "method": "not_available"}]
+
+
+def save_bar_chart(
+    path: Path,
+    title: str,
+    labels: Sequence[str],
+    values: Sequence[float],
+    ylabel: str,
+    color: str = "#4c78a8",
+    highlight_label: Optional[str] = None,
+    highlight_color: str = "#f58518",
+) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.8 * len(labels) + 2), 5))
+    x = np.arange(len(labels))
+    colors = [highlight_color if highlight_label is not None and label == highlight_label else color for label in labels]
+    ax.bar(x, values, color=colors)
+    ax.set_title(title)
+    ax.set_ylabel(ylabel)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels, rotation=30, ha="right")
+    ax.grid(axis="y", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_model_comparison_plot(
+    path: Path,
+    comparison_rows: Sequence[Dict[str, Any]],
+    selection_metric: str,
+    selected_model: str,
+) -> None:
+    valid_rows = [row for row in comparison_rows if str(row.get("split")) == "valid"]
+    test_rows = [row for row in comparison_rows if str(row.get("split")) == "test"]
+    model_names = [str(row.get("model")) for row in valid_rows]
+    metric_key = metric_field_for_selection(selection_metric)
+    valid_values = [safe_float(row.get(metric_key)) for row in valid_rows]
+    test_map = {str(row.get("model")): safe_float(row.get(metric_key)) for row in test_rows}
+    test_values = [test_map.get(model, float("nan")) for model in model_names]
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(9, 0.9 * len(model_names) + 2), 5.5))
+    x = np.arange(len(model_names))
+    width = 0.35
+    ax.bar(x - width / 2, valid_values, width=width, label="valid", color="#4c78a8")
+    ax.bar(x + width / 2, test_values, width=width, label="test", color="#f58518")
+    ax.set_title(f"Model comparison by {selection_metric}")
+    ax.set_ylabel(selection_metric)
+    ax.set_xticks(x)
+    ax.set_xticklabels(model_names, rotation=25, ha="right")
+    ax.legend()
+    ax.grid(axis="y", alpha=0.2)
+    if selected_model in model_names:
+        selected_idx = model_names.index(selected_model)
+        ax.get_xticklabels()[selected_idx].set_fontweight("bold")
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_confusion_matrix_plot(
+    path: Path,
+    confusion_rows: Sequence[Dict[str, Any]],
+    classes: Sequence[str],
+    model_name: str,
+    split_name: str = "test",
+) -> None:
+    filtered = [
+        row for row in confusion_rows
+        if str(row.get("model")) == model_name and str(row.get("split")) == split_name
+    ]
+    matrix = np.zeros((len(classes), len(classes)), dtype=np.float64)
+    true_index = {cls: idx for idx, cls in enumerate(classes)}
+    pred_index = {cls: idx for idx, cls in enumerate(classes)}
+    for row in filtered:
+        t = str(row.get("true_label"))
+        p = str(row.get("pred_label"))
+        if t in true_index and p in pred_index:
+            matrix[true_index[t], pred_index[p]] = safe_float(row.get("count"))
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(6.5, 5.5))
+    im = ax.imshow(matrix, cmap="Blues")
+    ax.set_title(f"Confusion matrix - {model_name} ({split_name})")
+    ax.set_xlabel("Predicted label")
+    ax.set_ylabel("True label")
+    ax.set_xticks(np.arange(len(classes)))
+    ax.set_yticks(np.arange(len(classes)))
+    ax.set_xticklabels(classes)
+    ax.set_yticklabels(classes)
+    for i in range(len(classes)):
+        for j in range(len(classes)):
+            value = int(matrix[i, j])
+            ax.text(j, i, str(value), ha="center", va="center", color="black")
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
+def save_feature_importance_plot(
+    path: Path,
+    feature_rows: Sequence[Dict[str, Any]],
+    top_n: int,
+) -> None:
+    rows = list(feature_rows[:top_n])
+    labels = [str(row.get("feature")) for row in rows]
+    values = [safe_float(row.get("importance")) for row in rows]
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fig, ax = plt.subplots(figsize=(max(8, 0.75 * len(labels) + 2), 5.5))
+    ax.barh(labels[::-1], values[::-1], color="#54a24b")
+    ax.set_title(f"Top {min(top_n, len(labels))} feature importances")
+    ax.set_xlabel("Importance")
+    ax.grid(axis="x", alpha=0.2)
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
 
 
 def build_report_text(
-    cfg: Phase4Config,
+    cfg: Phase6Config,
     feature_columns: Sequence[str],
     label_counts: Dict[str, Dict[str, int]],
     comparison_rows: Sequence[Dict[str, Any]],
@@ -653,7 +769,7 @@ def build_report_text(
     elapsed_seconds: float,
 ) -> str:
     lines: List[str] = []
-    lines.append("Phase 4 - Supervised Training Report")
+    lines.append("Phase 6 - Supervised Training Report")
     lines.append("")
     lines.append("Configuration:")
     lines.append(f"- Train CSV                  : {cfg.train_csv}")
@@ -701,27 +817,30 @@ def build_report_text(
     lines.append("")
 
     lines.append("Generated files:")
-    lines.append(f"- {cfg.output_dir / 'phase4_model_comparison.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_classification_metrics.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_confusion_matrix.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_best_model_predictions.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_feature_importance.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_best_model.pkl'}")
-    lines.append(f"- {cfg.output_dir / 'phase4_training_report.txt'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_model_comparison.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_model_comparison.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_classification_metrics.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_confusion_matrix.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_confusion_matrix.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_best_model_predictions.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_feature_importance.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_feature_importance.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_best_model.pkl'}")
+    lines.append(f"- {cfg.output_dir / 'phase6_training_report.txt'}")
 
     return "\n".join(lines) + "\n"
 
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Phase 4: supervised model training and optimization from Phase 3 splits."
+        description="Phase 6: train and compare supervised models on the phase5 train/valid/test splits."
     )
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
-    parser.add_argument("--output-dir", type=Path, default=Path("results"))
+    parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
+    parser.add_argument("--output-dir", type=Path, default=Path("experiment/results"))
 
-    parser.add_argument("--train-input", type=Path, default=Path("stage3_train_modeling.csv"))
-    parser.add_argument("--valid-input", type=Path, default=Path("stage3_valid.csv"))
-    parser.add_argument("--test-input", type=Path, default=Path("stage3_test.csv"))
+    parser.add_argument("--train-input", type=Path, default=Path("phase5_train_modeling.csv"))
+    parser.add_argument("--valid-input", type=Path, default=Path("phase5_valid.csv"))
+    parser.add_argument("--test-input", type=Path, default=Path("phase5_test.csv"))
 
     parser.add_argument("--label-column", type=str, default="StandardLabelKMeans")
     parser.add_argument("--sample-origin-column", type=str, default="sample_origin")
@@ -768,13 +887,16 @@ def main() -> int:
     valid_csv = resolve_path_arg(args.valid_input, project_root, results_dir)
     test_csv = resolve_path_arg(args.test_input, project_root, results_dir)
 
-    cfg = Phase4Config(
+    cfg = Phase6Config(
         project_root=project_root,
         results_dir=results_dir,
         output_dir=output_dir,
         train_csv=train_csv,
         valid_csv=valid_csv,
         test_csv=test_csv,
+        model_comparison_plot=output_dir / "phase6_model_comparison.png",
+        confusion_matrix_plot=output_dir / "phase6_confusion_matrix.png",
+        feature_importance_plot=output_dir / "phase6_feature_importance.png",
         label_column=args.label_column,
         sample_origin_column=args.sample_origin_column,
         feature_columns_arg=args.feature_columns,
@@ -789,7 +911,7 @@ def main() -> int:
 
     try:
         started = time.time()
-        log("Starting Phase 4: supervised model training")
+        log("Starting Phase 6: supervised model training")
 
         for path in [cfg.train_csv, cfg.valid_csv, cfg.test_csv]:
             if not path.exists():
@@ -944,7 +1066,7 @@ def main() -> int:
                     "model": best_model_name,
                     "split": split.split_name,
                     "user_id": split.user_ids[i],
-                    "stage3_row_id": split.row_ids[i],
+                    "phase5_row_id": split.row_ids[i],
                     "true_label": str(split.y[i]),
                     "pred_label": pred_label,
                     "is_correct": int(str(split.y[i]) == pred_label),
@@ -957,7 +1079,7 @@ def main() -> int:
         cfg.output_dir.mkdir(parents=True, exist_ok=True)
 
         write_csv(
-            path=cfg.output_dir / "phase4_model_comparison.csv",
+            path=cfg.output_dir / "phase6_model_comparison.csv",
             fieldnames=[
                 "model",
                 "split",
@@ -980,13 +1102,13 @@ def main() -> int:
         )
 
         write_csv(
-            path=cfg.output_dir / "phase4_classification_metrics.csv",
+            path=cfg.output_dir / "phase6_classification_metrics.csv",
             fieldnames=["model", "split", "label", "precision", "recall", "f1", "support"],
             rows=class_metric_rows,
         )
 
         write_csv(
-            path=cfg.output_dir / "phase4_confusion_matrix.csv",
+            path=cfg.output_dir / "phase6_confusion_matrix.csv",
             fieldnames=["model", "split", "true_label", "pred_label", "count"],
             rows=confusion_rows,
         )
@@ -995,21 +1117,44 @@ def main() -> int:
             "model",
             "split",
             "user_id",
-            "stage3_row_id",
+            "phase5_row_id",
             "true_label",
             "pred_label",
             "is_correct",
         ] + [f"prob_{cls}" for cls in classes]
         write_csv(
-            path=cfg.output_dir / "phase4_best_model_predictions.csv",
+            path=cfg.output_dir / "phase6_best_model_predictions.csv",
             fieldnames=prediction_fields,
             rows=prediction_rows,
         )
 
-        write_feature_importance(
-            path=cfg.output_dir / "phase4_feature_importance.csv",
+        feature_importance_rows = collect_feature_importance_rows(
             estimator=best_estimator,
             feature_columns=feature_columns,
+        )
+        write_csv(
+            path=cfg.output_dir / "phase6_feature_importance.csv",
+            fieldnames=["feature", "importance", "method"],
+            rows=feature_importance_rows,
+        )
+
+        save_model_comparison_plot(
+            path=cfg.model_comparison_plot,
+            comparison_rows=comparison_rows,
+            selection_metric=cfg.primary_metric,
+            selected_model=best_model_name,
+        )
+        save_confusion_matrix_plot(
+            path=cfg.confusion_matrix_plot,
+            confusion_rows=confusion_rows,
+            classes=classes,
+            model_name=best_model_name,
+            split_name="test",
+        )
+        save_feature_importance_plot(
+            path=cfg.feature_importance_plot,
+            feature_rows=feature_importance_rows,
+            top_n=min(15, len(feature_importance_rows)),
         )
 
         model_bundle = {
@@ -1023,7 +1168,7 @@ def main() -> int:
             "best_params": best_train_result.best_params,
             "estimator": best_estimator,
         }
-        with (cfg.output_dir / "phase4_best_model.pkl").open("wb") as f:
+        with (cfg.output_dir / "phase6_best_model.pkl").open("wb") as f:
             pickle.dump(model_bundle, f)
 
         label_counts = {
@@ -1039,11 +1184,11 @@ def main() -> int:
             best_model_name=best_model_name,
             elapsed_seconds=time.time() - started,
         )
-        with (cfg.output_dir / "phase4_training_report.txt").open("w", encoding="utf-8") as f:
+        with (cfg.output_dir / "phase6_training_report.txt").open("w", encoding="utf-8") as f:
             f.write(report_text)
 
         log(f"Selected best model: {best_model_name}")
-        log(f"Phase 4 completed in {time.time() - started:.2f}s")
+        log(f"Phase 6 completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")
