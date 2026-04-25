@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Phase 5: model evaluation metrics and final reporting from Phase 4 outputs.
+Phase 7: Model Evaluation – select best supervised model, summarize evaluation metrics, and generate final report.
 
 Scenario alignment goals:
 - Select best supervised model based on validation metric.
@@ -9,18 +9,18 @@ Scenario alignment goals:
 - Export model-centric artifacts for reporting/dashboard use.
 
 Default inputs (from Phase 4 outputs):
-- results/phase4_model_comparison.csv
-- results/phase4_classification_metrics.csv
-- results/phase4_confusion_matrix.csv
-- results/phase4_feature_importance.csv
+- results/phase6_model_comparison.csv
+- results/phase6_classification_metrics.csv
+- results/phase6_confusion_matrix.csv
+- results/phase6_feature_importance.csv
 
 Generated outputs:
-- results/phase5_model_selection_summary.csv
-- results/phase5_best_model_class_metrics.csv
-- results/phase5_best_model_confusion_matrix.csv
-- results/phase5_top_features.csv
-- results/phase5_metric_checks.csv
-- results/phase5_evaluation_report.txt
+- results/phase7_model_selection_summary.csv
+- results/phase7_best_model_class_metrics.csv
+- results/phase7_best_model_confusion_matrix.csv
+- results/phase7_top_features.csv
+- results/phase7_metric_checks.csv
+- results/phase7_evaluation_report.txt
 - results/final_summary_report.txt
 """
 
@@ -43,7 +43,7 @@ import numpy as np
 
 
 @dataclass
-class Phase5Config:
+class Phase7Config:
     project_root: Path
     results_dir: Path
     output_dir: Path
@@ -140,7 +140,7 @@ def select_best_model(
 
     valid_rows = [row for row in comparison_rows if (row.get("split") or "").strip() == "valid"]
     if not valid_rows:
-        raise RuntimeError("No rows with split=valid found in phase4_model_comparison.csv")
+        raise RuntimeError("No rows with split=valid found in phase6_model_comparison.csv")
 
     sorted_valid = sorted(
         valid_rows,
@@ -301,14 +301,14 @@ def format_optional_float(value: Any) -> str:
 
 
 def build_final_summary_report_text(
-    cfg: Phase5Config,
+    cfg: Phase7Config,
     summary_row: Dict[str, Any],
     checks: Sequence[Dict[str, Any]],
     top_feature_rows: Sequence[Dict[str, Any]],
     phase2_lines: Sequence[str],
     phase3_lines: Sequence[str],
     phase4_lines: Sequence[str],
-    phase5_lines: Sequence[str],
+    phase7_lines: Sequence[str],
     elapsed_seconds: float,
 ) -> str:
     selected_model = str(summary_row.get("selected_model", "N/A"))
@@ -364,7 +364,7 @@ def build_final_summary_report_text(
         limit=7,
     )
     phase5_highlights = collect_highlight_lines(
-        phase5_lines,
+        phase7_lines,
         [
             "Selected best model",
             "valid:",
@@ -393,36 +393,36 @@ def build_final_summary_report_text(
     )
     lines.append("")
 
-    lines.append("Phase 2 highlights:")
+    lines.append("Phase 4 highlights:")
     if phase2_highlights:
         for item in phase2_highlights:
-            lines.append(f"- {pretty_line(item)}")
-    else:
-        lines.append("- (phase2 report not found or no highlight lines matched)")
-    lines.append("")
-
-    lines.append("Phase 3 highlights:")
-    if phase3_highlights:
-        for item in phase3_highlights:
-            lines.append(f"- {pretty_line(item)}")
-    else:
-        lines.append("- (phase3 report not found or no highlight lines matched)")
-    lines.append("")
-
-    lines.append("Phase 4 highlights:")
-    if phase4_highlights:
-        for item in phase4_highlights:
             lines.append(f"- {pretty_line(item)}")
     else:
         lines.append("- (phase4 report not found or no highlight lines matched)")
     lines.append("")
 
-    lines.append("Phase 5 highlights:")
+    lines.append("Phase 5 (Splitting) highlights:")
+    if phase3_highlights:
+        for item in phase3_highlights:
+            lines.append(f"- {pretty_line(item)}")
+    else:
+        lines.append("- (phase5 split report not found or no highlight lines matched)")
+    lines.append("")
+
+    lines.append("Phase 6 highlights:")
+    if phase4_highlights:
+        for item in phase4_highlights:
+            lines.append(f"- {pretty_line(item)}")
+    else:
+        lines.append("- (phase6 report not found or no highlight lines matched)")
+    lines.append("")
+
+    lines.append("Phase 7 highlights:")
     if phase5_highlights:
         for item in phase5_highlights:
             lines.append(f"- {pretty_line(item)}")
     else:
-        lines.append("- (phase5 report not found or no highlight lines matched)")
+        lines.append("- (phase7 report not found or no highlight lines matched)")
     lines.append("")
 
     lines.append("Top features (from selected model):")
@@ -436,15 +436,15 @@ def build_final_summary_report_text(
     lines.append("")
 
     lines.append("Generated files:")
-    lines.append(f"- {cfg.output_dir / 'phase5_model_selection_summary.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_best_model_class_metrics.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_best_model_confusion_matrix.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_top_features.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_metric_checks.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_evaluation_report.txt'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_selected_model_metrics.png'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_class_metrics.png'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_metric_checks.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_model_selection_summary.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_best_model_class_metrics.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_best_model_confusion_matrix.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_top_features.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_metric_checks.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_evaluation_report.txt'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_selected_model_metrics.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_class_metrics.png'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_metric_checks.png'}")
     lines.append(f"- {cfg.final_summary_txt}")
     lines.append("")
     lines.append(f"Elapsed seconds                : {elapsed_seconds:.2f}")
@@ -535,7 +535,7 @@ def make_metric_checks(
 
 
 def build_report_text(
-    cfg: Phase5Config,
+    cfg: Phase7Config,
     selected_model: str,
     selection_metric: str,
     best_valid: Dict[str, str],
@@ -553,7 +553,7 @@ def build_report_text(
         return "N/A"
 
     lines: List[str] = []
-    lines.append("Phase 5 - Model Evaluation Metrics Report")
+    lines.append("Phase 7 - Model Evaluation Metrics Report")
     lines.append("")
     lines.append("Configuration:")
     lines.append(f"- Model comparison CSV        : {cfg.model_comparison_csv}")
@@ -611,12 +611,12 @@ def build_report_text(
     lines.append("")
 
     lines.append("Generated files:")
-    lines.append(f"- {cfg.output_dir / 'phase5_model_selection_summary.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_best_model_class_metrics.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_best_model_confusion_matrix.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_top_features.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_metric_checks.csv'}")
-    lines.append(f"- {cfg.output_dir / 'phase5_evaluation_report.txt'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_model_selection_summary.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_best_model_class_metrics.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_best_model_confusion_matrix.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_top_features.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_metric_checks.csv'}")
+    lines.append(f"- {cfg.output_dir / 'phase7_evaluation_report.txt'}")
     lines.append(f"- {cfg.final_summary_txt}")
     lines.append("")
     lines.append(f"Elapsed seconds: {elapsed_seconds:.2f}")
@@ -626,7 +626,7 @@ def build_report_text(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Phase 7: select the best trained model and summarize valid/test evaluation metrics."
+        description="Phase 7: Model Evaluation – select best model and summarize valid/test metrics."
     )
     parser.add_argument("--results-dir", type=Path, default=Path("experiment/results"))
     parser.add_argument("--output-dir", type=Path, default=Path("experiment/results"))
@@ -634,37 +634,37 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--model-comparison-input",
         type=Path,
-        default=Path("phase4_model_comparison.csv"),
+        default=Path("phase6_model_comparison.csv"),
     )
     parser.add_argument(
         "--class-metrics-input",
         type=Path,
-        default=Path("phase4_classification_metrics.csv"),
+        default=Path("phase6_classification_metrics.csv"),
     )
     parser.add_argument(
         "--confusion-input",
         type=Path,
-        default=Path("phase4_confusion_matrix.csv"),
+        default=Path("phase6_confusion_matrix.csv"),
     )
     parser.add_argument(
         "--feature-importance-input",
         type=Path,
-        default=Path("phase4_feature_importance.csv"),
+        default=Path("phase6_feature_importance.csv"),
     )
     parser.add_argument(
         "--phase2-report-input",
         type=Path,
-        default=Path("phase2_kmeans_validation_report.txt"),
+        default=Path("phase4_labeling_report.txt"),
     )
     parser.add_argument(
         "--phase3-report-input",
         type=Path,
-        default=Path("stage3_split_report.txt"),
+        default=Path("phase5_split_report.txt"),
     )
     parser.add_argument(
         "--phase4-report-input",
         type=Path,
-        default=Path("phase4_training_report.txt"),
+        default=Path("phase6_training_report.txt"),
     )
     parser.add_argument(
         "--final-summary-output",
@@ -703,7 +703,7 @@ def main() -> int:
     phase4_report_txt = resolve_path_arg(args.phase4_report_input, project_root, results_dir)
     final_summary_txt = resolve_path_arg(args.final_summary_output, project_root, output_dir)
 
-    cfg = Phase5Config(
+    cfg = Phase7Config(
         project_root=project_root,
         results_dir=results_dir,
         output_dir=output_dir,
@@ -715,9 +715,9 @@ def main() -> int:
         phase3_report_txt=phase3_report_txt,
         phase4_report_txt=phase4_report_txt,
         final_summary_txt=final_summary_txt,
-        selected_model_metrics_plot=output_dir / "phase5_selected_model_metrics.png",
-        class_metrics_plot=output_dir / "phase5_class_metrics.png",
-        metric_checks_plot=output_dir / "phase5_metric_checks.png",
+        selected_model_metrics_plot=output_dir / "phase7_selected_model_metrics.png",
+        class_metrics_plot=output_dir / "phase7_class_metrics.png",
+        metric_checks_plot=output_dir / "phase7_metric_checks.png",
         selection_metric=args.selection_metric,
         top_features=max(1, int(args.top_features)),
         auc_threshold=float(args.auc_threshold),
@@ -728,7 +728,7 @@ def main() -> int:
 
     try:
         started = time.time()
-        log("Starting Phase 5: model evaluation metrics")
+        log("Starting Phase 7: Model Evaluation")
 
         for required in [
             cfg.model_comparison_csv,
@@ -792,7 +792,7 @@ def main() -> int:
         }
 
         write_csv(
-            path=cfg.output_dir / "phase5_model_selection_summary.csv",
+            path=cfg.output_dir / "phase7_model_selection_summary.csv",
             fieldnames=[
                 "selected_model",
                 "selection_metric",
@@ -815,25 +815,25 @@ def main() -> int:
         )
 
         write_csv(
-            path=cfg.output_dir / "phase5_best_model_class_metrics.csv",
+            path=cfg.output_dir / "phase7_best_model_class_metrics.csv",
             fieldnames=["model", "split", "label", "precision", "recall", "f1", "support"],
             rows=filtered_class_rows,
         )
 
         write_csv(
-            path=cfg.output_dir / "phase5_best_model_confusion_matrix.csv",
+            path=cfg.output_dir / "phase7_best_model_confusion_matrix.csv",
             fieldnames=["model", "split", "true_label", "pred_label", "count"],
             rows=filtered_confusion_rows,
         )
 
         write_csv(
-            path=cfg.output_dir / "phase5_top_features.csv",
+            path=cfg.output_dir / "phase7_top_features.csv",
             fieldnames=["feature", "importance", "method"],
             rows=top_feature_rows,
         )
 
         write_csv(
-            path=cfg.output_dir / "phase5_metric_checks.csv",
+            path=cfg.output_dir / "phase7_metric_checks.csv",
             fieldnames=["split", "metric", "value", "threshold", "status", "note"],
             rows=checks,
         )
@@ -852,14 +852,14 @@ def main() -> int:
             top_feature_rows=top_feature_rows,
             elapsed_seconds=time.time() - started,
         )
-        phase5_report_path = cfg.output_dir / "phase5_evaluation_report.txt"
-        with phase5_report_path.open("w", encoding="utf-8") as f:
+        phase7_report_path = cfg.output_dir / "phase7_evaluation_report.txt"
+        with phase7_report_path.open("w", encoding="utf-8") as f:
             f.write(report_text)
 
         phase2_lines = read_text_lines(cfg.phase2_report_txt)
         phase3_lines = read_text_lines(cfg.phase3_report_txt)
         phase4_lines = read_text_lines(cfg.phase4_report_txt)
-        phase5_lines = read_text_lines(phase5_report_path)
+        phase7_lines = read_text_lines(phase7_report_path)
 
         final_summary_text = build_final_summary_report_text(
             cfg=cfg,
@@ -869,14 +869,14 @@ def main() -> int:
             phase2_lines=phase2_lines,
             phase3_lines=phase3_lines,
             phase4_lines=phase4_lines,
-            phase5_lines=phase5_lines,
+            phase7_lines=phase7_lines,
             elapsed_seconds=time.time() - started,
         )
         with cfg.final_summary_txt.open("w", encoding="utf-8") as f:
             f.write(final_summary_text)
 
         log(f"Selected best model: {best_model}")
-        log(f"Phase 5 completed in {time.time() - started:.2f}s")
+        log(f"Phase 7 completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")

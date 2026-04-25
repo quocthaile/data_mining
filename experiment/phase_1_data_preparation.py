@@ -14,6 +14,7 @@ import sys
 import time
 import re
 from collections import defaultdict
+from functools import lru_cache
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
@@ -22,31 +23,15 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import utils_eda as eda_lib
-
+import subprocess
 
 # =============================================================================
 # CHỨC NĂNG 1: TRANSLATION (Làm sạch và dịch trường học)
 # =============================================================================
 """
 Phase 1: Làm sạch dữ liệu
+
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def now_text() -> str:
     return time.strftime("%Y-%m-%d %H:%M:%S")
@@ -336,7 +321,7 @@ def run_translation(
 
 
 
-def run_translation(args):
+def execute_translation(args):
     
     project_root = Path(__file__).resolve().parents[1]
     dataset_dir = resolve_path_arg(args.dataset_dir, project_root, project_root)
@@ -384,21 +369,6 @@ def run_translation(args):
 """
 Phase 2: Chuyển đổi dữ liệu
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def now_text() -> str:
@@ -1599,7 +1569,7 @@ def process_parquet(parquet_path: Path, output_csv: Path, output_weekly_csv: Pat
 
 
 
-def run_translation(args):
+def run_combine(args):
     
     project_root = Path(__file__).resolve().parents[1]
     dataset_dir = resolve_path_arg(args.dataset_dir, project_root, project_root)
@@ -1612,7 +1582,7 @@ def run_translation(args):
     
     try:
         started = time.time()
-        log("Starting Phase 2: Data Transformation")
+        log("Starting Combine Process (Aggregate metrics)")
         
         cfg = CombineConfig(
             project_root=project_root,
@@ -1634,7 +1604,7 @@ def run_translation(args):
         combiner = StreamingCombiner(cfg)
         combiner.run()
         
-        log(f"Phase 2 completed in {time.time() - started:.2f}s")
+        log(f"Combine process completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")
@@ -1770,14 +1740,14 @@ def main():
     print(" STARTING PHASE 1: DATA PREPARATION ")
     print("="*80)
     
-    # Bước 1: Translate (If requested)
+    # Step 1: Translate (If requested)
     if args.user_input and args.translated_user:
         print("\n[1/3] Running Translation process...")
-        run_translation(args)
+        execute_translation(args)
     else:
         print("\n[1/3] Skipping Translation (missing arguments)")
         
-    # Bước 2: Combine (Aggregate metrics)
+    # Step 2: Combine (Aggregate metrics)
     if args.dataset_dir and args.combined_file and args.weekly_file and args.db_file:
         print("\n[2/3] Running Combine process (Aggregate metrics)...")
         if not args.combined_file.exists():
@@ -1787,7 +1757,7 @@ def main():
     else:
         print("\n[2/3] Skipping Combine (missing arguments)")
         
-    # Bước 3: EDA
+    # Step 3: EDA
     eda_input = args.combined_input or args.combined_file
     if eda_input and eda_input.exists():
         print("\n[3/3] Running EDA process (Generate charts & Report)...")
