@@ -131,7 +131,12 @@ def safe_float(value) -> Optional[float]:
         return None
 
 
-def parse_week_from_datetime(value: Optional[str]) -> Optional[int]:
+def iso_year_week_key(dt: datetime) -> int:
+    iso = dt.isocalendar()
+    return int(iso.year * 100 + iso.week)
+
+
+def parse_datetime_any(value: Optional[str]) -> Optional[datetime]:
     if not value:
         return None
 
@@ -139,27 +144,21 @@ def parse_week_from_datetime(value: Optional[str]) -> Optional[int]:
     if not text:
         return None
 
-    dt: Optional[datetime] = None
     try:
-        dt = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        return datetime.fromisoformat(text.replace("Z", "+00:00"))
     except ValueError:
         pass
 
-    if dt is None:
-        for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
-            try:
-                dt = datetime.strptime(text, fmt)
-                break
-            except ValueError:
-                continue
+    for fmt in ("%Y-%m-%d %H:%M:%S", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(text, fmt)
+        except ValueError:
+            continue
 
-    if dt is None:
-        return None
-
-    return int(dt.isocalendar().week)
+    return None
 
 
-def parse_week_from_unix(value) -> Optional[int]:
+def parse_datetime_from_unix(value) -> Optional[datetime]:
     if value is None:
         return None
 
@@ -167,11 +166,23 @@ def parse_week_from_unix(value) -> Optional[int]:
         ts = float(value)
         if ts <= 0:
             return None
-        dt = datetime.fromtimestamp(ts, tz=timezone.utc)
+        return datetime.fromtimestamp(ts, tz=timezone.utc)
     except (TypeError, ValueError, OSError, OverflowError):
         return None
 
-    return int(dt.isocalendar().week)
+
+def parse_week_from_datetime(value: Optional[str]) -> Optional[int]:
+    dt = parse_datetime_any(value)
+    if dt is None:
+        return None
+    return iso_year_week_key(dt)
+
+
+def parse_week_from_unix(value) -> Optional[int]:
+    dt = parse_datetime_from_unix(value)
+    if dt is None:
+        return None
+    return iso_year_week_key(dt)
 
 
 def normalize_user_id(raw) -> Optional[str]:
@@ -446,6 +457,10 @@ class StreamingCombiner:
                     if not isinstance(seg, dict):
                         continue
                     delta.segment_count += 1
+
+                    local_start_dt = parse_datetime_from_unix(seg.get("local_start_time"))
+                    if local_start_dt is not None:
+                        delta.update_time(local_start_dt.isoformat())
 
                     start = safe_float(seg.get("start_point"))
                     end = safe_float(seg.get("end_point"))
@@ -944,62 +959,125 @@ class StreamingCombiner:
 def process_parquet(parquet_path: Path, output_csv: Path, output_weekly_csv: Path) -> None:
     import pandas as pd
     import numpy as np
+
     log(f"Reading parquet file: {parquet_path}")
     df = pd.read_parquet(parquet_path)
 
+    if "user_id" not in df.columns:
+        raise RuntimeError("Parquet input missing required column: user_id")
+
+    df["user_id"] = df["user_id"].map(normalize_user_id)
+    df = df[df["user_id"].notna()].copy()
+
+    if "num_courses" not in df.columns:
+        df["num_courses"] = 0
+    df["num_courses"] = pd.to_numeric(df["num_courses"], errors="coerce").fillna(0)
+    # Keep behavior aligned with JSON streaming path: only users with >5 courses.
+    df = df[df["num_courses"] > 5].copy()
+
     log("Aggregating user metrics from parquet...")
-    df['is_correct'] = pd.to_numeric(df['is_correct'], errors='coerce').fillna(0)
-    df['attempts'] = pd.to_numeric(df['attempts'], errors='coerce').fillna(0)
-    df['score'] = pd.to_numeric(df['score'], errors='coerce')
-    
-    agg_funcs = {
-        'gender': 'first',
-        'school': 'first',
-        'year_of_birth': 'first',
-        'num_courses': 'first',
-        'problem_id': 'count',
-        'is_correct': 'sum',
-        'attempts': 'sum',
-        'score': ['sum', 'count'],
-        'log_id': 'count',
-        'id_x': 'count',
-        'id_y': 'count',
+    for col in ["is_correct", "attempts", "score"]:
+        if col not in df.columns:
+            df[col] = 0
+    df["is_correct"] = pd.to_numeric(df["is_correct"], errors="coerce").fillna(0)
+    df["attempts"] = pd.to_numeric(df["attempts"], errors="coerce").fillna(0)
+    df["score"] = pd.to_numeric(df["score"], errors="coerce")
+
+    video_count_col = "log_id" if "log_id" in df.columns else ("seq" if "seq" in df.columns else None)
+    problem_count_col = "problem_id" if "problem_id" in df.columns else None
+
+    if "reply_id" in df.columns:
+        reply_count_col = "reply_id"
+    elif "id_x" in df.columns:
+        reply_count_col = "id_x"
+    else:
+        reply_count_col = None
+
+    if "comment_id" in df.columns:
+        comment_count_col = "comment_id"
+    elif "id_y" in df.columns:
+        comment_count_col = "id_y"
+    else:
+        comment_count_col = None
+
+    named_aggs: Dict[str, Tuple[str, str]] = {
+        "num_courses": ("num_courses", "max"),
+        "problem_correct": ("is_correct", "sum"),
+        "attempts_sum": ("attempts", "sum"),
+        "score_sum": ("score", "sum"),
+        "score_count": ("score", "count"),
     }
-    
-    user_agg = df.groupby('user_id').agg(agg_funcs)
-    user_agg.columns = ['_'.join(col).strip('_') for col in user_agg.columns.values]
-    
-    user_agg = user_agg.rename(columns={
-        'gender_first': 'gender',
-        'school_first': 'school',
-        'year_of_birth_first': 'year_of_birth',
-        'num_courses_first': 'num_courses',
-        'problem_id_count': 'problem_total',
-        'is_correct_sum': 'problem_correct',
-        'attempts_sum': 'attempts_sum',
-        'score_sum': 'score_sum',
-        'score_count': 'score_count',
-        'log_id_count': 'video_count',
-        'id_x_count': 'comment_count',
-        'id_y_count': 'reply_count'
-    })
-    
-    user_agg['problem_accuracy'] = np.where(user_agg['problem_total'] > 0, user_agg['problem_correct'] / user_agg['problem_total'], 0)
-    user_agg['avg_attempts'] = np.where(user_agg['problem_total'] > 0, user_agg['attempts_sum'] / user_agg['problem_total'], 0)
-    user_agg['avg_score'] = np.where(user_agg['score_count'] > 0, user_agg['score_sum'] / user_agg['score_count'], 0)
-    
-    user_agg['video_sessions'] = user_agg['video_count']
-    user_agg['segment_count'] = user_agg['video_count'] * 3
-    user_agg['watched_seconds'] = user_agg['video_count'] * 60
-    user_agg['watched_hours'] = user_agg['watched_seconds'] / 3600
-    user_agg['avg_speed'] = 1.0
-    
-    user_agg['forum_total'] = user_agg['comment_count'] + user_agg['reply_count']
-    user_agg['engagement_events'] = user_agg['problem_total'] + user_agg['video_sessions'] + user_agg['forum_total']
-    
-    user_agg['first_activity_time'] = "2023-01-01 00:00:00"
-    user_agg['last_activity_time'] = "2023-12-31 23:59:59"
-    
+    if "gender" in df.columns:
+        named_aggs["gender"] = ("gender", "first")
+    if "school" in df.columns:
+        named_aggs["school"] = ("school", "first")
+    if "year_of_birth" in df.columns:
+        named_aggs["year_of_birth"] = ("year_of_birth", "first")
+    if problem_count_col is not None:
+        named_aggs["problem_total"] = (problem_count_col, "count")
+    if video_count_col is not None:
+        named_aggs["video_count"] = (video_count_col, "count")
+    if reply_count_col is not None:
+        named_aggs["reply_count"] = (reply_count_col, "count")
+    if comment_count_col is not None:
+        named_aggs["comment_count"] = (comment_count_col, "count")
+
+    user_agg = df.groupby("user_id").agg(**named_aggs).reset_index()
+
+    for col in ["problem_total", "video_count", "reply_count", "comment_count"]:
+        if col not in user_agg.columns:
+            user_agg[col] = 0
+
+    event_time_parts = []
+    if "submit_time" in df.columns:
+        event_time_parts.append(pd.to_datetime(df["submit_time"], errors="coerce", utc=True))
+    if "create_time" in df.columns:
+        event_time_parts.append(pd.to_datetime(df["create_time"], errors="coerce", utc=True))
+    if "local_start_time" in df.columns:
+        local_dt = pd.to_datetime(
+            pd.to_numeric(df["local_start_time"], errors="coerce"),
+            errors="coerce",
+            utc=True,
+            unit="s",
+        )
+        event_time_parts.append(local_dt)
+
+    if event_time_parts:
+        df["_event_time"] = pd.concat(event_time_parts, axis=1).bfill(axis=1).iloc[:, 0]
+        time_agg = (
+            df.groupby("user_id")["_event_time"]
+            .agg(first_activity_time="min", last_activity_time="max")
+            .reset_index()
+        )
+        user_agg = user_agg.merge(time_agg, on="user_id", how="left")
+        user_agg["first_activity_time"] = user_agg["first_activity_time"].dt.strftime("%Y-%m-%d %H:%M:%S")
+        user_agg["last_activity_time"] = user_agg["last_activity_time"].dt.strftime("%Y-%m-%d %H:%M:%S")
+    else:
+        user_agg["first_activity_time"] = ""
+        user_agg["last_activity_time"] = ""
+
+    user_agg["problem_accuracy"] = np.where(
+        user_agg["problem_total"] > 0,
+        user_agg["problem_correct"] / user_agg["problem_total"],
+        0,
+    )
+    user_agg["avg_attempts"] = np.where(
+        user_agg["problem_total"] > 0,
+        user_agg["attempts_sum"] / user_agg["problem_total"],
+        0,
+    )
+    user_agg["avg_score"] = np.where(user_agg["score_count"] > 0, user_agg["score_sum"] / user_agg["score_count"], 0)
+
+    # Limited signal in compact parquet, keep conservative proxy fields for compatibility.
+    user_agg["video_sessions"] = user_agg["video_count"]
+    user_agg["segment_count"] = user_agg["video_count"] * 3
+    user_agg["watched_seconds"] = user_agg["video_count"] * 60
+    user_agg["watched_hours"] = user_agg["watched_seconds"] / 3600
+    user_agg["avg_speed"] = 1.0
+
+    user_agg["forum_total"] = user_agg["comment_count"] + user_agg["reply_count"]
+    user_agg["engagement_events"] = user_agg["problem_total"] + user_agg["video_sessions"] + user_agg["forum_total"]
+
     headers = [
         "user_id", "gender", "school", "year_of_birth", "num_courses",
         "problem_total", "problem_correct", "problem_accuracy", "avg_attempts",
@@ -1008,19 +1086,52 @@ def process_parquet(parquet_path: Path, output_csv: Path, output_weekly_csv: Pat
         "comment_count", "forum_total", "engagement_events",
         "first_activity_time", "last_activity_time"
     ]
-    
-    user_agg = user_agg.reset_index()
+
     for col in headers:
         if col not in user_agg.columns:
             user_agg[col] = 0
-            
+
     user_agg = user_agg[headers]
-    
+
     log(f"Saving {len(user_agg)} rows to {output_csv}")
     user_agg.to_csv(output_csv, index=False)
-    
-    log("Generating weekly dummy...")
-    weekly = pd.DataFrame(columns=['user_id', 'week', 'video', 'problem', 'reply', 'comment'])
+
+    log("Generating weekly user activity from parquet...")
+    weekly_cols = ["user_id", "week", "video", "problem", "reply", "comment"]
+    if "_event_time" in df.columns:
+        weekly_df = df[df["_event_time"].notna()][["user_id", "_event_time"]].copy()
+        iso = weekly_df["_event_time"].dt.isocalendar()
+        weekly_df["week"] = (iso["year"].astype(int) * 100 + iso["week"].astype(int)).astype(int)
+
+        weekly_df["video"] = (
+            df.loc[weekly_df.index, video_count_col].notna().astype(int)
+            if video_count_col is not None
+            else 0
+        )
+        weekly_df["problem"] = (
+            df.loc[weekly_df.index, problem_count_col].notna().astype(int)
+            if problem_count_col is not None
+            else 0
+        )
+        weekly_df["reply"] = (
+            df.loc[weekly_df.index, reply_count_col].notna().astype(int)
+            if reply_count_col is not None
+            else 0
+        )
+        weekly_df["comment"] = (
+            df.loc[weekly_df.index, comment_count_col].notna().astype(int)
+            if comment_count_col is not None
+            else 0
+        )
+
+        weekly = (
+            weekly_df.groupby(["user_id", "week"], as_index=False)[["video", "problem", "reply", "comment"]]
+            .max()
+            .sort_values(["user_id", "week"])
+        )
+    else:
+        weekly = pd.DataFrame(columns=weekly_cols)
+
     weekly.to_csv(output_weekly_csv, index=False)
     log("Parquet processing complete.")
 

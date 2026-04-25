@@ -279,7 +279,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="Phase to run (1 to 8) or 'all'.",
     )
     parser.add_argument("--dataset-dir", type=Path, default=Path(r"D:\MOOCCubeX_dataset"))
-    parser.add_argument("--results-dir", type=Path, default=Path("results"))
+    # Default results dir = experiment/results/ (same folder as this script)
+    parser.add_argument("--results-dir", type=Path, default=Path(__file__).resolve().parent / "results")
     parser.add_argument("--user-input", type=Path, default=Path("user.json"))
     parser.add_argument("--translated-user", type=Path, default=Path("user_school_en.json"))
     parser.add_argument("--translate-summary", type=Path, default=Path("school_translate_summary.txt"))

@@ -502,7 +502,7 @@ def write_outputs(
     }
 
 
-def write_report(
+def write_step3_report(
     cfg: Step3Config,
     weekly_stats: WeeklyStats,
     thresholds: Tuple[float, float, float, float],
@@ -1373,6 +1373,110 @@ class Step4Reporter:
                         f"high_rate={high_rate:.2f}%\n"
                     )
 
+
+def run_engagement_report(
+    input_csv: Path,
+    weekly_csv: Path,
+    output_dir: Path,
+    clusters: int,
+    batch_size: int,
+    q_low: float,
+    q_high: float,
+    log_every: int,
+    max_rows: Optional[int],
+) -> None:
+    started = time.time()
+    cfg = Step3Config(
+        project_root=output_dir.parent,
+        combined_csv=input_csv,
+        weekly_csv=weekly_csv,
+        output_dir=output_dir,
+        output_results_csv=(output_dir / "step3_student_engagement_results.csv").resolve(),
+        output_weights_csv=(output_dir / "step3_activity_weights.csv").resolve(),
+        output_centers_csv=(output_dir / "step3_cluster_centers.csv").resolve(),
+        output_report_txt=(output_dir / "step3_analysis_report.txt").resolve(),
+        clusters=max(1, clusters),
+        batch_size=max(1, batch_size),
+        log_every=max(1, log_every),
+        q_low=max(0.0, min(1.0, q_low)),
+        q_high=max(0.0, min(1.0, q_high)),
+        max_rows=max_rows,
+    )
+
+    weekly_stats = compute_weekly_stats(cfg)
+    user_scores = compute_user_engagement_scores(cfg, weekly_stats)
+    scaler, total_rows = fit_scaler(cfg)
+    kmeans, k = fit_kmeans(cfg, scaler, total_rows)
+    min_e, max_e, low_th, high_th = collect_score_distribution(cfg, user_scores)
+    output_stats = write_outputs(
+        cfg=cfg,
+        weekly_stats=weekly_stats,
+        user_scores=user_scores,
+        min_e=min_e,
+        max_e=max_e,
+        low_th=low_th,
+        high_th=high_th,
+        scaler=scaler,
+        kmeans=kmeans,
+        k=k,
+    )
+    write_step3_report(
+        cfg=cfg,
+        weekly_stats=weekly_stats,
+        thresholds=(min_e, max_e, low_th, high_th),
+        output_stats=output_stats,
+        k=k,
+        elapsed_seconds=time.time() - started,
+    )
+
+
+def run_init_standard_labels(
+    input_csv: Path,
+    output_dir: Path,
+    log_every: int,
+    max_rows: Optional[int],
+) -> None:
+    cfg = Step5Config(
+        project_root=output_dir.parent,
+        input_csv=input_csv,
+        output_dir=output_dir,
+        output_labeled_csv=(output_dir / "step5_standard_labels_kmeans.csv").resolve(),
+        output_cluster_map_csv=(output_dir / "step5_kmeans_cluster_label_map.csv").resolve(),
+        output_report_txt=(output_dir / "step5_kmeans_label_init_report.txt").resolve(),
+        log_every=max(1, log_every),
+        max_rows=max_rows,
+    )
+    KMeansLabelInitializer(cfg).run()
+
+
+def run_detailed_report(
+    input_csv: Path,
+    output_dir: Path,
+    top_users: int,
+    min_school_size: int,
+    top_schools: int,
+    log_every: int,
+    max_rows: Optional[int],
+) -> None:
+    cfg = Step4Config(
+        project_root=output_dir.parent,
+        input_csv=input_csv,
+        output_dir=output_dir,
+        output_global_stats_csv=(output_dir / "step4_global_stats.csv").resolve(),
+        output_label_summary_csv=(output_dir / "step4_label_summary.csv").resolve(),
+        output_cluster_summary_csv=(output_dir / "step4_cluster_summary.csv").resolve(),
+        output_label_cluster_csv=(output_dir / "step4_label_cluster_matrix.csv").resolve(),
+        output_school_summary_csv=(output_dir / "step4_school_summary.csv").resolve(),
+        output_top_users_csv=(output_dir / "step4_top_users.csv").resolve(),
+        output_report_txt=(output_dir / "step4_analysis_report.txt").resolve(),
+        top_users=max(1, top_users),
+        min_school_size=max(1, min_school_size),
+        top_schools=max(1, top_schools),
+        log_every=max(1, log_every),
+        max_rows=max_rows,
+    )
+    Step4Reporter(cfg).run()
+
 """
 Phase 2: K-Means ground-truth initialization + label-based validation.
 
@@ -1748,19 +1852,26 @@ def main() -> int:
     combined_csv = resolve_path_arg(args.combined_input, project_root, results_dir)
     weekly_csv = resolve_path_arg(args.weekly_input, project_root, results_dir)
 
-    cfg = Phase3Config(
+    cfg = Phase2Config(
         project_root=project_root,
-        experiment_dir=project_root / "experiment",
+        scripts_dir=project_root / "experiment",
         results_dir=results_dir,
+        combined_csv=combined_csv,
+        weekly_csv=weekly_csv,
         step3_results_csv=(results_dir / "step3_student_engagement_results.csv").resolve(),
+        step3_weights_csv=(results_dir / "step3_activity_weights.csv").resolve(),
+        step3_centers_csv=(results_dir / "step3_cluster_centers.csv").resolve(),
+        step3_report_txt=(results_dir / "step3_analysis_report.txt").resolve(),
         step5_labeled_csv=(results_dir / "step5_standard_labels_kmeans.csv").resolve(),
         step5_cluster_map_csv=(results_dir / "step5_kmeans_cluster_label_map.csv").resolve(),
         step5_report_txt=(results_dir / "step5_kmeans_label_init_report.txt").resolve(),
         output_external_csv=(results_dir / "phase4_external_validation_metrics.csv").resolve(),
         output_internal_csv=(results_dir / "phase4_internal_validation_metrics.csv").resolve(),
         output_report_txt=(results_dir / "phase4_labeling_report.txt").resolve(),
+        clusters=max(1, args.clusters),
         q_low=max(0.0, min(1.0, args.q_low)),
         q_high=max(0.0, min(1.0, args.q_high)),
+        batch_size=max(1, args.batch_size),
         log_every=max(1, args.log_every),
         silhouette_sample_size=max(100, args.silhouette_sample_size),
         max_rows=args.max_rows,

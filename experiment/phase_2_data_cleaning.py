@@ -217,8 +217,95 @@ def translate_school(school_raw: str) -> Tuple[str, str, bool]:
     return text, "unchanged", fixed
 
 
+def run_translation(
+    input_path: Path,
+    output_path: Path,
+    log_every: int = 200000,
+    max_lines: Optional[int] = None,
+    summary_path: Optional[Path] = None,
+) -> None:
+    """Stream user.json, translate each school name, write translated JSONL."""
+    if not input_path.exists():
+        raise FileNotFoundError(f"user input not found: {input_path}")
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    stats = TranslateStats()
+    method_counts: Dict[str, int] = {}
+
+    log(f"Translating school names: {input_path} -> {output_path}")
+
+    with input_path.open("r", encoding="utf-8", errors="ignore") as fin, \
+         output_path.open("w", encoding="utf-8") as fout:
+
+        for line_no, line in enumerate(fin, start=1):
+            if max_lines is not None and line_no > max_lines:
+                break
+
+            stats.scanned += 1
+            line = line.strip()
+            if not line:
+                continue
+
+            try:
+                record = json.loads(line)
+            except json.JSONDecodeError:
+                stats.parsed_error += 1
+                continue
+
+            stats.parsed_ok += 1
+            school_raw = record.get("school") or ""
+
+            if not school_raw or not str(school_raw).strip():
+                stats.empty_school += 1
+                fout.write(json.dumps(record, ensure_ascii=False) + "\n")
+                continue
+
+            translated, method, fixed = translate_school(str(school_raw))
+            record["school"] = translated
+            if fixed:
+                stats.mojibake_fixed += 1
+            if method == "direct":
+                stats.direct_map_hits += 1
+            elif method.startswith("suffix"):
+                stats.suffix_rule_hits += 1
+            elif method == "pinyin":
+                stats.pinyin_hits += 1
+            stats.translated += 1
+            method_counts[method] = method_counts.get(method, 0) + 1
+
+            fout.write(json.dumps(record, ensure_ascii=False) + "\n")
+
+            if stats.scanned % log_every == 0:
+                log(f"Progress: scanned={stats.scanned:,} translated={stats.translated:,}")
+
+    log(
+        f"Translation done: scanned={stats.scanned:,} ok={stats.parsed_ok:,} "
+        f"errors={stats.parsed_error:,} translated={stats.translated:,} "
+        f"mojibake_fixed={stats.mojibake_fixed:,}"
+    )
+
+    if summary_path is not None:
+        summary_path.parent.mkdir(parents=True, exist_ok=True)
+        with summary_path.open("w", encoding="utf-8") as sf:
+            sf.write("Phase 2 - School Name Translation Summary\n")
+            sf.write("=" * 60 + "\n")
+            sf.write(f"Input               : {input_path}\n")
+            sf.write(f"Output              : {output_path}\n")
+            sf.write(f"Generated at        : {time.strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            sf.write(f"Lines scanned       : {stats.scanned:,}\n")
+            sf.write(f"Parsed OK           : {stats.parsed_ok:,}\n")
+            sf.write(f"Parse errors        : {stats.parsed_error:,}\n")
+            sf.write(f"Empty school        : {stats.empty_school:,}\n")
+            sf.write(f"Translated          : {stats.translated:,}\n")
+            sf.write(f"Mojibake fixed      : {stats.mojibake_fixed:,}\n\n")
+            sf.write("Method breakdown:\n")
+            for method, count in sorted(method_counts.items(), key=lambda x: -x[1]):
+                sf.write(f"  {method:<20}: {count:,}\n")
+        log(f"Summary written to: {summary_path}")
+
+
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Phase 2: Làm sạch dữ liệu (Data Cleaning).")
+    parser = argparse.ArgumentParser(description="Phase 2: Data Cleaning (school name translation).")
     parser.add_argument("--dataset-dir", type=Path, default=Path("D:/MOOCCubeX_dataset"))
     parser.add_argument("--output-dir", type=Path, default=Path("results"))
     parser.add_argument("--user-input", type=Path, default=Path("user.json"))
@@ -228,32 +315,40 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--max-rows", type=int, default=None)
     return parser
 
+
 def main() -> int:
     args = build_parser().parse_args()
     project_root = Path(__file__).resolve().parents[1]
     dataset_dir = resolve_path_arg(args.dataset_dir, project_root, project_root)
     output_dir = resolve_path_arg(args.output_dir, project_root, project_root)
-    
+
     user_input = resolve_path_arg(args.user_input, project_root, dataset_dir)
     translated_user = resolve_path_arg(args.translated_user, project_root, dataset_dir)
     translate_summary = resolve_path_arg(args.translate_summary, project_root, output_dir)
-    
+
     try:
         started = time.time()
-        log("Starting Phase 2: Làm sạch dữ liệu")
+        log("Starting Phase 2: Data Cleaning")
+
+        if not user_input.exists():
+            log(f"WARNING: user input not found at {user_input}. Phase 2 skipped.")
+            return 0
+
         run_translation(
             input_path=user_input,
             output_path=translated_user,
             log_every=max(1, args.log_every),
             max_lines=args.max_rows,
-            summary_path=translate_summary
+            summary_path=translate_summary,
         )
         log(f"Phase 2 completed in {time.time() - started:.2f}s")
         return 0
     except Exception as exc:
         log(f"FAILED: {exc}")
+        import traceback
+        traceback.print_exc()
         return 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
