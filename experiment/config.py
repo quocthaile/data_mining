@@ -7,7 +7,8 @@ PROJECT_DIR = BASE_DIR.parent
 DATASET_DIR = PROJECT_DIR / "dataset"
 
 # Input
-RAW_DATA_PARQUET = Path(r"D:\MOOCCubeX_dataset\combined_all_data.parquet")
+# Use combined_all_data.parquet located inside the project's `dataset/` folder
+RAW_DATA_PARQUET = DATASET_DIR / "combined_all_data.parquet"
 RANDOM_STATE = 42
 PRIMARY_KEY = "user_id"
 
