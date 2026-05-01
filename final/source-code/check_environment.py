@@ -44,7 +44,7 @@ def check_data_files():
         return False
 
     # Kiểm tra các file cần thiết (có thể thay đổi tùy dataset thực tế)
-    data_files = ["user.json", "user_school_en.json"]  # Ví dụ
+    data_files = ["user.json"]  # Ví dụ
 
     for file in data_files:
         file_path = dataset_dir / file

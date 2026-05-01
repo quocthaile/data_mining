@@ -1,0 +1,12 @@
+user_id: Mã định danh người dùng
+gender: Giới tính
+school: Trường học, mã hoá scale theo điểm trung bình của sinh viên trong trường đó
+year_of_birth: Năm sinh
+num_courses: Số lượng khóa học đã tham gia
+is_correct: Kết quả làm bài
+attempts: số lần nộp bài
+score: Điểm số
+seq: tổng thời gian học
+speed: tốc độ xem video trung bình
+rep_counts: Số lần phản hồi
+cmt_counts: Số lần bình luận

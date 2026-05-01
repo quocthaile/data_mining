@@ -1,0 +1,87 @@
+# Command reference (executed in this workspace)
+# Prefer venv Python when available:
+# python.exe <command>
+
+# -------------------------------------------------------------------
+# SETUP: CÀI ĐẶT DEPENDENCIES VÀ DATASET
+# -------------------------------------------------------------------
+# 1. Cài đặt dependencies
+pip install pandas numpy matplotlib seaborn scikit-learn
+
+# 2. Tải dataset MOOCCubeX từ https://github.com/THU-KEG/MOOCCubeX
+# Đặt tại D:/MOOCCubeX_dataset/ hoặc custom path
+# Nếu không có, dùng dataset giả trong dataset/ để test
+
+# -------------------------------------------------------------------
+# 1) CHẠY TOÀN BỘ PIPELINE (ALL PHASES)
+# -------------------------------------------------------------------
+# Pipeline gồm 8 phase. Khi chạy "all", thứ tự thực thi là 1 -> 8.
+# Thứ tự luồng xử lý đã được chuẩn hóa lại để đảm bảo logic chạy tuần tự.
+python.exe experiment/run_experiment_stages.py --phase all --dataset-dir dataset --max-rows 1000
+
+
+# -------------------------------------------------------------------
+# 2) CHẠY TỪNG PHASE RIÊNG LẺ THÔNG QUA ORCHESTRATOR (KHUYẾN NGHỊ)
+# -------------------------------------------------------------------
+# Bạn có thể điều khiển từng phase thông qua `run_experiment_stages.py`.
+# Thứ tự chuẩn của luồng dữ liệu là: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 8.
+
+# --- BƯỚC LÀM SẠCH (Phase 1) ---
+# Dịch tên trường từ tiếng Trung sang tiếng Anh (đọc từ user.json).
+python.exe experiment/run_experiment_stages.py --phase 1 --skip-translate --dataset-dir dataset --max-rows 1000
+
+# --- BƯỚC CHUYỂN ĐỔI (Phase 2) ---
+# Trích xuất đặc trưng từ JSONL streaming, tạo combined_user_metrics.csv.
+python.exe experiment/run_experiment_stages.py --phase 2 --dataset-dir dataset
+
+# --- BƯỚC KHÁM PHÁ EDA (Phase 3) ---
+# Đánh giá chất lượng dữ liệu, thống kê và loại bỏ outliers.
+python.exe experiment/run_experiment_stages.py --phase 3
+
+# --- BƯỚC GHI NHÃN (Phase 4) ---
+# K-Means clustering, tính điểm engagement và gán nhãn Low/Medium/High.
+python.exe experiment/run_experiment_stages.py --phase 4
+
+# --- BƯỚC CHIA TẬP (Phase 5) ---
+# Chia tập Train/Valid/Test, hỗ trợ temporal/hybrid split và SMOTE.
+python.exe experiment/run_experiment_stages.py --phase 5
+
+# --- BƯỚC MÔ HÌNH HÓA (Phase 6) ---
+# Huấn luyện các mô hình supervised (Logistic, RF, HistGB, CatBoost, XGBoost).
+python.exe experiment/run_experiment_stages.py --phase 6
+
+# --- BƯỚC ĐÁNH GIÁ (Phase 7) ---
+# Tính toán metrics, kiểm tra ngưỡng và xuất báo cáo tổng hợp.
+python.exe experiment/run_experiment_stages.py --phase 7
+
+# --- BƯỚC GIẢI THÍCH (Phase 8) ---
+# Phân tích SHAP, độ quan trọng đặc trưng (global) và giải thích từng mẫu (local).
+python.exe experiment/run_experiment_stages.py --phase 8
+
+# -------------------------------------------------------------------
+# OPTIONS THÊM
+# -------------------------------------------------------------------
+# --dataset-dir <path>: Chỉ định thư mục dataset (default: dataset)
+# --max-rows <n>: Giới hạn số rows để test (default: unlimited)
+# --skip-translate: Bỏ qua dịch tên trường
+# --disable-stage-warning: Tắt early warning features
+
+
+# -------------------------------------------------------------------
+# 3) CHẠY TRỰC TIẾP CÁC FILE SCRIPT (NÂNG CAO)
+# -------------------------------------------------------------------
+# Bạn có thể gọi trực tiếp từng script để can thiệp sâu vào các tham số.
+
+# Chạy Phase 3 (EDA) với ngưỡng missing data và IQR tùy chỉnh:
+python.exe experiment/phase_3_eda.py --missing-threshold 0.4 --outlier-iqr-multiplier 2.0
+
+# Chạy Phase 5 (Data Splitting) với chiến lược chia theo thời gian (temporal):
+python.exe experiment/phase_5_train_valid_test_split.py --split-strategy temporal --test-size 0.15
+
+# Chạy Phase 6 (Modeling) chỉ chạy Random Forest và HistGB:
+python.exe experiment/phase_6_supervised_model_training.py --models random_forest,hist_gb --cv-folds 5
+
+
+
+Nếu cần chạy riêng sản phẩm thực hành:
+python run_experiment_stages.py --phase all --results-dir reports/thuc-hanh

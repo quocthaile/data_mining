@@ -1,0 +1,9 @@
+﻿metric,value
+labeling_strategy,quantile_rank
+raw_rows,4438340
+raw_users,129516
+observation_days_hint,28
+labeled_users,129516
+low_engagement_users,43172
+medium_engagement_users,43172
+high_engagement_users,43172

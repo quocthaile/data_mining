@@ -144,7 +144,7 @@ def run_phase_2(cfg: ExperimentConfig) -> None:
         "--output-dir",
         str(phase2_dir),
         "--translated-user",
-        str(cfg.translated_user),
+        str(cfg.user_input),
         "--combined-file",
         str(cfg.combined_file),
         "--weekly-file",

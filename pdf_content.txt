@@ -1,0 +1,94 @@
+QUY TRÌNH THỰC THI (END-TO-END PIPELINE) 
+Quy trình được chia thành 4 bước chính, mỗi bước đóng vai trò xử lý một khía cạnh cụ 
+thể của bài toán Cảnh báo Sớm. 
+BƯỚC 1: KHÁM PHÁ VÀ HIỆU CHUẨN TRỤC THỜI GIAN (Timeline 
+Calibration) 
+Mục tiêu: Xác định thời điểm bắt đầu ($T_{start}$) và kết thúc ($T_{end}$) thực tế của 
+từng khóa học, từ đó tính toán các mốc cảnh báo $M_{50}$ và $M_{75}$. 
+• Input (Đầu vào): 
+o user-video.json: Tệp chứa nhật ký xem video của toàn bộ sinh viên trên các 
+khóa học. 
+• Chi tiết kỹ thuật: 
+o Hệ thống đọc tệp user-video.json theo từng dòng (stream). 
+o Sử dụng hàm _extract_core_info() để xử lý các vấn đề dữ liệu bị thiếu hoặc 
+lồng sâu (nested JSON) đặc trưng của MOOCCubeX, trích xuất chính xác 
+course_id và event_time. 
+o Quét qua toàn bộ dữ liệu để cập nhật giá trị thời gian nhỏ nhất 
+($T_{start}$) và lớn nhất ($T_{end}$) cho từng course_id. 
+o Tính toán $M_{50}$ = $T_{start}$ + 0.5 * ($T_{end}$ - $T_{start}$) và 
+$M_{75}$ = $T_{start}$ + 0.75 * ($T_{end}$ - $T_{start}$). 
+• Output (Đầu ra): 
+o step1_timelines.json: Tệp từ điển chứa thông tin trục thời gian của tất cả 
+các khóa học. 
+BƯỚC 2: TRÍCH XUẤT ĐẶC TRƯNG ĐA MỐC (Multi-Milestone Extraction) 
+Mục tiêu: Trích xuất các đặc trưng hành vi (Feature Engineering) từ nhật ký tương tác và 
+cập nhật lũy kế vào cơ sở dữ liệu SQLite tại 3 mốc thời gian: 50%, 75% và 100%. 
+• Input (Đầu vào): 
+o user-video.json: Tệp nhật ký tương tác video thô. 
+o step1_timelines.json: Từ điển trục thời gian (từ Bước 1). 
+• Chi tiết kỹ thuật: o Khởi tạo cơ sở dữ liệu ews_master.db với bảng ews_features chứa cấu trúc 
+khóa chính phức hợp: (user_id, course_id, milestone). 
+o Đọc luồng dữ liệu (stream) từ tệp user-video.json. Với mỗi dòng (log), lấy 
+user_id, course_id và event_time. 
+o So sánh event_time với các mốc $M_{50}$ và $M_{75}$ của course_id 
+tương ứng (lấy từ tệp step1_timelines.json). 
+o Nếu $t \le M_{50}$, log được đóng góp vào việc tính toán đặc trưng cho cả 
+3 mốc (50, 75, 100). Nếu $M_{50} < t \le M_{75}$, log chỉ đóng góp cho 
+mốc 75 và 100. 
+o Các đặc trưng được tính toán tại chỗ (On-the-fly): 
+▪ watched_seconds: Tính tổng thời lượng xem hợp lệ từ mảng seq. 
+▪ pause_rewind_freq: Đếm số lần thực hiện thao tác dừng/tua lại. 
+▪ lag_time_days: Độ trễ từ $T_{start}$ đến sự kiện đầu tiên. 
+o Sử dụng cơ chế Upsert (ON CONFLICT DO UPDATE) trong SQLite để 
+cộng dồn các giá trị đặc trưng trực tiếp trên ổ cứng (Disk) định kỳ (mỗi 
+20.000 records). Cơ chế này đảm bảo bộ nhớ RAM duy trì ở mức tối thiểu. 
+• Output (Đầu ra): 
+o Dữ liệu được lưu trữ trực tiếp vào bảng ews_features trong tệp cơ sở dữ 
+liệu ews_master.db. 
+BƯỚC 3: PHÂN TÍCH THỐNG KÊ, PCA VÀ PHÂN CỤM K-MEANS 
+Mục tiêu: Xử lý dữ liệu tại mốc hoàn thành khóa học ($M_{100}$) để tạo ra nhãn 
+Ground Truth (Biến mục tiêu Y) phục vụ cho mô hình học máy. 
+• Input (Đầu vào): 
+o Bảng ews_features trong ews_master.db (chỉ truy vấn các dòng có 
+milestone = '100'). 
+• Chi tiết kỹ thuật: 
+o Thực hiện phân tích tương quan Pearson để xác định mối quan hệ giữa các 
+đặc trưng học tập. o Sử dụng StandardScaler để chuẩn hóa (Standardize) các đặc trưng số, đưa 
+chúng về cùng một thang đo. 
+o Áp dụng phương pháp Giảm chiều dữ liệu PCA 
+(PCA(n_components=0.95)) nhằm loại bỏ nhiễu, giữ lại 95% thông tin cốt 
+lõi. 
+o Phân cụm sinh viên thành 3 nhóm (K=3) bằng thuật toán K-Means dựa trên 
+dữ liệu không gian PCA. 
+o Hệ thống tự động ánh xạ các cụm (0, 1, 2) thành các nhãn ('Low', 'Medium', 
+'High') dựa trên giá trị trung bình của đặc trưng watched_seconds trong 
+từng cụm. Cụm có thời gian xem cao nhất được gán nhãn 'High'. 
+• Output (Đầu ra): 
+o step3_correlation_matrix.csv: Tệp chứa ma trận tương quan. 
+o step3_kmeans_labels.csv: Tệp chứa nhãn phân cụm (Ground Truth) của 
+sinh viên: (user_id, course_id, engagement_label). 
+BƯỚC 4: XUẤT DỮ LIỆU CẢNH BÁO SỚM VÀ CHIA TẬP TRAIN/TEST 
+Mục tiêu: Tích hợp các đặc trưng dự đoán tại mốc sớm ($M_{50}, M_{75}$) với nhãn 
+Ground Truth và phân chia dữ liệu thành tập huấn luyện và kiểm thử. 
+• Input (Đầu vào): 
+o Bảng ews_features trong ews_master.db (truy vấn milestone = '50' và '75'). 
+o step1_timelines.json (để tính toán absence_days). 
+o step3_kmeans_labels.csv (Nhãn Ground Truth). 
+• Chi tiết kỹ thuật: 
+o Truy xuất dữ liệu cho từng mốc dự đoán (ví dụ: $M_{50}$). 
+o Tính toán đặc trưng nhịp độ quan trọng: absence_days (số ngày vắng mặt 
+liên tục tính đến mốc thời gian dự đoán). Giá trị này được tính bằng khoảng 
+cách từ last_activity_dt (thời điểm hoạt động cuối cùng của sinh viên) đến 
+mốc $M_{50}$. 
+o Loại bỏ các cột dữ liệu trung gian (last_activity_dt, milestone). o Thực hiện phép nối trong (Inner Join) giữa dữ liệu đặc trưng và tệp nhãn 
+(step3_kmeans_labels.csv) bằng khóa chính phức hợp (user_id, course_id). 
+o Áp dụng kỹ thuật GroupShuffleSplit để chia tách dữ liệu thành tập Train 
+(80%) và Test (20%). Việc nhóm theo course_id đảm bảo các bản ghi thuộc 
+cùng một khóa học không bị chia cắt giữa hai tập, loại trừ khả năng rò rỉ dữ 
+liệu. 
+• Output (Đầu ra): 
+o Các tệp dữ liệu hoàn chỉnh, sẵn sàng cho việc huấn luyện mô hình phân 
+loại: 
+▪ step4_train_50pct.csv, step4_test_50pct.csv 
+▪ step4_train_75pct.csv, step4_test_75pct.csv 
+ 

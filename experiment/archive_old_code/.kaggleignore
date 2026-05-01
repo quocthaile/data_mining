@@ -1,0 +1,29 @@
+# Keep dataset upload Python-only by excluding non-Python files and folders
+results/
+config/
+__pycache__/
+
+# When --dir-mode zip is used, Kaggle may generate these archive files
+results.zip
+__pycache__.zip
+
+# Exclude common non-Python files
+*.txt
+*.md
+*.ini
+*.ipynb
+*.json
+*.csv
+*.sqlite
+*.sqlite3
+*.db
+*.parquet
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.pdf
+*.zip
+
+# Do not upload local control files
+.kaggleignore

@@ -1,0 +1,16 @@
+tính thêm thời gian từng khoá học, chia thành phần trăm để cảnh báo sớm ở hai hoặc 4 giai đoạn
+
+[2026-04-26] Business decisions implemented
+- Evaluation unit default switched to user_course in runner/splitting.
+- Group split default switched to user_course_key to avoid cross-course leakage for the same user.
+- Phase 5 merge enrichment now joins by user_course_key when evaluation-unit=user_course.
+- Phase 4 adds course timeline per course_id and 3-stage warning features at 50% and 75% course progress:
+	activity_count_stage_1, activity_count_stage_2, activity_count_stage_3,
+	active_week_ratio_stage_1, active_week_ratio_stage_2, active_week_ratio_stage_3,
+	no_activity_stage_1, no_activity_stage_2, no_activity_stage_3,
+	course_midpoint_week, course_75pct_week, time_progress_pct_at_last_activity,
+	early_warning_stage_1, early_warning_stage_2, early_warning_stage_3, early_warning_any,
+	early_warning_priority_stage.
+- Warning rule per stage: low activity (quantile threshold) AND no activity in that stage.
+- Default low-activity thresholds: stage_1=q25, stage_2=q30, stage_3=q35.
+- Backward compatibility flag added: --disable-stage-warning (Phase 4).

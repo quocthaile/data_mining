@@ -68,20 +68,36 @@ project/
 
 ## 🔬 Thực hành – Pipeline (`experiment/`)
 
-Thư mục `experiment/` chứa toàn bộ code pipeline thực hành gồm **8 phase** chạy tuần tự:
+Thư mục `experiment/` được thiết kế lại theo bài toán thực tế:
+
+- Dự đoán **cảnh báo sớm theo từng user-course**.
+- Chỉ dùng dữ liệu đến thời điểm dự đoán (chống leakage).
+- Mục tiêu là cảnh báo trước khi khóa học kết thúc để can thiệp.
+
+Tài liệu thiết kế đầy đủ: `report/thuc-hanh/thiet-ke-he-thong-canh-bao-som-user-course.md`
+
+Pipeline 8 phase (hướng vận hành):
 
 ```
-Phase 1: Data Preparation  →  Dịch tên trường + Gộp log + EDA
-Phase 2: Data Cleaning     →  Lọc missing / NaN / Inf
-Phase 3: Transformation    →  Min-max normalization engagement_events
-Phase 4: Data Labeling     →  K-Means (k=3) → nhãn Low/Medium/High
-Phase 5: Data Splitting    →  Stratified 70% train / 15% valid / 15% test
-Phase 6: Model Training    →  LR / RF / HistGB / LightGBM / XGBoost
-Phase 7: Model Evaluation  →  Macro F1, AUC-ROC, Recall Low class
-Phase 8: Interpretability  →  SHAP global / class / local
+Phase 1: Data Preparation  →  Chuẩn hóa dữ liệu + timeline course + EDA an toàn bộ nhớ
+Phase 2: Data Cleaning     →  Làm sạch missing/noise/outlier theo user-course
+Phase 3: Transformation    →  Biến đổi đặc trưng có xét mốc thời gian dự đoán
+Phase 4: Data Labeling     →  Nhãn risk + cảnh báo sớm theo tiến độ khóa học
+Phase 5: Data Splitting    →  Chia tập theo thời gian/group để tránh leakage
+Phase 6: Model Training    →  Huấn luyện và hiệu chỉnh risk score
+Phase 7: Model Evaluation  →  Đánh giá theo metric cảnh báo sớm (ưu tiên recall nhóm nguy cơ)
+Phase 8: Interpretability  →  Giải thích yếu tố rủi ro để hỗ trợ can thiệp
 ```
 
 Pipeline `experiment` mặc định ghi sản phẩm vào `reports/do-an/`.
+
+Nếu bạn muốn chạy bản v2 ngắn gọn theo yêu cầu mới, dùng:
+
+```bash
+python -m experiment.pipeline_v2.run_pipeline --config experiment/pipeline_v2/config.json
+```
+
+Tài liệu hướng dẫn riêng của v2 nằm tại `experiment/pipeline_v2/README.md`.
 
 **Chạy pipeline:**
 ```bash
@@ -102,10 +118,10 @@ python experiment/run_experiment_stages.py --phase all --results-dir reports/thu
 
 | File | Mô tả |
 |------|-------|
-| `phase1/combined_user_metrics.csv` | Đặc trưng hành vi theo học sinh |
+| `phase1/combined_user_metrics.csv` | Đặc trưng hành vi theo user-course |
 | `phase1/phase1_eda_report.txt` | Báo cáo thống kê EDA + biểu đồ |
 | `phase2/combined_user_metrics_clean.csv` | Dữ liệu sau làm sạch |
-| `phase4/phase4_2_standard_labels_kmeans.csv` | Nhãn engagement (Low/Medium/High) |
+| `phase4/phase4_2_standard_labels_kmeans.csv` | Nhãn risk + cảnh báo sớm theo giai đoạn |
 | `phase6/phase6_best_model.pkl` | Model tốt nhất |
 | `phase7/final_summary_report.txt` | Báo cáo tổng hợp toàn pipeline |
 

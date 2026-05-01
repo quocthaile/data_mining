@@ -1,0 +1,2 @@
+﻿Accuracy,Precision_Low_Engagement,Recall_Low_Engagement,AUC_ROC_OVR,Model
+0.5491,0.4273,0.7763,N/A,Linear SVC

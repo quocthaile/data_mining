@@ -1,0 +1,6 @@
+﻿Model,Accuracy,Recall_Low_Engagement,Precision_Low_Engagement,AUC_ROC_OVR
+Logistic Regression,0.5574,0.7841,0.433,0.7701
+Linear SVC,0.5551,0.7855,0.4303,N/A
+Decision Tree,0.5806,0.76,0.453,0.7818
+Random Forest,0.6269,0.0058,0.4464,0.7847
+XGBoost,0.5798,0.7605,0.4523,0.7839
