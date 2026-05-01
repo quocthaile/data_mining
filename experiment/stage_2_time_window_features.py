@@ -12,6 +12,8 @@ from config import (
     GROUND_TRUTH_FILE,
     PRIMARY_KEY,
     RAW_DATA_PARQUET,
+    TIME_WINDOW_COMPARE_SUMMARY_FILE,
+    TIME_WINDOW_MODE,
 )
 
 logging.basicConfig(
@@ -22,6 +24,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 OBSERVATION_DAYS = DEFAULT_OBSERVATION_DAYS
+WINDOW_MODE = str(TIME_WINDOW_MODE).strip().lower()
 
 RAW_REQUIRED_COLUMNS_STEP2 = [
     'user_id', 'enroll_time', 'submit_time', 'create_time_x', 'create_time_y',
@@ -54,7 +57,7 @@ def load_data() -> pd.DataFrame:
     logger.info(f"-> Đã tải thành công: {len(df):,} dòng dữ liệu thô.")
     return df
 
-def build_time_window(df: pd.DataFrame) -> pd.DataFrame:
+def build_action_timeline(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Đang xây dựng bộ đếm thời gian hành động (Action Time)...")
     for col in ["submit_time", "create_time_x", "create_time_y"]:
         if col not in df.columns:
@@ -71,12 +74,38 @@ def build_time_window(df: pd.DataFrame) -> pd.DataFrame:
 
     logger.info("Đang tính toán số ngày kể từ lúc bắt đầu học...")
     df["days_since_enroll"] = (df["action_time"] - df["enroll_time"]).dt.days
+    df["days_since_enroll"] = pd.to_numeric(df["days_since_enroll"], errors="coerce")
+    df["days_since_enroll"] = df["days_since_enroll"].clip(lower=0)
 
-    logger.info(f"CHỐT CHẶN LEAK DATA: Cắt bỏ mọi hành vi sau ngày thứ {OBSERVATION_DAYS}...")
+    logger.info("Đang tính độ dài hành vi tối đa theo từng user để hỗ trợ relative windows...")
+    max_days_per_user = df.groupby(PRIMARY_KEY)["days_since_enroll"].max().fillna(0)
+    max_days_per_user = max_days_per_user.clip(lower=1)
+    df["max_days_per_user"] = df[PRIMARY_KEY].map(max_days_per_user)
+    return df
+
+
+def build_fixed_window(df: pd.DataFrame) -> pd.DataFrame:
+    logger.info(f"CHỐT CHẶN LEAK DATA (fixed): Cắt bỏ mọi hành vi sau ngày thứ {OBSERVATION_DAYS}...")
     within_window = (df["days_since_enroll"] <= OBSERVATION_DAYS) | df["days_since_enroll"].isna()
     df_window = df.loc[within_window].copy()
-    
+    df_window["window_type"] = "fixed"
+    df_window["window_value"] = OBSERVATION_DAYS
+
     logger.info(f"-> Dữ liệu sau khi cắt thời gian: {len(df_window):,} dòng.")
+    return df_window
+
+
+def build_relative_window(df: pd.DataFrame, fraction: float) -> pd.DataFrame:
+    pct_text = int(round(float(fraction) * 100))
+    logger.info(f"CHỐT CHẶN LEAK DATA (relative): Cắt theo {pct_text}% timeline của từng user...")
+
+    per_row_limit = (df["max_days_per_user"] * float(fraction)).round().astype(int).clip(lower=1)
+    within_window = (df["days_since_enroll"] <= per_row_limit) | df["days_since_enroll"].isna()
+    df_window = df.loc[within_window].copy()
+    df_window["window_type"] = "relative"
+    df_window["window_value"] = pct_text
+
+    logger.info(f"-> Dữ liệu sau khi cắt relative {pct_text}%: {len(df_window):,} dòng.")
     return df_window
 
 def extract_features(df_window: pd.DataFrame) -> pd.DataFrame:
@@ -112,29 +141,85 @@ def extract_features(df_window: pd.DataFrame) -> pd.DataFrame:
     logger.info(f"-> Đã tổng hợp đặc trưng cho {len(features):,} sinh viên.")
     return features
 
+
+def finalize_with_labels(features: pd.DataFrame) -> pd.DataFrame:
+    labels = pd.read_csv(GROUND_TRUTH_FILE)
+    return features.merge(labels, on="user_id", how="inner")
+
+
+def export_window_dataset(final_df: pd.DataFrame, mode: str, window_value: int) -> str:
+    if mode == "fixed":
+        output_path = FEATURES_WINDOW_FILE
+        final_df.to_csv(output_path, index=False, encoding="utf-8-sig")
+        final_df.to_csv(FEATURES_COMPAT_FILE, index=False, encoding="utf-8-sig")
+        return str(output_path)
+
+    output_path = Path(str(RELATIVE_FEATURES_OUTPUT_PATTERN).format(pct=window_value))
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    final_df.to_csv(output_path, index=False, encoding="utf-8-sig")
+
+    # Relative branch: mặc định chọn 50% để làm file tương thích cho Stage 3 nếu user muốn chạy tiếp.
+    if int(window_value) == 50:
+        final_df.to_csv(FEATURES_COMPAT_FILE, index=False, encoding="utf-8-sig")
+
+    return str(output_path)
+
+
+def summarize_outputs(items: list[dict]) -> None:
+    summary = pd.DataFrame(items)
+    summary.to_csv(TIME_WINDOW_COMPARE_SUMMARY_FILE, index=False, encoding="utf-8-sig")
+    logger.info(f"Đã lưu bảng so sánh time-window tại: {TIME_WINDOW_COMPARE_SUMMARY_FILE}")
+
 def main():
     print("=" * 80)
-    print(f"STEP 2: EXTRACT EARLY TIME-WINDOW FEATURES ({OBSERVATION_DAYS} DAYS)")
+    print(f"STEP 2: EXTRACT EARLY TIME-WINDOW FEATURES ({WINDOW_MODE.upper()})")
     print("=" * 80)
 
     try:
         df = load_data()
-        df_window = build_time_window(df)
+        df = build_action_timeline(df)
         logger.info("Đang dọn dẹp bộ nhớ RAM...")
+        summary_rows = []
+
+        if WINDOW_MODE == "relative":
+            for frac in RELATIVE_WINDOW_FRACTIONS:
+                pct_value = int(round(float(frac) * 100))
+                df_window = build_relative_window(df, float(frac))
+                features = extract_features(df_window)
+                final_df = finalize_with_labels(features)
+                output_path = export_window_dataset(final_df, mode="relative", window_value=pct_value)
+                summary_rows.append(
+                    {
+                        "window_mode": "relative",
+                        "window_value": pct_value,
+                        "num_rows": int(len(df_window)),
+                        "num_users": int(final_df[PRIMARY_KEY].nunique()),
+                        "output_file": output_path,
+                    }
+                )
+        else:
+            df_window = build_fixed_window(df)
+            features = extract_features(df_window)
+            final_df = finalize_with_labels(features)
+            output_path = export_window_dataset(final_df, mode="fixed", window_value=OBSERVATION_DAYS)
+            summary_rows.append(
+                {
+                    "window_mode": "fixed",
+                    "window_value": int(OBSERVATION_DAYS),
+                    "num_rows": int(len(df_window)),
+                    "num_users": int(final_df[PRIMARY_KEY].nunique()),
+                    "output_file": output_path,
+                }
+            )
+
+        summarize_outputs(summary_rows)
         del df
         gc.collect()
-        features = extract_features(df_window)
-        logger.info("Đang nối (Merge) Đặc trưng cửa sổ thời gian với Nhãn toàn khóa...")
-        labels = pd.read_csv(GROUND_TRUTH_FILE)
-        final_df = features.merge(labels, on="user_id", how="inner")
-        logger.info("Đang lưu file kết quả...")
-        final_df.to_csv(FEATURES_WINDOW_FILE, index=False, encoding="utf-8-sig")
-        final_df.to_csv(FEATURES_COMPAT_FILE, index=False, encoding="utf-8-sig")
 
         print("=" * 80)
-        logger.info(f"HOÀN TẤT GIAI ĐOẠN 2. Đã lưu file Đặc trưng: {FEATURES_WINDOW_FILE}")
-        logger.info(f"Đã lưu file tương thích: {FEATURES_COMPAT_FILE}")
-        logger.info(f"Tổng số sinh viên có trong tập huấn luyện: {len(final_df):,}")
+        logger.info("HOÀN TẤT GIAI ĐOẠN 2.")
+        logger.info(f"File tương thích cho Stage 3: {FEATURES_COMPAT_FILE}")
+        logger.info(f"Số cấu hình time-window đã xuất: {len(summary_rows)}")
         print("=" * 80)
 
     except Exception as e:

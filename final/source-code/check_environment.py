@@ -14,22 +14,22 @@ def check_requirements():
         'flask', 'joblib', 'xgboost', 'lightgbm'
     ]
 
-    print("🔍 Kiểm tra các thư viện cần thiết...")
+    print("[INFO] Kiem tra cac thu vien can thiet...")
     missing = []
     for package in required_packages:
         try:
             __import__(package.replace('-', '_'))
-            print(f"✅ {package}")
+            print(f"[OK] {package}")
         except ImportError:
-            print(f"❌ {package}")
+            print(f"[MISSING] {package}")
             missing.append(package)
 
     if missing:
-        print(f"\n⚠️  Thiếu các thư viện: {', '.join(missing)}")
+        print(f"\n[WARN] Thieu cac thu vien: {', '.join(missing)}")
         print("Cài đặt bằng: pip install " + ' '.join(missing))
         return False
     else:
-        print("\n✅ Tất cả thư viện đã được cài đặt!")
+        print("\n[OK] Tat ca thu vien da duoc cai dat!")
         return True
 
 def check_data_files():
@@ -37,10 +37,10 @@ def check_data_files():
     project_root = Path(__file__).resolve().parents[2]
     dataset_dir = project_root / "du-lieu-thuc-nghiem"
 
-    print("🔍 Kiểm tra file dữ liệu...")
+    print("[INFO] Kiem tra file du lieu...")
 
     if not dataset_dir.exists():
-        print(f"❌ Thư mục dữ liệu không tồn tại: {dataset_dir}")
+        print(f"[ERROR] Thu muc du lieu khong ton tai: {dataset_dir}")
         return False
 
     # Kiểm tra các file cần thiết (có thể thay đổi tùy dataset thực tế)
@@ -49,11 +49,11 @@ def check_data_files():
     for file in data_files:
         file_path = dataset_dir / file
         if file_path.exists():
-            print(f"✅ {file}")
+            print(f"[OK] {file}")
         else:
-            print(f"⚠️  {file} không tìm thấy (có thể chưa cần thiết)")
+            print(f"[WARN] {file} khong tim thay (co the chua can thiet)")
 
-    print("✅ Kiểm tra dữ liệu hoàn thành!")
+        print("[OK] Kiem tra du lieu hoan thanh!")
     return True
 
 def check_scripts():
@@ -61,7 +61,7 @@ def check_scripts():
     project_root = Path(__file__).resolve().parents[2]
     experiment_dir = project_root / "experiment" # Corrected path to experiment scripts
 
-    print("🔍 Kiểm tra script...")
+    print("[INFO] Kiem tra script...")
 
     required_scripts = [
         "experiment/phase_1_data_cleaning.py",
@@ -80,21 +80,21 @@ def check_scripts():
     for script in required_scripts:
         script_path = project_root / script
         if script_path.exists():
-            print(f"✅ {script}")
+            print(f"[OK] {script}")
         else:
-            print(f"❌ {script}")
+            print(f"[MISSING] {script}")
             missing.append(script)
 
     if missing:
-        print(f"\n❌ Thiếu các script: {missing}")
+        print(f"\n[ERROR] Thieu cac script: {missing}")
         return False
     else:
-        print("\n✅ Tất cả script đã có!")
+        print("\n[OK] Tat ca script da co!")
         return True
 
 def run_quick_test():
     """Chạy test nhanh với dữ liệu nhỏ"""
-    print("🧪 Chạy test nhanh...")
+    print("[INFO] Chay test nhanh...")
 
     project_root = Path(__file__).resolve().parents[2]
     main_script = project_root / "final" / "source-code" / "main_experiment.py"
@@ -110,23 +110,23 @@ def run_quick_test():
     try:
         result = subprocess.run(cmd, cwd=str(project_root), capture_output=True, text=True, timeout=300)
         if result.returncode == 0:
-            print("✅ Test phase 1 thành công!")
+            print("[OK] Test phase 1 thanh cong!")
             return True
         else:
-            print("❌ Test phase 1 thất bại!")
+            print("[ERROR] Test phase 1 that bai!")
             print("STDOUT:", result.stdout)
             print("STDERR:", result.stderr)
             return False
     except subprocess.TimeoutExpired:
-        print("⏰ Test timeout!")
+        print("[ERROR] Test timeout!")
         return False
     except Exception as e:
-        print(f"❌ Lỗi khi chạy test: {e}")
+        print(f"[ERROR] Loi khi chay test: {e}")
         return False
 
 def main():
     """Hàm chính"""
-    print("🚀 Kiểm tra môi trường đồ án DS317\n")
+    print("[INFO] Kiem tra moi truong do an DS317\n")
 
     checks = [
         ("Thư viện Python", check_requirements),
@@ -147,17 +147,17 @@ def main():
     print('='*50)
 
     if all_passed:
-        print("✅ Tất cả kiểm tra đã pass!")
-        print("\n🧪 Chạy test nhanh...")
+        print("[OK] Tat ca kiem tra da pass!")
+        print("\n[INFO] Chay test nhanh...")
 
         if run_quick_test():
-            print("\n🎉 Môi trường sẵn sàng! Có thể chạy đồ án.")
+            print("\n[OK] Moi truong san sang! Co the chay do an.")
             print("Chạy đầy đủ: python final/source-code/main_experiment.py --phase all")
             print("Chạy demo: python final/source-code/demo_app.py")
         else:
-            print("\n⚠️  Test thất bại. Kiểm tra lại cấu hình.")
+            print("\n[WARN] Test that bai. Kiem tra lai cau hinh.")
     else:
-        print("❌ Một số kiểm tra thất bại. Vui lòng khắc phục trước khi chạy.")
+        print("[ERROR] Mot so kiem tra that bai. Vui long khac phuc truoc khi chay.")
 
 if __name__ == "__main__":
     main()

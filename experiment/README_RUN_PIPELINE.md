@@ -90,7 +90,21 @@ So sánh ngắn gọn:
 - Fixed window: dễ triển khai, ổn định khi course có cấu trúc thời gian giống nhau; nhưng có thể bỏ lỡ hành vi sớm/ trễ nếu course dài khác nhau.
 - Relative percentiles: thích ứng với các khóa có độ dài khác nhau, phản ánh hành vi theo tiến độ; nhưng cần xác định rõ cách tính độ dài khóa (ví dụ ngày đầu và ngày cuối hành động thực tế).
 
-Trong README này, `DEFAULT_OBSERVATION_DAYS` mặc định là 28 (fixed). Nếu bạn muốn thử relative windows (25%/50%), ta cần thêm bước tính độ dài thực tế cho từng user/course và slice theo phần trăm — tôi có thể bổ sung hàm đó nếu bạn muốn.
+Trong README này, `DEFAULT_OBSERVATION_DAYS` mặc định là 28 (fixed).
+
+Relative windows đã được triển khai trong Stage 2. Cách chạy so sánh:
+
+```powershell
+python run_pipeline.py --from-step 2 --to-step 2 --param TIME_WINDOW_MODE="relative"
+```
+
+Kết quả so sánh sẽ được lưu:
+
+- `dataset/user_features_relative_25.csv`
+- `dataset/user_features_relative_50.csv`
+- `dataset/time_window_comparison.csv`
+
+Khi chạy relative, pipeline sẽ ghi `dataset/user_features_and_wes.csv` theo mốc 50% để có thể chạy tiếp Stage 3 nếu cần.
 
 ### Logs và lệnh đang xử lý
 

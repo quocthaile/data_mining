@@ -1,22 +1,22 @@
-===== FILE: docs\Huong dan do an.pdf =====
+﻿===== FILE: docs\Huong dan do an.pdf =====
 PAGES: 4
 LINES: 8
 
 --- HEAD (first 120 lines) ---
-Biên soạn: ThS. Nguyễn Thị Anh Thư DATA MINING & DATA SCIENCE HƯỚNG DẪN ĐỒ ÁN CUỐI KỲ
-Biên soạn: ThS. Nguyễn Thị Anh Thư
-1 MỤC LỤC
-1. Mục tiêu .................................................................................................................. 2 2. Yêu cầu ................................................................................................................... 2 3. Hướng dẫn thực hiện ............................................................................................... 3
-Biên soạn: ThS. Nguyễn Thị Anh Thư
-2 1. Mục tiêu Hiểu rõ kiến thức quan trọng về nền tảng lý thuyết của dữ liệu lớn và các vấn đề trong quá trình khai phá dữ liệu lớn trong doanh nghiệp. Đồng thời, tìm hiểu về các phương pháp khai phá dữ liệu lớn phổ biến hiện tại, cách thức đánh giá kết quả khai phá và ứng dụng vào thực tế cho doanh nghiệp: - Tổng quan về dữ liệu lớn (big data), đặc điểm và kiến trúc dữ liệu lớn. Đồng thời, tìm hiểu về các vấn đề trong quá trình quản lý và khai phá dữ liệu lớn trong doanh nghiệp. - Các phương pháp tìm hiểu, phân tích, tiền xử lý và khai phá dữ liệu lớn thông qua các công nghệ phổ biến hiện tại trong doanh nghiệp. Sau đó, triển khai các phương pháp đánh giá và phân tích kết quả đạt được. Từ đó, nắm rõ cách thức ứng dụng kết quả khai phá dữ liệu lớn vào thực tế cho doanh nghiệp. Đồng thời, phát triển các kỹ năng mềm cần thiết cho sinh viên khi tham gia vào một dự án gồm: - Kỹ năng giao tiếp, hợp tác, kết nối hiệu quả với các cá nhân và tập thể trong thực tế. - Kỹ năng báo cáo chuyên nghiệp. - Kỹ năng thuyết trình một cách hiệu quả và hấp dẫn. 2. Yêu cầu - Nhiệm vụ của nhóm là triển khai đề tài khai thác dữ liệu trên kiến trúc dữ liệu lớn thực tế trong doanh nghiệp. Từ đó, phát triển một hệ thống thông minh ứng dụng trí tuệ nhân tạo (ứng dụng BI phân tích và kiểm soát chất lượng dữ liệu ®  ứng dụng thực tế cho người dùng ở dạng web hoặc application) nhằm nâng cao hiệu quả hoạt động. - Sản phẩm: Báo cáo đề tài (docx, pptx), bộ dữ liệu thực nghiệm, toàn bộ source code và video thuyết trình về tất cả sản phẩm (tất cả thành viên tham gia báo cáo trong video, mở camera).
-Biên soạn: ThS. Nguyễn Thị Anh Thư
-3 3. Hướng dẫn thực hiện Báo cáo đề tài: - Tổng quan: giới thiệu, định nghĩa bài toán (input và output), ứng dụng, khó khăn và thách thức, mục tiêu và phạm vi thực hiện. - Các công trình nghiên cứu liên quan: phân tích kết quả khảo sát, xác định định hướng triển khai đề tài. - Cơ sở lý thuyết: trình bày nền tảng lý thuyết và các công nghệ sẽ áp dụng. - Phân tích bộ dữ liệu: Tìm hiểu dữ liệu, Chuẩn bị dữ liệu, Phân tích vấn đề. - Phương pháp đề xuất: framework miêu tả các bước thực hiện tổng quan từ input đến output của bài toán, thiết kế kiến trúc dữ liệu lớn có thể triển khai framework đề xuất (thành phần và công nghệ triển khai), hệ thống thông minh ứng dụng trí tuệ nhân tạo dành cho người dùng (nếu có). - Thực nghiệm: miêu tả bộ dữ liệu, phương pháp tổ chức dữ liệu thực nghiệm, độ đo đánh giá, kịch bản thực nghiệm theo thời gian trên kiến trúc dữ liệu lớn và đánh giá kết quả thực nghiệm. - Kết luận và hướng phát triển: đánh giá ưu nhược điểm của phương pháp đề xuất và xác định định hướng phát triển tiềm năng. 4. Yêu cầu đồ án: o Cơ bản: Xây dựng ứng dụng BI cho bài toán đề tài đồ án (tập trung vào giám sát dữ liệu input, độ đo chất lượng dữ liệu, áp dụng các phương pháp Machine learning trong tài liệu tham khảo). o Nâng cao: Đáp ứng toàn bộ yêu cầu của đồ án cơ bản và đồng thời có phát triển cải tiến mới như sau: • Áp dụng các phương pháp cải thiện chất lượng dữ liệu như: điền khuyết dữ liệu, tăng cường dữ liệu và làm giàu dữ liệu. • Nghiên cứu cải tiến phương pháp ML/DL và triển khai thêm chức năng demo cho output bài toán. • Triển khai thực nghiệm trên kiến trúc dữ liệu lớn.
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ° DATA MINING & DATA SCIENCE HÆ¯á»šNG DáºªN Äá»’ ÃN CUá»I Ká»²
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ°
+1 Má»¤C Lá»¤C
+1. Má»¥c tiÃªu .................................................................................................................. 2 2. YÃªu cáº§u ................................................................................................................... 2 3. HÆ°á»›ng dáº«n thá»±c hiá»‡n ............................................................................................... 3
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ°
+2 1. Má»¥c tiÃªu Hiá»ƒu rÃµ kiáº¿n thá»©c quan trá»ng vá» ná»n táº£ng lÃ½ thuyáº¿t cá»§a dá»¯ liá»‡u lá»›n vÃ  cÃ¡c váº¥n Ä‘á» trong quÃ¡ trÃ¬nh khai phÃ¡ dá»¯ liá»‡u lá»›n trong doanh nghiá»‡p. Äá»“ng thá»i, tÃ¬m hiá»ƒu vá» cÃ¡c phÆ°Æ¡ng phÃ¡p khai phÃ¡ dá»¯ liá»‡u lá»›n phá»• biáº¿n hiá»‡n táº¡i, cÃ¡ch thá»©c Ä‘Ã¡nh giÃ¡ káº¿t quáº£ khai phÃ¡ vÃ  á»©ng dá»¥ng vÃ o thá»±c táº¿ cho doanh nghiá»‡p: - Tá»•ng quan vá» dá»¯ liá»‡u lá»›n (big data), Ä‘áº·c Ä‘iá»ƒm vÃ  kiáº¿n trÃºc dá»¯ liá»‡u lá»›n. Äá»“ng thá»i, tÃ¬m hiá»ƒu vá» cÃ¡c váº¥n Ä‘á» trong quÃ¡ trÃ¬nh quáº£n lÃ½ vÃ  khai phÃ¡ dá»¯ liá»‡u lá»›n trong doanh nghiá»‡p. - CÃ¡c phÆ°Æ¡ng phÃ¡p tÃ¬m hiá»ƒu, phÃ¢n tÃ­ch, tiá»n xá»­ lÃ½ vÃ  khai phÃ¡ dá»¯ liá»‡u lá»›n thÃ´ng qua cÃ¡c cÃ´ng nghá»‡ phá»• biáº¿n hiá»‡n táº¡i trong doanh nghiá»‡p. Sau Ä‘Ã³, triá»ƒn khai cÃ¡c phÆ°Æ¡ng phÃ¡p Ä‘Ã¡nh giÃ¡ vÃ  phÃ¢n tÃ­ch káº¿t quáº£ Ä‘áº¡t Ä‘Æ°á»£c. Tá»« Ä‘Ã³, náº¯m rÃµ cÃ¡ch thá»©c á»©ng dá»¥ng káº¿t quáº£ khai phÃ¡ dá»¯ liá»‡u lá»›n vÃ o thá»±c táº¿ cho doanh nghiá»‡p. Äá»“ng thá»i, phÃ¡t triá»ƒn cÃ¡c ká»¹ nÄƒng má»m cáº§n thiáº¿t cho sinh viÃªn khi tham gia vÃ o má»™t dá»± Ã¡n gá»“m: - Ká»¹ nÄƒng giao tiáº¿p, há»£p tÃ¡c, káº¿t ná»‘i hiá»‡u quáº£ vá»›i cÃ¡c cÃ¡ nhÃ¢n vÃ  táº­p thá»ƒ trong thá»±c táº¿. - Ká»¹ nÄƒng bÃ¡o cÃ¡o chuyÃªn nghiá»‡p. - Ká»¹ nÄƒng thuyáº¿t trÃ¬nh má»™t cÃ¡ch hiá»‡u quáº£ vÃ  háº¥p dáº«n. 2. YÃªu cáº§u - Nhiá»‡m vá»¥ cá»§a nhÃ³m lÃ  triá»ƒn khai Ä‘á» tÃ i khai thÃ¡c dá»¯ liá»‡u trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n thá»±c táº¿ trong doanh nghiá»‡p. Tá»« Ä‘Ã³, phÃ¡t triá»ƒn má»™t há»‡ thá»‘ng thÃ´ng minh á»©ng dá»¥ng trÃ­ tuá»‡ nhÃ¢n táº¡o (á»©ng dá»¥ng BI phÃ¢n tÃ­ch vÃ  kiá»ƒm soÃ¡t cháº¥t lÆ°á»£ng dá»¯ liá»‡u Â®  á»©ng dá»¥ng thá»±c táº¿ cho ngÆ°á»i dÃ¹ng á»Ÿ dáº¡ng web hoáº·c application) nháº±m nÃ¢ng cao hiá»‡u quáº£ hoáº¡t Ä‘á»™ng. - Sáº£n pháº©m: BÃ¡o cÃ¡o Ä‘á» tÃ i (docx, pptx), bá»™ dá»¯ liá»‡u thá»±c nghiá»‡m, toÃ n bá»™ source code vÃ  video thuyáº¿t trÃ¬nh vá» táº¥t cáº£ sáº£n pháº©m (táº¥t cáº£ thÃ nh viÃªn tham gia bÃ¡o cÃ¡o trong video, má»Ÿ camera).
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ°
+3 3. HÆ°á»›ng dáº«n thá»±c hiá»‡n BÃ¡o cÃ¡o Ä‘á» tÃ i: - Tá»•ng quan: giá»›i thiá»‡u, Ä‘á»‹nh nghÄ©a bÃ i toÃ¡n (input vÃ  output), á»©ng dá»¥ng, khÃ³ khÄƒn vÃ  thÃ¡ch thá»©c, má»¥c tiÃªu vÃ  pháº¡m vi thá»±c hiá»‡n. - CÃ¡c cÃ´ng trÃ¬nh nghiÃªn cá»©u liÃªn quan: phÃ¢n tÃ­ch káº¿t quáº£ kháº£o sÃ¡t, xÃ¡c Ä‘á»‹nh Ä‘á»‹nh hÆ°á»›ng triá»ƒn khai Ä‘á» tÃ i. - CÆ¡ sá»Ÿ lÃ½ thuyáº¿t: trÃ¬nh bÃ y ná»n táº£ng lÃ½ thuyáº¿t vÃ  cÃ¡c cÃ´ng nghá»‡ sáº½ Ã¡p dá»¥ng. - PhÃ¢n tÃ­ch bá»™ dá»¯ liá»‡u: TÃ¬m hiá»ƒu dá»¯ liá»‡u, Chuáº©n bá»‹ dá»¯ liá»‡u, PhÃ¢n tÃ­ch váº¥n Ä‘á». - PhÆ°Æ¡ng phÃ¡p Ä‘á» xuáº¥t: framework miÃªu táº£ cÃ¡c bÆ°á»›c thá»±c hiá»‡n tá»•ng quan tá»« input Ä‘áº¿n output cá»§a bÃ i toÃ¡n, thiáº¿t káº¿ kiáº¿n trÃºc dá»¯ liá»‡u lá»›n cÃ³ thá»ƒ triá»ƒn khai framework Ä‘á» xuáº¥t (thÃ nh pháº§n vÃ  cÃ´ng nghá»‡ triá»ƒn khai), há»‡ thá»‘ng thÃ´ng minh á»©ng dá»¥ng trÃ­ tuá»‡ nhÃ¢n táº¡o dÃ nh cho ngÆ°á»i dÃ¹ng (náº¿u cÃ³). - Thá»±c nghiá»‡m: miÃªu táº£ bá»™ dá»¯ liá»‡u, phÆ°Æ¡ng phÃ¡p tá»• chá»©c dá»¯ liá»‡u thá»±c nghiá»‡m, Ä‘á»™ Ä‘o Ä‘Ã¡nh giÃ¡, ká»‹ch báº£n thá»±c nghiá»‡m theo thá»i gian trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n vÃ  Ä‘Ã¡nh giÃ¡ káº¿t quáº£ thá»±c nghiá»‡m. - Káº¿t luáº­n vÃ  hÆ°á»›ng phÃ¡t triá»ƒn: Ä‘Ã¡nh giÃ¡ Æ°u nhÆ°á»£c Ä‘iá»ƒm cá»§a phÆ°Æ¡ng phÃ¡p Ä‘á» xuáº¥t vÃ  xÃ¡c Ä‘á»‹nh Ä‘á»‹nh hÆ°á»›ng phÃ¡t triá»ƒn tiá»m nÄƒng. 4. YÃªu cáº§u Ä‘á»“ Ã¡n: o CÆ¡ báº£n: XÃ¢y dá»±ng á»©ng dá»¥ng BI cho bÃ i toÃ¡n Ä‘á» tÃ i Ä‘á»“ Ã¡n (táº­p trung vÃ o giÃ¡m sÃ¡t dá»¯ liá»‡u input, Ä‘á»™ Ä‘o cháº¥t lÆ°á»£ng dá»¯ liá»‡u, Ã¡p dá»¥ng cÃ¡c phÆ°Æ¡ng phÃ¡p Machine learning trong tÃ i liá»‡u tham kháº£o). o NÃ¢ng cao: ÄÃ¡p á»©ng toÃ n bá»™ yÃªu cáº§u cá»§a Ä‘á»“ Ã¡n cÆ¡ báº£n vÃ  Ä‘á»“ng thá»i cÃ³ phÃ¡t triá»ƒn cáº£i tiáº¿n má»›i nhÆ° sau: â€¢ Ãp dá»¥ng cÃ¡c phÆ°Æ¡ng phÃ¡p cáº£i thiá»‡n cháº¥t lÆ°á»£ng dá»¯ liá»‡u nhÆ°: Ä‘iá»n khuyáº¿t dá»¯ liá»‡u, tÄƒng cÆ°á»ng dá»¯ liá»‡u vÃ  lÃ m giÃ u dá»¯ liá»‡u. â€¢ NghiÃªn cá»©u cáº£i tiáº¿n phÆ°Æ¡ng phÃ¡p ML/DL vÃ  triá»ƒn khai thÃªm chá»©c nÄƒng demo cho output bÃ i toÃ¡n. â€¢ Triá»ƒn khai thá»±c nghiá»‡m trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n.
 
 --- KEY MATCHES (first 260 matches) ---
-Biên soạn: ThS. Nguyễn Thị Anh Thư DATA MINING & DATA SCIENCE HƯỚNG DẪN ĐỒ ÁN CUỐI KỲ
-1. Mục tiêu .................................................................................................................. 2 2. Yêu cầu ................................................................................................................... 2 3. Hướng dẫn thực hiện ............................................................................................... 3
-2 1. Mục tiêu Hiểu rõ kiến thức quan trọng về nền tảng lý thuyết của dữ liệu lớn và các vấn đề trong quá trình khai phá dữ liệu lớn trong doanh nghiệp. Đồng thời, tìm hiểu về các phương pháp khai phá dữ liệu lớn phổ biến hiện tại, cách thức đánh giá kết quả khai phá và ứng dụng vào thực tế cho doanh nghiệp: - Tổng quan về dữ liệu lớn (big data), đặc điểm và kiến trúc dữ liệu lớn. Đồng thời, tìm hiểu về các vấn đề trong quá trình quản lý và khai phá dữ liệu lớn trong doanh nghiệp. - Các phương pháp tìm hiểu, phân tích, tiền xử lý và khai phá dữ liệu lớn thông qua các công nghệ phổ biến hiện tại trong doanh nghiệp. Sau đó, triển khai các phương pháp đánh giá và phân tích kết quả đạt được. Từ đó, nắm rõ cách thức ứng dụng kết quả khai phá dữ liệu lớn vào thực tế cho doanh nghiệp. Đồng thời, phát triển các kỹ năng mềm cần thiết cho sinh viên khi tham gia vào một dự án gồm: - Kỹ năng giao tiếp, hợp tác, kết nối hiệu quả với các cá nhân và tập thể trong thực tế. - Kỹ năng báo cáo chuyên nghiệp. - Kỹ năng thuyết trình một cách hiệu quả và hấp dẫn. 2. Yêu cầu - Nhiệm vụ của nhóm là triển khai đề tài khai thác dữ liệu trên kiến trúc dữ liệu lớn thực tế trong doanh nghiệp. Từ đó, phát triển một hệ thống thông minh ứng dụng trí tuệ nhân tạo (ứng dụng BI phân tích và kiểm soát chất lượng dữ liệu ®  ứng dụng thực tế cho người dùng ở dạng web hoặc application) nhằm nâng cao hiệu quả hoạt động. - Sản phẩm: Báo cáo đề tài (docx, pptx), bộ dữ liệu thực nghiệm, toàn bộ source code và video thuyết trình về tất cả sản phẩm (tất cả thành viên tham gia báo cáo trong video, mở camera).
-3 3. Hướng dẫn thực hiện Báo cáo đề tài: - Tổng quan: giới thiệu, định nghĩa bài toán (input và output), ứng dụng, khó khăn và thách thức, mục tiêu và phạm vi thực hiện. - Các công trình nghiên cứu liên quan: phân tích kết quả khảo sát, xác định định hướng triển khai đề tài. - Cơ sở lý thuyết: trình bày nền tảng lý thuyết và các công nghệ sẽ áp dụng. - Phân tích bộ dữ liệu: Tìm hiểu dữ liệu, Chuẩn bị dữ liệu, Phân tích vấn đề. - Phương pháp đề xuất: framework miêu tả các bước thực hiện tổng quan từ input đến output của bài toán, thiết kế kiến trúc dữ liệu lớn có thể triển khai framework đề xuất (thành phần và công nghệ triển khai), hệ thống thông minh ứng dụng trí tuệ nhân tạo dành cho người dùng (nếu có). - Thực nghiệm: miêu tả bộ dữ liệu, phương pháp tổ chức dữ liệu thực nghiệm, độ đo đánh giá, kịch bản thực nghiệm theo thời gian trên kiến trúc dữ liệu lớn và đánh giá kết quả thực nghiệm. - Kết luận và hướng phát triển: đánh giá ưu nhược điểm của phương pháp đề xuất và xác định định hướng phát triển tiềm năng. 4. Yêu cầu đồ án: o Cơ bản: Xây dựng ứng dụng BI cho bài toán đề tài đồ án (tập trung vào giám sát dữ liệu input, độ đo chất lượng dữ liệu, áp dụng các phương pháp Machine learning trong tài liệu tham khảo). o Nâng cao: Đáp ứng toàn bộ yêu cầu của đồ án cơ bản và đồng thời có phát triển cải tiến mới như sau: • Áp dụng các phương pháp cải thiện chất lượng dữ liệu như: điền khuyết dữ liệu, tăng cường dữ liệu và làm giàu dữ liệu. • Nghiên cứu cải tiến phương pháp ML/DL và triển khai thêm chức năng demo cho output bài toán. • Triển khai thực nghiệm trên kiến trúc dữ liệu lớn.
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ° DATA MINING & DATA SCIENCE HÆ¯á»šNG DáºªN Äá»’ ÃN CUá»I Ká»²
+1. Má»¥c tiÃªu .................................................................................................................. 2 2. YÃªu cáº§u ................................................................................................................... 2 3. HÆ°á»›ng dáº«n thá»±c hiá»‡n ............................................................................................... 3
+2 1. Má»¥c tiÃªu Hiá»ƒu rÃµ kiáº¿n thá»©c quan trá»ng vá» ná»n táº£ng lÃ½ thuyáº¿t cá»§a dá»¯ liá»‡u lá»›n vÃ  cÃ¡c váº¥n Ä‘á» trong quÃ¡ trÃ¬nh khai phÃ¡ dá»¯ liá»‡u lá»›n trong doanh nghiá»‡p. Äá»“ng thá»i, tÃ¬m hiá»ƒu vá» cÃ¡c phÆ°Æ¡ng phÃ¡p khai phÃ¡ dá»¯ liá»‡u lá»›n phá»• biáº¿n hiá»‡n táº¡i, cÃ¡ch thá»©c Ä‘Ã¡nh giÃ¡ káº¿t quáº£ khai phÃ¡ vÃ  á»©ng dá»¥ng vÃ o thá»±c táº¿ cho doanh nghiá»‡p: - Tá»•ng quan vá» dá»¯ liá»‡u lá»›n (big data), Ä‘áº·c Ä‘iá»ƒm vÃ  kiáº¿n trÃºc dá»¯ liá»‡u lá»›n. Äá»“ng thá»i, tÃ¬m hiá»ƒu vá» cÃ¡c váº¥n Ä‘á» trong quÃ¡ trÃ¬nh quáº£n lÃ½ vÃ  khai phÃ¡ dá»¯ liá»‡u lá»›n trong doanh nghiá»‡p. - CÃ¡c phÆ°Æ¡ng phÃ¡p tÃ¬m hiá»ƒu, phÃ¢n tÃ­ch, tiá»n xá»­ lÃ½ vÃ  khai phÃ¡ dá»¯ liá»‡u lá»›n thÃ´ng qua cÃ¡c cÃ´ng nghá»‡ phá»• biáº¿n hiá»‡n táº¡i trong doanh nghiá»‡p. Sau Ä‘Ã³, triá»ƒn khai cÃ¡c phÆ°Æ¡ng phÃ¡p Ä‘Ã¡nh giÃ¡ vÃ  phÃ¢n tÃ­ch káº¿t quáº£ Ä‘áº¡t Ä‘Æ°á»£c. Tá»« Ä‘Ã³, náº¯m rÃµ cÃ¡ch thá»©c á»©ng dá»¥ng káº¿t quáº£ khai phÃ¡ dá»¯ liá»‡u lá»›n vÃ o thá»±c táº¿ cho doanh nghiá»‡p. Äá»“ng thá»i, phÃ¡t triá»ƒn cÃ¡c ká»¹ nÄƒng má»m cáº§n thiáº¿t cho sinh viÃªn khi tham gia vÃ o má»™t dá»± Ã¡n gá»“m: - Ká»¹ nÄƒng giao tiáº¿p, há»£p tÃ¡c, káº¿t ná»‘i hiá»‡u quáº£ vá»›i cÃ¡c cÃ¡ nhÃ¢n vÃ  táº­p thá»ƒ trong thá»±c táº¿. - Ká»¹ nÄƒng bÃ¡o cÃ¡o chuyÃªn nghiá»‡p. - Ká»¹ nÄƒng thuyáº¿t trÃ¬nh má»™t cÃ¡ch hiá»‡u quáº£ vÃ  háº¥p dáº«n. 2. YÃªu cáº§u - Nhiá»‡m vá»¥ cá»§a nhÃ³m lÃ  triá»ƒn khai Ä‘á» tÃ i khai thÃ¡c dá»¯ liá»‡u trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n thá»±c táº¿ trong doanh nghiá»‡p. Tá»« Ä‘Ã³, phÃ¡t triá»ƒn má»™t há»‡ thá»‘ng thÃ´ng minh á»©ng dá»¥ng trÃ­ tuá»‡ nhÃ¢n táº¡o (á»©ng dá»¥ng BI phÃ¢n tÃ­ch vÃ  kiá»ƒm soÃ¡t cháº¥t lÆ°á»£ng dá»¯ liá»‡u Â®  á»©ng dá»¥ng thá»±c táº¿ cho ngÆ°á»i dÃ¹ng á»Ÿ dáº¡ng web hoáº·c application) nháº±m nÃ¢ng cao hiá»‡u quáº£ hoáº¡t Ä‘á»™ng. - Sáº£n pháº©m: BÃ¡o cÃ¡o Ä‘á» tÃ i (docx, pptx), bá»™ dá»¯ liá»‡u thá»±c nghiá»‡m, toÃ n bá»™ source code vÃ  video thuyáº¿t trÃ¬nh vá» táº¥t cáº£ sáº£n pháº©m (táº¥t cáº£ thÃ nh viÃªn tham gia bÃ¡o cÃ¡o trong video, má»Ÿ camera).
+3 3. HÆ°á»›ng dáº«n thá»±c hiá»‡n BÃ¡o cÃ¡o Ä‘á» tÃ i: - Tá»•ng quan: giá»›i thiá»‡u, Ä‘á»‹nh nghÄ©a bÃ i toÃ¡n (input vÃ  output), á»©ng dá»¥ng, khÃ³ khÄƒn vÃ  thÃ¡ch thá»©c, má»¥c tiÃªu vÃ  pháº¡m vi thá»±c hiá»‡n. - CÃ¡c cÃ´ng trÃ¬nh nghiÃªn cá»©u liÃªn quan: phÃ¢n tÃ­ch káº¿t quáº£ kháº£o sÃ¡t, xÃ¡c Ä‘á»‹nh Ä‘á»‹nh hÆ°á»›ng triá»ƒn khai Ä‘á» tÃ i. - CÆ¡ sá»Ÿ lÃ½ thuyáº¿t: trÃ¬nh bÃ y ná»n táº£ng lÃ½ thuyáº¿t vÃ  cÃ¡c cÃ´ng nghá»‡ sáº½ Ã¡p dá»¥ng. - PhÃ¢n tÃ­ch bá»™ dá»¯ liá»‡u: TÃ¬m hiá»ƒu dá»¯ liá»‡u, Chuáº©n bá»‹ dá»¯ liá»‡u, PhÃ¢n tÃ­ch váº¥n Ä‘á». - PhÆ°Æ¡ng phÃ¡p Ä‘á» xuáº¥t: framework miÃªu táº£ cÃ¡c bÆ°á»›c thá»±c hiá»‡n tá»•ng quan tá»« input Ä‘áº¿n output cá»§a bÃ i toÃ¡n, thiáº¿t káº¿ kiáº¿n trÃºc dá»¯ liá»‡u lá»›n cÃ³ thá»ƒ triá»ƒn khai framework Ä‘á» xuáº¥t (thÃ nh pháº§n vÃ  cÃ´ng nghá»‡ triá»ƒn khai), há»‡ thá»‘ng thÃ´ng minh á»©ng dá»¥ng trÃ­ tuá»‡ nhÃ¢n táº¡o dÃ nh cho ngÆ°á»i dÃ¹ng (náº¿u cÃ³). - Thá»±c nghiá»‡m: miÃªu táº£ bá»™ dá»¯ liá»‡u, phÆ°Æ¡ng phÃ¡p tá»• chá»©c dá»¯ liá»‡u thá»±c nghiá»‡m, Ä‘á»™ Ä‘o Ä‘Ã¡nh giÃ¡, ká»‹ch báº£n thá»±c nghiá»‡m theo thá»i gian trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n vÃ  Ä‘Ã¡nh giÃ¡ káº¿t quáº£ thá»±c nghiá»‡m. - Káº¿t luáº­n vÃ  hÆ°á»›ng phÃ¡t triá»ƒn: Ä‘Ã¡nh giÃ¡ Æ°u nhÆ°á»£c Ä‘iá»ƒm cá»§a phÆ°Æ¡ng phÃ¡p Ä‘á» xuáº¥t vÃ  xÃ¡c Ä‘á»‹nh Ä‘á»‹nh hÆ°á»›ng phÃ¡t triá»ƒn tiá»m nÄƒng. 4. YÃªu cáº§u Ä‘á»“ Ã¡n: o CÆ¡ báº£n: XÃ¢y dá»±ng á»©ng dá»¥ng BI cho bÃ i toÃ¡n Ä‘á» tÃ i Ä‘á»“ Ã¡n (táº­p trung vÃ o giÃ¡m sÃ¡t dá»¯ liá»‡u input, Ä‘á»™ Ä‘o cháº¥t lÆ°á»£ng dá»¯ liá»‡u, Ã¡p dá»¥ng cÃ¡c phÆ°Æ¡ng phÃ¡p Machine learning trong tÃ i liá»‡u tham kháº£o). o NÃ¢ng cao: ÄÃ¡p á»©ng toÃ n bá»™ yÃªu cáº§u cá»§a Ä‘á»“ Ã¡n cÆ¡ báº£n vÃ  Ä‘á»“ng thá»i cÃ³ phÃ¡t triá»ƒn cáº£i tiáº¿n má»›i nhÆ° sau: â€¢ Ãp dá»¥ng cÃ¡c phÆ°Æ¡ng phÃ¡p cáº£i thiá»‡n cháº¥t lÆ°á»£ng dá»¯ liá»‡u nhÆ°: Ä‘iá»n khuyáº¿t dá»¯ liá»‡u, tÄƒng cÆ°á»ng dá»¯ liá»‡u vÃ  lÃ m giÃ u dá»¯ liá»‡u. â€¢ NghiÃªn cá»©u cáº£i tiáº¿n phÆ°Æ¡ng phÃ¡p ML/DL vÃ  triá»ƒn khai thÃªm chá»©c nÄƒng demo cho output bÃ i toÃ¡n. â€¢ Triá»ƒn khai thá»±c nghiá»‡m trÃªn kiáº¿n trÃºc dá»¯ liá»‡u lá»›n.
 
 MATCH_COUNT_WRITTEN: 4
 
@@ -25,80 +25,80 @@ PAGES: 416
 LINES: 5212
 
 --- HEAD (first 120 lines) ---
-ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
-TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
-KHAI PHÁ DỮ LIỆU TRONG
-DOANH NGHIỆP
-Biên soạn: ThS. Nguyễn Thị Anh Thư
-Nội dung
-1. Mục tiêu
-2. Chương  trình
-3. Hình  thức kiểm  tra và đánh  giá
-4. Hình  thức học
-5. Quy định chung
+Äáº I Há»ŒC QUá»C GIA THÃ€NH PHá» Há»’ CHÃ MINH
+TRÆ¯á»œNG Äáº I Há»ŒC CÃ”NG NGHá»† THÃ”NG TIN
+KHAI PHÃ Dá»® LIá»†U TRONG
+DOANH NGHIá»†P
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ°
+Ná»™i dung
+1. Má»¥c tiÃªu
+2. ChÆ°Æ¡ng  trÃ¬nh
+3. HÃ¬nh  thá»©c kiá»ƒm  tra vÃ  Ä‘Ã¡nh  giÃ¡
+4. HÃ¬nh  thá»©c há»c
+5. Quy Ä‘á»‹nh chung
 2
-1. Mục tiêu
-3Kỹ năng
-làm việc
-nhóm và
-giao tiếpỨng dụng
+1. Má»¥c tiÃªu
+3Ká»¹ nÄƒng
+lÃ m viá»‡c
+nhÃ³m vÃ 
+giao tiáº¿pá»¨ng dá»¥ng
 doanh
-nghiệpKhai phá
-dữ liệuDữ liệu
-lớn
-2. Chương trình
-CHƯƠNG 1:Tổng quan vềkhai phádữliệuvàứngdụng doanh nghiệp
-CHƯƠNG 2:Kiến trúcdữliệulớntrong doanh nghiệp
-CHƯƠNG 3:Chuẩn bịdữliệu
-CHƯƠNG 4:Chất lượng dữliệu
-CHƯƠNG 5:Phân tíchdữliệuchodoanh nghiệp
-CHƯƠNG 6:Công nghệ khai phádữliệutrong doanh nghiệp
-CHƯƠNG 7:Hệthống phân loạichodoanh nghiệp
-CHƯƠNG 8:Hệthống phân cụm chodoanh nghiệp
-CHƯƠNG 9:Hệthống khai pháluậtkếthợpchodoanh nghiệp
-CHƯƠNG 10:Phân tíchhồiquyvàchuỗi thờigian chodoanh nghiệp
-CHƯƠNG 11:Bức tranh tổng quan vềdữliệulớntrong doanh nghiệp
+nghiá»‡pKhai phÃ¡
+dá»¯ liá»‡uDá»¯ liá»‡u
+lá»›n
+2. ChÆ°Æ¡ng trÃ¬nh
+CHÆ¯Æ NG 1:Tá»•ng quan vá»khai phÃ¡dá»¯liá»‡uvÃ á»©ngdá»¥ng doanh nghiá»‡p
+CHÆ¯Æ NG 2:Kiáº¿n trÃºcdá»¯liá»‡ulá»›ntrong doanh nghiá»‡p
+CHÆ¯Æ NG 3:Chuáº©n bá»‹dá»¯liá»‡u
+CHÆ¯Æ NG 4:Cháº¥t lÆ°á»£ng dá»¯liá»‡u
+CHÆ¯Æ NG 5:PhÃ¢n tÃ­chdá»¯liá»‡uchodoanh nghiá»‡p
+CHÆ¯Æ NG 6:CÃ´ng nghá»‡ khai phÃ¡dá»¯liá»‡utrong doanh nghiá»‡p
+CHÆ¯Æ NG 7:Há»‡thá»‘ng phÃ¢n loáº¡ichodoanh nghiá»‡p
+CHÆ¯Æ NG 8:Há»‡thá»‘ng phÃ¢n cá»¥m chodoanh nghiá»‡p
+CHÆ¯Æ NG 9:Há»‡thá»‘ng khai phÃ¡luáº­tkáº¿thá»£pchodoanh nghiá»‡p
+CHÆ¯Æ NG 10:PhÃ¢n tÃ­chhá»“iquyvÃ chuá»—i thá»igian chodoanh nghiá»‡p
+CHÆ¯Æ NG 11:Bá»©c tranh tá»•ng quan vá»dá»¯liá»‡ulá»›ntrong doanh nghiá»‡p
 4
-3. Hình thức kiểm tra và đánh giá
-5Thành phần đánh giá Tỷ lệ (%)
-A1. Quá trình  (bài tập) 20%
-A2. Giữa  kỳ
-A3. Thực  hành 30%
-A4. Đồ án cuối kỳ 50%
-Bài tập trên lớp, bài tập thực hành và đồ án cuối kỳ thực hiện theo nhóm.
-4. Hình thức học
-6➢Hoạt  động  học tập theo nhóm :
-▪Phân  chia nhóm  với số lượng  thành  viên:
-▪3~5 người (sỉ số < 50)
-▪5~7 người  (sỉ số  50).
-▪7~15 người  (sỉ số  100).
-▪Mỗi nhóm  chọn  một nhóm  trưởng  điều hành  hoạt động .
-5. Quy định chung
-7➢Tất cả sản phẩm  lưu trên drive  của nhóm .
-➢Mỗi nhóm đăng kýmộtaccount đểtạodrive lưutrữ.
-➢Tạo folder  theo tên nhóm  gồm các thư mục con sau:
-➢Bàitậptrênlớp:Toàn bộfilebàitậpnhóm .
-➢Thực hành :Thuyết minh đềtài(docx, pptx),video  thuyết  trình (tấtcảthành
-viên tham giabáocáotrong video,mởcamera ).
-➢Đồánmônhọc:Báo cáođồán(docx, pptx),video  thuyết  trình (tấtcảthành
-viên tham giabáocáotrong video,mởcamera ) và toàn bộ sản phẩm  đề tài.
-➢Bảng phân công vàkếhoạchthựchiện.
+3. HÃ¬nh thá»©c kiá»ƒm tra vÃ  Ä‘Ã¡nh giÃ¡
+5ThÃ nh pháº§n Ä‘Ã¡nh giÃ¡ Tá»· lá»‡ (%)
+A1. QuÃ¡ trÃ¬nh  (bÃ i táº­p) 20%
+A2. Giá»¯a  ká»³
+A3. Thá»±c  hÃ nh 30%
+A4. Äá»“ Ã¡n cuá»‘i ká»³ 50%
+BÃ i táº­p trÃªn lá»›p, bÃ i táº­p thá»±c hÃ nh vÃ  Ä‘á»“ Ã¡n cuá»‘i ká»³ thá»±c hiá»‡n theo nhÃ³m.
+4. HÃ¬nh thá»©c há»c
+6âž¢Hoáº¡t  Ä‘á»™ng  há»c táº­p theo nhÃ³m :
+â–ªPhÃ¢n  chia nhÃ³m  vá»›i sá»‘ lÆ°á»£ng  thÃ nh  viÃªn:
+â–ª3~5 ngÆ°á»i (sá»‰ sá»‘ < 50)
+â–ª5~7 ngÆ°á»i  (sá»‰ sá»‘ ï‚³ 50).
+â–ª7~15 ngÆ°á»i  (sá»‰ sá»‘ ï‚³ 100).
+â–ªMá»—i nhÃ³m  chá»n  má»™t nhÃ³m  trÆ°á»Ÿng  Ä‘iá»u hÃ nh  hoáº¡t Ä‘á»™ng .
+5. Quy Ä‘á»‹nh chung
+7âž¢Táº¥t cáº£ sáº£n pháº©m  lÆ°u trÃªn drive  cá»§a nhÃ³m .
+âž¢Má»—i nhÃ³m Ä‘Äƒng kÃ½má»™taccount Ä‘á»ƒtáº¡odrive lÆ°utrá»¯.
+âž¢Táº¡o folder  theo tÃªn nhÃ³m  gá»“m cÃ¡c thÆ° má»¥c con sau:
+âž¢BÃ itáº­ptrÃªnlá»›p:ToÃ n bá»™filebÃ itáº­pnhÃ³m .
+âž¢Thá»±c hÃ nh :Thuyáº¿t minh Ä‘á»tÃ i(docx, pptx),video  thuyáº¿t  trÃ¬nh (táº¥tcáº£thÃ nh
+viÃªn tham giabÃ¡ocÃ¡otrong video,má»Ÿcamera ).
+âž¢Äá»“Ã¡nmÃ´nhá»c:BÃ¡o cÃ¡oÄ‘á»“Ã¡n(docx, pptx),video  thuyáº¿t  trÃ¬nh (táº¥tcáº£thÃ nh
+viÃªn tham giabÃ¡ocÃ¡otrong video,má»Ÿcamera ) vÃ  toÃ n bá»™ sáº£n pháº©m  Ä‘á» tÃ i.
+âž¢Báº£ng phÃ¢n cÃ´ng vÃ káº¿hoáº¡chthá»±chiá»‡n.
 Question & Answer
-ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH
-TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN
-CHƯƠNG 1
-Tổng quan về khai phá dữ liệu và
-ứng dụng doanh nghiệp
-Biên soạn: ThS. Nguyễn Thị Anh Thư
-Nộidung
-1.Giới thiệu
-2.Ứng dụng
-3.Quy trình khám phátrithức
-4.Công nghệ vàhệsinh thái
-5.Bàitập
-6.Tổng kết
+Äáº I Há»ŒC QUá»C GIA THÃ€NH PHá» Há»’ CHÃ MINH
+TRÆ¯á»œNG Äáº I Há»ŒC CÃ”NG NGHá»† THÃ”NG TIN
+CHÆ¯Æ NG 1
+Tá»•ng quan vá» khai phÃ¡ dá»¯ liá»‡u vÃ 
+á»©ng dá»¥ng doanh nghiá»‡p
+BiÃªn soáº¡n: ThS. Nguyá»…n Thá»‹ Anh ThÆ°
+Ná»™idung
+1.Giá»›i thiá»‡u
+2.á»¨ng dá»¥ng
+3.Quy trÃ¬nh khÃ¡m phÃ¡trithá»©c
+4.CÃ´ng nghá»‡ vÃ há»‡sinh thÃ¡i
+5.BÃ itáº­p
+6.Tá»•ng káº¿t
 2
-1. Giới thiệu
+1. Giá»›i thiá»‡u
 Data
 Data
 miningBig
@@ -106,307 +106,308 @@ data
 Data
 science
 3
-1. Giới thiệu
-Dữliệu làtậphợpcácsựkiện, sốliệu, hoặc thông tinđược thuthập vàlưutrữ
-dưới dạng cóthểhiểu vàsửdụng được .
-Dữliệucóthểđược biểu diễn dưới nhiều dạng khác nhau, baogồm:
-➢Số:doanh sốbánhàng, nhiệt độ,tuổitác.
-➢Chữ:tên,địachỉ,môtảsảnphẩm .
-➢Hìnhảnh:ảnhchụp, ảnhX-quang, bảnđồ.
-➢Âmthanh :lờinói,tiếng nhạc, tiếng ồnmôitrường .
-➢Video :phim, chương trình truyền hình, camera giám sát.
+1. Giá»›i thiá»‡u
+Dá»¯liá»‡u lÃ táº­phá»£pcÃ¡csá»±kiá»‡n, sá»‘liá»‡u, hoáº·c thÃ´ng tinÄ‘Æ°á»£c thutháº­p vÃ lÆ°utrá»¯
+dÆ°á»›i dáº¡ng cÃ³thá»ƒhiá»ƒu vÃ sá»­dá»¥ng Ä‘Æ°á»£c .
+Dá»¯liá»‡ucÃ³thá»ƒÄ‘Æ°á»£c biá»ƒu diá»…n dÆ°á»›i nhiá»u dáº¡ng khÃ¡c nhau, baogá»“m:
+âž¢Sá»‘:doanh sá»‘bÃ¡nhÃ ng, nhiá»‡t Ä‘á»™,tuá»•itÃ¡c.
+âž¢Chá»¯:tÃªn,Ä‘á»‹achá»‰,mÃ´táº£sáº£npháº©m .
+âž¢HÃ¬nháº£nh:áº£nhchá»¥p, áº£nhX-quang, báº£nÄ‘á»“.
+âž¢Ã‚mthanh :lá»inÃ³i,tiáº¿ng nháº¡c, tiáº¿ng á»“nmÃ´itrÆ°á»ng .
+âž¢Video :phim, chÆ°Æ¡ng trÃ¬nh truyá»n hÃ¬nh, camera giÃ¡m sÃ¡t.
 4
-1. Giới thiệu
-Cóhailoạidữliệuchính :
-5•Dữ liệu có thể được đo lường và biểu diễn bằng số.
-•Dữ liệu có thể được biểu diễn dưới dạng số nguyên,
-số thập phân, tỷ lệ hoặc phần trăm.Dữ liệu
-định lượng
-•Dữ liệu không thể được đo lường bằng số và thường
-được biểu diễn bằng chữ hoặc hình ảnh .
-•Ví dụ: Văn bản, hình ảnh, âm thanh, …Dữ liệu
-định tính
-1. Giới thiệu
-Data mining (Khai phádữliệu) làmột lĩnh vựcliênngành thuộc khoa họcmáy tính,
-sửdụng cáckỹthuật thống kê,họcmáy vàquản lýcơsởdữliệuđểtrích xuất kiến thức
-vàthông tinhữuíchtừdữliệulớn.
-Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
-➢Đưa radựđoán :Dựđoán xuhướng tương laivàđưaraquyết định sáng suốt hơn.
-➢Khám phátrithức :Xác định cácmẫu vàmối quan hệẩntrong dữliệumàcóthể
-không được nhìn thấy rõràng.
-➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
-➢Tốiưuhóaquytrình :Xác định cácyếutốảnhhưởng đếnhiệu quảhoạt động vàđề
-xuất cácgiảipháp cảitiến.
+1. Giá»›i thiá»‡u
+CÃ³hailoáº¡idá»¯liá»‡uchÃ­nh :
+5â€¢Dá»¯ liá»‡u cÃ³ thá»ƒ Ä‘Æ°á»£c Ä‘o lÆ°á»ng vÃ  biá»ƒu diá»…n báº±ng sá»‘.
+â€¢Dá»¯ liá»‡u cÃ³ thá»ƒ Ä‘Æ°á»£c biá»ƒu diá»…n dÆ°á»›i dáº¡ng sá»‘ nguyÃªn,
+sá»‘ tháº­p phÃ¢n, tá»· lá»‡ hoáº·c pháº§n trÄƒm.Dá»¯ liá»‡u
+Ä‘á»‹nh lÆ°á»£ng
+â€¢Dá»¯ liá»‡u khÃ´ng thá»ƒ Ä‘Æ°á»£c Ä‘o lÆ°á»ng báº±ng sá»‘ vÃ  thÆ°á»ng
+Ä‘Æ°á»£c biá»ƒu diá»…n báº±ng chá»¯ hoáº·c hÃ¬nh áº£nh .
+â€¢VÃ­ dá»¥: VÄƒn báº£n, hÃ¬nh áº£nh, Ã¢m thanh, â€¦Dá»¯ liá»‡u
+Ä‘á»‹nh tÃ­nh
+1. Giá»›i thiá»‡u
+Data mining (Khai phÃ¡dá»¯liá»‡u) lÃ má»™t lÄ©nh vá»±cliÃªnngÃ nh thuá»™c khoa há»cmÃ¡y tÃ­nh,
+sá»­dá»¥ng cÃ¡cká»¹thuáº­t thá»‘ng kÃª,há»cmÃ¡y vÃ quáº£n lÃ½cÆ¡sá»Ÿdá»¯liá»‡uÄ‘á»ƒtrÃ­ch xuáº¥t kiáº¿n thá»©c
+vÃ thÃ´ng tinhá»¯uÃ­chtá»«dá»¯liá»‡ulá»›n.
+Má»¥c tiÃªulÃ chuyá»ƒn Ä‘á»•idá»¯liá»‡uthÃ´thÃ nh thÃ´ng tincÃ³giÃ¡trá»‹cÃ³thá»ƒÄ‘Æ°á»£c sá»­dá»¥ng Ä‘á»ƒ:
+âž¢ÄÆ°a radá»±Ä‘oÃ¡n :Dá»±Ä‘oÃ¡n xuhÆ°á»›ng tÆ°Æ¡ng laivÃ Ä‘Æ°araquyáº¿t Ä‘á»‹nh sÃ¡ng suá»‘t hÆ¡n.
+âž¢KhÃ¡m phÃ¡trithá»©c :XÃ¡c Ä‘á»‹nh cÃ¡cmáº«u vÃ má»‘i quan há»‡áº©ntrong dá»¯liá»‡umÃ cÃ³thá»ƒ
+khÃ´ng Ä‘Æ°á»£c nhÃ¬n tháº¥y rÃµrÃ ng.
+âž¢PhÃ¢nloáº¡idá»¯liá»‡u:NhÃ³m cÃ¡cdá»¯liá»‡utÆ°Æ¡ng tá»±nhau vÃ ocÃ¡cnhÃ³m .
+âž¢Tá»‘iÆ°uhÃ³aquytrÃ¬nh :XÃ¡c Ä‘á»‹nh cÃ¡cyáº¿utá»‘áº£nhhÆ°á»Ÿng Ä‘áº¿nhiá»‡u quáº£hoáº¡t Ä‘á»™ng vÃ Ä‘á»
+xuáº¥t cÃ¡cgiáº£iphÃ¡p cáº£itiáº¿n.
 6
-1. Giới thiệu
-Dữ liệu lớn (b ig data )làtất cả thông
-tin, định lượng và theo dõi.
+1. Giá»›i thiá»‡u
+Dá»¯ liá»‡u lá»›n (b ig data )lÃ táº¥t cáº£ thÃ´ng
+tin, Ä‘á»‹nh lÆ°á»£ng vÃ  theo dÃµi.
 7
-Big data lưu thông tin về
-mọi khía cạnh trong cuộc
-sống.Tất cả
+Big data lÆ°u thÃ´ng tin vá»
+má»i khÃ­a cáº¡nh trong cuá»™c
+sá»‘ng.Táº¥t cáº£
 
 --- KEY MATCHES (first 260 matches) ---
-1. Mục tiêu
-1. Mục tiêu
-nhóm và
-3. Hình thức kiểm tra và đánh giá
-5Thành phần đánh giá Tỷ lệ (%)
-A4. Đồ án cuối kỳ 50%
-Bài tập trên lớp, bài tập thực hành và đồ án cuối kỳ thực hiện theo nhóm.
-6➢Hoạt  động  học tập theo nhóm :
-▪Phân  chia nhóm  với số lượng  thành  viên:
-▪Mỗi nhóm  chọn  một nhóm  trưởng  điều hành  hoạt động .
-7➢Tất cả sản phẩm  lưu trên drive  của nhóm .
-➢Mỗi nhóm đăng kýmộtaccount đểtạodrive lưutrữ.
-➢Tạo folder  theo tên nhóm  gồm các thư mục con sau:
-➢Bàitậptrênlớp:Toàn bộfilebàitậpnhóm .
-➢Đồánmônhọc:Báo cáođồán(docx, pptx),video  thuyết  trình (tấtcảthành
-Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
-➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
-Mục tiêu của Data
-➢Điều phối vàquản trịdữliệu:Chỉhuyvàtựđộng hóacácbước khác nhau
-Kiểu xử lýTheo nhóm
-Ví dụBáo cáo tài
-➢Phân tíchtổhợp: So sánh các nhóm  cá nhân  theo thời gian.
-➢Phân tích cụm: Nhóm  các điểm  dữ liệu thành  các cụm dựa trên sự giống  nhau  của
-việc thực hiện các bước
-Chuẩn bị dữ liệu là một bước quan
-nhưng đây là bước quan trọng để
-➢plyr:Cung cấpcáchàm đểthao tácdữliệutheo nhóm, tómtắtvàchuyển đổidữ
-➢Là một bước quan trọng .
-•Lựachọn phương pháp phùhợpvớidữliệuvàmục tiêu.
-➢Sử dụng  các mô hình thống  kê để dự đoán  giá trị của biến mục tiêu.
-➢Là một bước quan trọng .
-➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
-➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
-➢Tương  tự các bước  xử lý dữ liệu trong  quá trình  “Khám  phá dữ liệu” . Quá trình
-•sklearn .feature_extraction .DictVectorizer :Chuyển đổicáctừđiển sang matrậnthưa thớtvớicác
-➢Tương  tự các bước  trực quan  hóa dữ liệu trong  quá trình  “Khám  phá dữ liệu” .
-➢Đánh giáhiệu quả môhình :Chia tậpdữliệuthành tậphuấn luyện vàtậpkiểm
-tragiúp đánh giáhiệu quảthực tếcủamôhình trêndữliệuchưa từng gặp.
-➢Chia theo thời gian (time -based split) :Phương pháp nàychia tậpdữliệutheo
-khai thác của nhóm.
-cấp các bước  cải thiện  chất lượng  dữ liệu.
-Mỗi tiêuchícóthểđược đánh giátheo cảhaiphương pháp chủquan vàkhách
-11Đánh giá chủ quan Đánh giá khách quan
-về các tiêu chí (dimension) như tính
-thang điểm.•Chuyển đổi các tiêu chí (dimension) như
-chuẩn, khoảng tin cậy để đánh giá độ
-Mỗi tiêuchícóthểđược đánh giátheo cảhaiphương pháp chủquan vàkhách
-12Đánh giá chủ quan Đánh giá khách quan
-•Không yêu cầu kiến thức  chuyên môn
-•Có thể đánh giá các yếu tố khó định
-•Dựa trên các tiêu chí cụ thể .
-thức của người đánh giá .
-•Yêu cầu kiến thức chuyên môn cao .
-•Khó đánh giá các yếu tố khó định
-dữ liệu áp dụng  trên các tiêu chí sau:
-➢Hướng dẫncácbước cụthểđểthực hiện triển khai thực tế
-TDQM Liên tục đánh giá, cải thiện và duy trì chất lượng dữ liệu . -
-AIMQ Đánh giá và cải thiện chất lượng tổng thể của thông tin trong một tổ chức. -
-DQA Cung cấp một cách tiếp cận có hệ thống để đánh giá  khách quan chất lượng dữ liệu .Có
-CDQ Đánh giá và cải thiện chất lượng dữ liệu cho nguồn dữ liệu có cấu trúc và web . Có
-DQPA Xác định dữ liệu liên quan và đánh giá chất lượng dữ liệu. -
-HDQM Đánh giá và cải thiện chất lượng dữ liệu trong tổ chức  cầnquản lý  nhiều loại dữ liệu .-
-DQAF Đánh giá chất lượng dữ liệu thống kê . -
-HDQF -EF Đánh giá chất lượng dữ liệu trong các công cụ dấu chân sinh thái (EF). -
-IDQ-MDM Quy trình 5bước đảm bảo chất lượng dữ liệu trong Quản lý dữ liệu chủ(MDM) . Có
-25012 Cung cấp cấu trúc được tiêu chuẩn hóa để đánh giá chất lượng dữ liệu  khi xử lý các
-RWDQF Đánh giá chất lượng của dữ liệu trong thế giới thực (RWD) vềnghiên cứu ung thư. -
-Độ chính xác – Đánh giá khách quan
-•Hệ số tương quan: Đánh giá mối liên hệ giữa các biến trong tập dữ liệu.
-•Đánh giá mức độ ảnh hưởng của lỗi dữ liệu đến kết quả phân tích.
-Tính đầy đủ  – Đánh giá khách quan
-•Phân tích phân bố: Đánh giá sự phân bố của dữ liệu để xác định các giá trị bị thiếu một cách có
-•Đánh giá mức độ ảnh hưởng của dữ liệu thiếu đến kết quả phân tích.
-Tính nhất quán – Đánh giá khách quan
-•Phân tích độ tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem chúng có nhất
-•Đánh giá mức độ ảnh hưởng của các giá trị không nhất quán đến kết quả phân tích.
-Tính kịp thời – Đánh giá khách quan
-•Đánh giá mức độ ảnh hưởng của độ trễ đến việc ra quyết định.
-•Sử dụng các mô hình mô phỏng: Sử dụng các mô hình mô phỏng để đánh giá tác động của độ trễ đến
-Tính hợp lệ – Đánh giá khách quan
-•Phân tích tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem dữ liệu có hợp
-•Đánh giá mức độ ảnh hưởng của các giá trị không hợp lệ đến kết quả phân tích.
-Tính duy nhất – Đánh giá khách quan
-•Phân tích độ tương quan: Đánh giá mối liên hệ giữa các thuộc tính dữ liệu để xác định xem
-•Đánh giá mức độ ảnh hưởng của các giá trị không duy nhất đến kết quả phân tích.
-➢Đánh giá và đảm bảo chất lượng
-của nhóm.
-dashboards, báo cáo,
-➢Phân tích nhóm :Giúp phân chia dữliệuthành cácnhóm khác nhau dựatrên
-trung bình (mean) củahainhóm dữliệu.
-◦Giảthuyết null(H0):Không cósựkhác biệtgiữa hainhóm .
-◦Giảthuyết thay thế(H1):Cósựkhác biệtgiữa hainhóm .
-nhóm .
-giátrịtrung bình (mean) củahainhóm dữliệu.
-➢Xác định sự khác  biệt giữa các nhóm : So sánh giá trị trung  bình của hai hoặc
-nhiều  nhóm  dữ liệu để xác định liệu có sự khác  biệt thống  kê đáng  kể hay không .
-◦Hai nhóm  khách  hàng  với mức tuổi tác khác  nhau .
-◦Kiểm  tra xem liệu có sự khác  biệt về thunhập giữa hai nhóm  này hay không .
-•Lựachọn phương pháp phùhợpvớidữliệuvàmục tiêu.
-dashboards, báo cáo,
-Mục tiêulàchuyển đổidữliệuthôthành thông tincógiátrịcóthểđược sửdụng để:
-➢Phânloạidữliệu:Nhóm cácdữliệutương tựnhau vàocácnhóm .
-nhãn sẵn(training data) .
-nhóm cácdữliệu tương đồng vào cùng một
-➢Phân chia dữliệuthành cácnhóm cóýnghĩa .
-◦Mục tiêulàkhám phácácmẫu ẩntrong dữliệu.
-◦Phân cụm (Clustering) :Nhóm cácđiểm dữliệucóđặcđiểm tương tựnhau vàocùng mộtnhóm .
-◦Khó khăn trong việc đánh giáhiệu quảmôhình.
-➢Self-training :Môhình họctừcácdựđoán củachính nó.
-➢Co-training :Sửdụng haimôhình khác nhau đểhọctừnhau .
+1. Má»¥c tiÃªu
+1. Má»¥c tiÃªu
+nhÃ³m vÃ 
+3. HÃ¬nh thá»©c kiá»ƒm tra vÃ  Ä‘Ã¡nh giÃ¡
+5ThÃ nh pháº§n Ä‘Ã¡nh giÃ¡ Tá»· lá»‡ (%)
+A4. Äá»“ Ã¡n cuá»‘i ká»³ 50%
+BÃ i táº­p trÃªn lá»›p, bÃ i táº­p thá»±c hÃ nh vÃ  Ä‘á»“ Ã¡n cuá»‘i ká»³ thá»±c hiá»‡n theo nhÃ³m.
+6âž¢Hoáº¡t  Ä‘á»™ng  há»c táº­p theo nhÃ³m :
+â–ªPhÃ¢n  chia nhÃ³m  vá»›i sá»‘ lÆ°á»£ng  thÃ nh  viÃªn:
+â–ªMá»—i nhÃ³m  chá»n  má»™t nhÃ³m  trÆ°á»Ÿng  Ä‘iá»u hÃ nh  hoáº¡t Ä‘á»™ng .
+7âž¢Táº¥t cáº£ sáº£n pháº©m  lÆ°u trÃªn drive  cá»§a nhÃ³m .
+âž¢Má»—i nhÃ³m Ä‘Äƒng kÃ½má»™taccount Ä‘á»ƒtáº¡odrive lÆ°utrá»¯.
+âž¢Táº¡o folder  theo tÃªn nhÃ³m  gá»“m cÃ¡c thÆ° má»¥c con sau:
+âž¢BÃ itáº­ptrÃªnlá»›p:ToÃ n bá»™filebÃ itáº­pnhÃ³m .
+âž¢Äá»“Ã¡nmÃ´nhá»c:BÃ¡o cÃ¡oÄ‘á»“Ã¡n(docx, pptx),video  thuyáº¿t  trÃ¬nh (táº¥tcáº£thÃ nh
+Má»¥c tiÃªulÃ chuyá»ƒn Ä‘á»•idá»¯liá»‡uthÃ´thÃ nh thÃ´ng tincÃ³giÃ¡trá»‹cÃ³thá»ƒÄ‘Æ°á»£c sá»­dá»¥ng Ä‘á»ƒ:
+âž¢PhÃ¢nloáº¡idá»¯liá»‡u:NhÃ³m cÃ¡cdá»¯liá»‡utÆ°Æ¡ng tá»±nhau vÃ ocÃ¡cnhÃ³m .
+Má»¥c tiÃªu cá»§a Data
+âž¢Äiá»u phá»‘i vÃ quáº£n trá»‹dá»¯liá»‡u:Chá»‰huyvÃ tá»±Ä‘á»™ng hÃ³acÃ¡cbÆ°á»›c khÃ¡c nhau
+Kiá»ƒu xá»­ lÃ½Theo nhÃ³m
+VÃ­ dá»¥BÃ¡o cÃ¡o tÃ i
+âž¢PhÃ¢n tÃ­chtá»•há»£p: So sÃ¡nh cÃ¡c nhÃ³m  cÃ¡ nhÃ¢n  theo thá»i gian.
+âž¢PhÃ¢n tÃ­ch cá»¥m: NhÃ³m  cÃ¡c Ä‘iá»ƒm  dá»¯ liá»‡u thÃ nh  cÃ¡c cá»¥m dá»±a trÃªn sá»± giá»‘ng  nhau  cá»§a
+viá»‡c thá»±c hiá»‡n cÃ¡c bÆ°á»›c
+Chuáº©n bá»‹ dá»¯ liá»‡u lÃ  má»™t bÆ°á»›c quan
+nhÆ°ng Ä‘Ã¢y lÃ  bÆ°á»›c quan trá»ng Ä‘á»ƒ
+âž¢plyr:Cung cáº¥pcÃ¡chÃ m Ä‘á»ƒthao tÃ¡cdá»¯liá»‡utheo nhÃ³m, tÃ³mtáº¯tvÃ chuyá»ƒn Ä‘á»•idá»¯
+âž¢LÃ  má»™t bÆ°á»›c quan trá»ng .
+â€¢Lá»±achá»n phÆ°Æ¡ng phÃ¡p phÃ¹há»£pvá»›idá»¯liá»‡uvÃ má»¥c tiÃªu.
+âž¢Sá»­ dá»¥ng  cÃ¡c mÃ´ hÃ¬nh thá»‘ng  kÃª Ä‘á»ƒ dá»± Ä‘oÃ¡n  giÃ¡ trá»‹ cá»§a biáº¿n má»¥c tiÃªu.
+âž¢LÃ  má»™t bÆ°á»›c quan trá»ng .
+âž¢TÆ°Æ¡ng  tá»± cÃ¡c bÆ°á»›c  xá»­ lÃ½ dá»¯ liá»‡u trong  quÃ¡ trÃ¬nh  â€œKhÃ¡m  phÃ¡ dá»¯ liá»‡uâ€ . QuÃ¡ trÃ¬nh
+âž¢TÆ°Æ¡ng  tá»± cÃ¡c bÆ°á»›c  xá»­ lÃ½ dá»¯ liá»‡u trong  quÃ¡ trÃ¬nh  â€œKhÃ¡m  phÃ¡ dá»¯ liá»‡uâ€ . QuÃ¡ trÃ¬nh
+âž¢TÆ°Æ¡ng  tá»± cÃ¡c bÆ°á»›c  xá»­ lÃ½ dá»¯ liá»‡u trong  quÃ¡ trÃ¬nh  â€œKhÃ¡m  phÃ¡ dá»¯ liá»‡uâ€ . QuÃ¡ trÃ¬nh
+â€¢sklearn .feature_extraction .DictVectorizer :Chuyá»ƒn Ä‘á»•icÃ¡ctá»«Ä‘iá»ƒn sang matráº­nthÆ°a thá»›tvá»›icÃ¡c
+âž¢TÆ°Æ¡ng  tá»± cÃ¡c bÆ°á»›c  trá»±c quan  hÃ³a dá»¯ liá»‡u trong  quÃ¡ trÃ¬nh  â€œKhÃ¡m  phÃ¡ dá»¯ liá»‡uâ€ .
+âž¢ÄÃ¡nh giÃ¡hiá»‡u quáº£ mÃ´hÃ¬nh :Chia táº­pdá»¯liá»‡uthÃ nh táº­phuáº¥n luyá»‡n vÃ táº­pkiá»ƒm
+tragiÃºp Ä‘Ã¡nh giÃ¡hiá»‡u quáº£thá»±c táº¿cá»§amÃ´hÃ¬nh trÃªndá»¯liá»‡uchÆ°a tá»«ng gáº·p.
+âž¢Chia theo thá»i gian (time -based split) :PhÆ°Æ¡ng phÃ¡p nÃ ychia táº­pdá»¯liá»‡utheo
+khai thÃ¡c cá»§a nhÃ³m.
+cáº¥p cÃ¡c bÆ°á»›c  cáº£i thiá»‡n  cháº¥t lÆ°á»£ng  dá»¯ liá»‡u.
+Má»—i tiÃªuchÃ­cÃ³thá»ƒÄ‘Æ°á»£c Ä‘Ã¡nh giÃ¡theo cáº£haiphÆ°Æ¡ng phÃ¡p chá»§quan vÃ khÃ¡ch
+11ÄÃ¡nh giÃ¡ chá»§ quan ÄÃ¡nh giÃ¡ khÃ¡ch quan
+vá» cÃ¡c tiÃªu chÃ­ (dimension) nhÆ° tÃ­nh
+thang Ä‘iá»ƒm.â€¢Chuyá»ƒn Ä‘á»•i cÃ¡c tiÃªu chÃ­ (dimension) nhÆ°
+chuáº©n, khoáº£ng tin cáº­y Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ Ä‘á»™
+Má»—i tiÃªuchÃ­cÃ³thá»ƒÄ‘Æ°á»£c Ä‘Ã¡nh giÃ¡theo cáº£haiphÆ°Æ¡ng phÃ¡p chá»§quan vÃ khÃ¡ch
+12ÄÃ¡nh giÃ¡ chá»§ quan ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢KhÃ´ng yÃªu cáº§u kiáº¿n thá»©c  chuyÃªn mÃ´n
+â€¢CÃ³ thá»ƒ Ä‘Ã¡nh giÃ¡ cÃ¡c yáº¿u tá»‘ khÃ³ Ä‘á»‹nh
+â€¢Dá»±a trÃªn cÃ¡c tiÃªu chÃ­ cá»¥ thá»ƒ .
+thá»©c cá»§a ngÆ°á»i Ä‘Ã¡nh giÃ¡ .
+â€¢YÃªu cáº§u kiáº¿n thá»©c chuyÃªn mÃ´n cao .
+â€¢KhÃ³ Ä‘Ã¡nh giÃ¡ cÃ¡c yáº¿u tá»‘ khÃ³ Ä‘á»‹nh
+dá»¯ liá»‡u Ã¡p dá»¥ng  trÃªn cÃ¡c tiÃªu chÃ­ sau:
+âž¢HÆ°á»›ng dáº«ncÃ¡cbÆ°á»›c cá»¥thá»ƒÄ‘á»ƒthá»±c hiá»‡n triá»ƒn khai thá»±c táº¿
+TDQM LiÃªn tá»¥c Ä‘Ã¡nh giÃ¡, cáº£i thiá»‡n vÃ  duy trÃ¬ cháº¥t lÆ°á»£ng dá»¯ liá»‡u . -
+AIMQ ÄÃ¡nh giÃ¡ vÃ  cáº£i thiá»‡n cháº¥t lÆ°á»£ng tá»•ng thá»ƒ cá»§a thÃ´ng tin trong má»™t tá»• chá»©c. -
+DQA Cung cáº¥p má»™t cÃ¡ch tiáº¿p cáº­n cÃ³ há»‡ thá»‘ng Ä‘á»ƒ Ä‘Ã¡nh giÃ¡  khÃ¡ch quan cháº¥t lÆ°á»£ng dá»¯ liá»‡u .CÃ³
+CDQ ÄÃ¡nh giÃ¡ vÃ  cáº£i thiá»‡n cháº¥t lÆ°á»£ng dá»¯ liá»‡u cho nguá»“n dá»¯ liá»‡u cÃ³ cáº¥u trÃºc vÃ  web . CÃ³
+DQPA XÃ¡c Ä‘á»‹nh dá»¯ liá»‡u liÃªn quan vÃ  Ä‘Ã¡nh giÃ¡ cháº¥t lÆ°á»£ng dá»¯ liá»‡u. -
+HDQM ÄÃ¡nh giÃ¡ vÃ  cáº£i thiá»‡n cháº¥t lÆ°á»£ng dá»¯ liá»‡u trong tá»• chá»©c  cáº§nquáº£n lÃ½  nhiá»u loáº¡i dá»¯ liá»‡u .-
+DQAF ÄÃ¡nh giÃ¡ cháº¥t lÆ°á»£ng dá»¯ liá»‡u thá»‘ng kÃª . -
+HDQF -EF ÄÃ¡nh giÃ¡ cháº¥t lÆ°á»£ng dá»¯ liá»‡u trong cÃ¡c cÃ´ng cá»¥ dáº¥u chÃ¢n sinh thÃ¡i (EF). -
+IDQ-MDM Quy trÃ¬nh 5bÆ°á»›c Ä‘áº£m báº£o cháº¥t lÆ°á»£ng dá»¯ liá»‡u trong Quáº£n lÃ½ dá»¯ liá»‡u chá»§(MDM) . CÃ³
+25012 Cung cáº¥p cáº¥u trÃºc Ä‘Æ°á»£c tiÃªu chuáº©n hÃ³a Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ cháº¥t lÆ°á»£ng dá»¯ liá»‡u  khi xá»­ lÃ½ cÃ¡c
+RWDQF ÄÃ¡nh giÃ¡ cháº¥t lÆ°á»£ng cá»§a dá»¯ liá»‡u trong tháº¿ giá»›i thá»±c (RWD) vá»nghiÃªn cá»©u ung thÆ°. -
+Äá»™ chÃ­nh xÃ¡c â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢Há»‡ sá»‘ tÆ°Æ¡ng quan: ÄÃ¡nh giÃ¡ má»‘i liÃªn há»‡ giá»¯a cÃ¡c biáº¿n trong táº­p dá»¯ liá»‡u.
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a lá»—i dá»¯ liá»‡u Ä‘áº¿n káº¿t quáº£ phÃ¢n tÃ­ch.
+TÃ­nh Ä‘áº§y Ä‘á»§  â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢PhÃ¢n tÃ­ch phÃ¢n bá»‘: ÄÃ¡nh giÃ¡ sá»± phÃ¢n bá»‘ cá»§a dá»¯ liá»‡u Ä‘á»ƒ xÃ¡c Ä‘á»‹nh cÃ¡c giÃ¡ trá»‹ bá»‹ thiáº¿u má»™t cÃ¡ch cÃ³
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a dá»¯ liá»‡u thiáº¿u Ä‘áº¿n káº¿t quáº£ phÃ¢n tÃ­ch.
+TÃ­nh nháº¥t quÃ¡n â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢PhÃ¢n tÃ­ch Ä‘á»™ tÆ°Æ¡ng quan: ÄÃ¡nh giÃ¡ má»‘i liÃªn há»‡ giá»¯a cÃ¡c thuá»™c tÃ­nh dá»¯ liá»‡u Ä‘á»ƒ xÃ¡c Ä‘á»‹nh xem chÃºng cÃ³ nháº¥t
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a cÃ¡c giÃ¡ trá»‹ khÃ´ng nháº¥t quÃ¡n Ä‘áº¿n káº¿t quáº£ phÃ¢n tÃ­ch.
+TÃ­nh ká»‹p thá»i â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a Ä‘á»™ trá»… Ä‘áº¿n viá»‡c ra quyáº¿t Ä‘á»‹nh.
+â€¢Sá»­ dá»¥ng cÃ¡c mÃ´ hÃ¬nh mÃ´ phá»ng: Sá»­ dá»¥ng cÃ¡c mÃ´ hÃ¬nh mÃ´ phá»ng Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ tÃ¡c Ä‘á»™ng cá»§a Ä‘á»™ trá»… Ä‘áº¿n
+TÃ­nh há»£p lá»‡ â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢PhÃ¢n tÃ­ch tÆ°Æ¡ng quan: ÄÃ¡nh giÃ¡ má»‘i liÃªn há»‡ giá»¯a cÃ¡c thuá»™c tÃ­nh dá»¯ liá»‡u Ä‘á»ƒ xÃ¡c Ä‘á»‹nh xem dá»¯ liá»‡u cÃ³ há»£p
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a cÃ¡c giÃ¡ trá»‹ khÃ´ng há»£p lá»‡ Ä‘áº¿n káº¿t quáº£ phÃ¢n tÃ­ch.
+TÃ­nh duy nháº¥t â€“ ÄÃ¡nh giÃ¡ khÃ¡ch quan
+â€¢PhÃ¢n tÃ­ch Ä‘á»™ tÆ°Æ¡ng quan: ÄÃ¡nh giÃ¡ má»‘i liÃªn há»‡ giá»¯a cÃ¡c thuá»™c tÃ­nh dá»¯ liá»‡u Ä‘á»ƒ xÃ¡c Ä‘á»‹nh xem
+â€¢ÄÃ¡nh giÃ¡ má»©c Ä‘á»™ áº£nh hÆ°á»Ÿng cá»§a cÃ¡c giÃ¡ trá»‹ khÃ´ng duy nháº¥t Ä‘áº¿n káº¿t quáº£ phÃ¢n tÃ­ch.
+âž¢ÄÃ¡nh giÃ¡ vÃ  Ä‘áº£m báº£o cháº¥t lÆ°á»£ng
+cá»§a nhÃ³m.
+dashboards, bÃ¡o cÃ¡o,
+âž¢PhÃ¢n tÃ­ch nhÃ³m :GiÃºp phÃ¢n chia dá»¯liá»‡uthÃ nh cÃ¡cnhÃ³m khÃ¡c nhau dá»±atrÃªn
+trung bÃ¬nh (mean) cá»§ahainhÃ³m dá»¯liá»‡u.
+â—¦Giáº£thuyáº¿t null(H0):KhÃ´ng cÃ³sá»±khÃ¡c biá»‡tgiá»¯a hainhÃ³m .
+â—¦Giáº£thuyáº¿t thay tháº¿(H1):CÃ³sá»±khÃ¡c biá»‡tgiá»¯a hainhÃ³m .
+nhÃ³m .
+giÃ¡trá»‹trung bÃ¬nh (mean) cá»§ahainhÃ³m dá»¯liá»‡u.
+âž¢XÃ¡c Ä‘á»‹nh sá»± khÃ¡c  biá»‡t giá»¯a cÃ¡c nhÃ³m : So sÃ¡nh giÃ¡ trá»‹ trung  bÃ¬nh cá»§a hai hoáº·c
+nhiá»u  nhÃ³m  dá»¯ liá»‡u Ä‘á»ƒ xÃ¡c Ä‘á»‹nh liá»‡u cÃ³ sá»± khÃ¡c  biá»‡t thá»‘ng  kÃª Ä‘Ã¡ng  ká»ƒ hay khÃ´ng .
+â—¦Hai nhÃ³m  khÃ¡ch  hÃ ng  vá»›i má»©c tuá»•i tÃ¡c khÃ¡c  nhau .
+â—¦Kiá»ƒm  tra xem liá»‡u cÃ³ sá»± khÃ¡c  biá»‡t vá» thunháº­p giá»¯a hai nhÃ³m  nÃ y hay khÃ´ng .
+â€¢Lá»±achá»n phÆ°Æ¡ng phÃ¡p phÃ¹há»£pvá»›idá»¯liá»‡uvÃ má»¥c tiÃªu.
+dashboards, bÃ¡o cÃ¡o,
+Má»¥c tiÃªulÃ chuyá»ƒn Ä‘á»•idá»¯liá»‡uthÃ´thÃ nh thÃ´ng tincÃ³giÃ¡trá»‹cÃ³thá»ƒÄ‘Æ°á»£c sá»­dá»¥ng Ä‘á»ƒ:
+âž¢PhÃ¢nloáº¡idá»¯liá»‡u:NhÃ³m cÃ¡cdá»¯liá»‡utÆ°Æ¡ng tá»±nhau vÃ ocÃ¡cnhÃ³m .
+nhÃ£n sáºµn(training data) .
+nhÃ³m cÃ¡cdá»¯liá»‡u tÆ°Æ¡ng Ä‘á»“ng vÃ o cÃ¹ng má»™t
+âž¢PhÃ¢n chia dá»¯liá»‡uthÃ nh cÃ¡cnhÃ³m cÃ³Ã½nghÄ©a .
+â—¦Má»¥c tiÃªulÃ khÃ¡m phÃ¡cÃ¡cmáº«u áº©ntrong dá»¯liá»‡u.
+â—¦PhÃ¢n cá»¥m (Clustering) :NhÃ³m cÃ¡cÄ‘iá»ƒm dá»¯liá»‡ucÃ³Ä‘áº·cÄ‘iá»ƒm tÆ°Æ¡ng tá»±nhau vÃ ocÃ¹ng má»™tnhÃ³m .
+â—¦KhÃ³ khÄƒn trong viá»‡c Ä‘Ã¡nh giÃ¡hiá»‡u quáº£mÃ´hÃ¬nh.
+âž¢Self-training :MÃ´hÃ¬nh há»ctá»«cÃ¡cdá»±Ä‘oÃ¡n cá»§achÃ­nh nÃ³.
+âž¢Co-training :Sá»­dá»¥ng haimÃ´hÃ¬nh khÃ¡c nhau Ä‘á»ƒhá»ctá»«nhau .
 Self-training
-Bước 1:Thuthập dữliệu
-Bước 2:Huấn luyện môhình banđầu
-Bước 3:Dựđoán nhãn chodữliệuchưa được gắnnhãn
-Bước 4:Cậpnhật môhình
-◦Sửdụng cácdựđoán từbước 3đểcậpnhật môhình.
-Bước 5:Lặplạicácbước 3và4
-◦Lặplạicácbước 3và4chođếnkhiđạtđược hiệu quảmong muốn .
+BÆ°á»›c 1:Thutháº­p dá»¯liá»‡u
+BÆ°á»›c 2:Huáº¥n luyá»‡n mÃ´hÃ¬nh banÄ‘áº§u
+BÆ°á»›c 3:Dá»±Ä‘oÃ¡n nhÃ£n chodá»¯liá»‡uchÆ°a Ä‘Æ°á»£c gáº¯nnhÃ£n
+BÆ°á»›c 4:Cáº­pnháº­t mÃ´hÃ¬nh
+â—¦Sá»­dá»¥ng cÃ¡cdá»±Ä‘oÃ¡n tá»«bÆ°á»›c 3Ä‘á»ƒcáº­pnháº­t mÃ´hÃ¬nh.
+BÆ°á»›c 5:Láº·pláº¡icÃ¡cbÆ°á»›c 3vÃ 4
+â—¦Láº·pláº¡icÃ¡cbÆ°á»›c 3vÃ 4choÄ‘áº¿nkhiÄ‘áº¡tÄ‘Æ°á»£c hiá»‡u quáº£mong muá»‘n .
 Self-training
-Bước 1:Thuthập dữliệu
-Bước 2:Huấn luyện môhình banđầu
-Bước 3:Dựđoán nhãn chodữliệuchưa được gắnnhãn
-Bước 4:Cậpnhật môhình
-◦Sửdụng cácdựđoán từbước 3đểcậpnhật môhình.
-Bước 5:Lặplạicácbước 3và4
-◦Lặplạicácbước 3và4chođếnkhiđạtđược hiệu quảmong muốn .
-learning đểhọccách tương tácvớingười dùng vàđạtđược mục tiêumong muốn .
-dùng đạtđược mục tiêuvàbịphạt nếuhành động không hiệu quả.
-bàitoán (nhiệm vụnguồn) đểgiảiquyết mộtbàitoán khác (nhiệm vụmục tiêu).
-giao sang môhình nhiệm vụmục tiêu.
-◦Huấn luyện môhình trên nhiệm vụmục tiêu:Môhình nhiệm vụmục tiêuđược huấn
-luyện trênmộttậpdữliệunhỏhơnchonhiệm vụmục tiêu.
-◦Cảithiện hiệu quảmôhình vớilượng dữliệuítchonhiệm vụmục tiêu.
-◦Cóthểápdụng chocáctrường hợpdữliệuchonhiệm vụmục tiêuđắtđỏhoặc khóthu
-➢Bước 1:Huấn luyện môhình BERT trêntậpdữliệunguồn .
-➢Bước 2:Chuyển giao kiến thức từmôhình BERT sang môhình nhiệm vụmục
-➢Bước 3:Huấn luyện môhình nhiệm vụmục tiêuvớilượng dữliệunhỏhơn.
-◦Nhiệm vụmục tiêu:Phân loạicâutrảlờitrênforum làtíchcựchaytiêucực.
-◦Tập dữliệumục tiêu:10.000câutrảlờitrênforum vớinhãn tíchcựchoặc tiêucực.
-◦Bước 1:Huấn luyện môhình BERT trêntậpdữliệutweet .
-◦Bước 2:Chuyển giao kiến thức từmôhình BERT sang môhình phân loạicâutrảlờiforum .
-◦Bước 3:Huấn luyện môhình phân loạicâutrảlờiforum với10.000câutrảlờitrênforum .
-nhãnHiệu quả cao, dễ hiểuYêu cầu dữ liệu có
-trong dữ liệuKhó đánh giá hiệu
-4.Đánh giáhiệu quả
-tượng vào các nhóm dựa trên các đặc
-nhãn sẵn(training data) .
-loại để đánh giá khả năng trả nợ của người vay.Hệ thống phân
-phân loạiĐánh giá hiệu
-1. Xác định mục tiêu và yêu cầu
-Bước đầu tiên là xác định mục tiêu và yêu cầu của hệ thống phân loại. Cần xác
-Bước tiếp theo là thu thập dữ liệu để huấn luyện thuật toán phân loại. Dữ liệu thu
-6. Đánh giá hiệu quả
-Hiệu quả của thuật toán phân loại được đánh giá trên tập kiểm tra và tập xác thực. Nếu
-hiệu quả không đạt yêu cầu, cần điều chỉnh các tham số của thuật toán hoặc thử một
-và đánh giá hiệu quả. Hệ thống phân loại có thể được triển khai dưới dạng một
-Cần cập nhật dữ liệu huấn luyện và đánh giá hiệu quả của hệ thống phân loại
-Hiệu quả với tập dữ liệu nhỏ . Ít yêu cầu về dữ liệu .
-Ít yêu cầu về dữ liệu . Ít bị ảnh hưởng bởi nhiễu .
-Ít yêu cầu về dữ liệu . Tốc độ huấn luyện và dự đoán nhanh .
-Hiệu quả với tập dữ liệu nhỏ . Ít yêu cầu về dữ liệu .
-Sử dụng các kỹ thuật tối ưu hóa để tăng tốc độ huấn luyện và hiệu suất . Sử dụng Category -aware features .
-Sử dụng Category -aware features để xử lý dữ liệu phi số .
-Nhược điểm Yêu cầu lượng dữ liệu lớn để huấn luyện hiệu quả .
-Ý tưởng Học mối quan hệ tuần tự giữa các phần tử trong dữ liệu .
-Ưu điểm Hiệu quả cao với dữ liệu tuần tự.
-Nhược điểm Yêu cầu lượng dữ liệu lớn để huấn luyện hiệu quả .
-4. Đánh giá hiệu quả
-•Có khả năng thanh toán trong mô hình đánh giá tín dụng.
-•Không có khả năng thanh toán trong mô hình đánh giá tín dụng.
-Việc xác định lớp tích cực và tiêu cực phụ thuộc vào mục tiêu cụ thể của bài toán phân loại.
-(PPV) để đánh giá toàn diện hiệu quả mô hình
-•F1 Score tích hợp thông tin từ cả Precision và Recall, giúp đánh giá khả năng tổng thể của mô hình trong
-•F1 Score giúp giải quyết vấn đề thiên vị (bias) trong việc đánh giá mô hình, thường xảy ra khi sử dụng chỉ
-Ngưỡng phân loại chia các mẫu dữ liệu thành hai nhóm:
-•Nhóm tích cực nếu giá trị dự đoán lớn hơn hoặc bằng ngưỡng phân loại.
-•Nhóm tiêu cực nếu giá trị dự đoán nhỏ hơn ngưỡng phân loại.
-•Có thể sử dụng đường cong ROC (ROC Curve) để đánh giá hiệu quả của mô hình phân loại
-Cách đánh giá mô hình phân loại đa lớp dựa trên Macro -F1:
-Cách đánh giá mô hình phân loại đa lớp dựa trên Micro -F1:
-Làmột chỉsốđánh giáhiệu suất củamôhình phân loạiđalớp, đặcbiệthữu íchtrong các
-Cách đánh giá mô hình phân loại đa lớp dựa trên Weighted -F1:
-➢Có thể điều chỉnh trọng số của các lớp để phù hợp với mục đích đánh giá.
-•Mô hình phân loại: Mô hình phân loại đã được huấn luyện và đánh giá hiệu quả.
-•Mô hình phân loại được triển khai trên server và ứng dụng sẽ gửi yêu cầu đến server để
-•Tạo API: API được tạo ra để nhận yêu cầu từ ứng dụng và gửi kết quả phân loại.
-•Gọi API: Ứng dụng gửi yêu cầu đến API và nhận kết quả phân loại .
-phân hoặc đa lớp. Đánh giá hiệu quả của mô hình phân lớp.
-➢Vận dụng vào tập dữ liệu khai thác của nhóm.
-Hệ thống phân tích, gom nhóm và
-4.Đánh giáhiệu quả
-nhóm riêng biệt (gọi là cụm) mà
-nhóm cácdữliệu tương đồng vào cùng một
-➢Phân chia dữliệuthành cácnhóm cóýnghĩa .
-➢Phân khúc khách hàng :Phân chia khách hàng thành cácnhóm cóđặcđiểm, sở
-nhắm mục tiêu quảng cáovàchiến lược tiếp thịhiệu quảhơn, đồng thời phát
-triển sảnphẩm vàdịch vụphùhợpvớinhucầucủatừng nhóm khách hàng .
-cụm cóthểphát hiện rarằng một nhóm khách hàng nhất định đang mua nhiều
-phân cụm cóthểphát hiện rarằng mộtsốkhách hàng đãnộpnhiều yêucầubảo
-phân cụmĐánh giá hiệu
-1. Xác định  mục tiêu và yêu cầu:
-➢Xác định rõ mục tiêu sử dụng  hệ thống  phân  cụm. Mục tiêu này sẽ giúp lựa
-➢Xác định các yêu cầu về hiệu suất, độ chính  xác, khả năng  mở rộng,  v.v. của hệ
-➢Lựa chọn thuật toán phùhợpdựatrên mục tiêusửdụng, đặcđiểm củadữliệu
-➢Chia dữliệuthành tậphuấn luyện vàtậpđánh giá.
-6.Đánh giáhiệu quả:
-➢Đánh giáhiệu quảcủamôhình phân cụm trêntậpđánh giá.
-➢Sửdụng cácchỉsốđánh giánhư Silhouette Coefficient, Calinski -Harabasz
-Index, Davies -Bouldin Index, v.v.đểđánh giáchất lượng củacáccụm.
-triển khaiYêu cầu số lượng cụm được xác
-4. Đánh giá hiệu quả
-Đánh giá nội
-Đánh giá bên
-Phụ thuộc vào nhiều yếu tố : loại dữ liệu, mục tiêu phân
-nhóm và thông tin có sẵn .
-1.Sửdụng thuật toán gom nhóm :
-➢Cóthểsửdụng mộtthuật toán gom nhóm đểphân chia tậpdữliệuthành cáccụm vàgán
-Đánh giá nội bộ
-cụm củanósovớicáccụm lâncận.Giátrịcaohơnchothấy sựphân nhóm tốt
-Đánh giá nội bộ
-cụm củanósovớicáccụm lâncận.Giátrịcaohơnchothấy sựphân nhóm tốt
-➢s(i)<0:Điểm icóthểđược phân nhóm tốthơnvàomộtcụm khác .
-chothấy sựphân nhóm tốthơn.
-Đánh giá nội bộ
-cácđiểm dữliệutrong mỗicụm.Giátrịcaohơnchothấy sựphân nhóm tốthơn.
-Đểtínhtoán CHI chomộttậpdữliệuđược phân nhóm thành kcụm,tathực hiện
-cácbước sau:
-Đánh giá nội bộ
-cácđiểm dữliệutrong mỗicụm.Giátrịcaohơnchothấy sựphân nhóm tốthơn.
-Đánh giá nội bộ
-điểm dữliệutrong mỗicụm.Giátrịthấp hơnchothấy sựphân nhóm tốthơn.
-Đểtínhtoán DBI chomộttậpdữliệuđược phân nhóm thành kcụm,tathực hiện
-cácbước sau:
-Đánh giá nội bộ
-điểm dữliệutrong mỗicụm.Giátrịthấp hơnchothấy sựphân nhóm tốthơn.
-Đánh giá bên ngoài
-caohơnchothấy sựphân nhóm tốthơn.
-Đánh giá bên ngoài
-caohơnchothấy sựphân nhóm tốthơn.
-Đánh giá bên ngoài
-thấy sựphân nhóm tốthơn.
-Đánh giá bên ngoài
-thấy sựphân nhóm tốthơn.
-➢Entropy cóthểphát hiện cáctrường hợpphân nhóm không hiệu quả, ngay cả
-Đánh giá bên ngoài
-nhóm trong việc phân loạicácđiểm dữliệu.Giátrịcaohơn chothấy sựphân
-nhóm tốthơn.
-Đánh giá bên ngoài
-nhóm trong việc phân loạicácđiểm dữliệu.Giátrịcaohơn chothấy sựphân
-nhóm tốthơn.
-➢F1Score, Purity vàEntropy làbachỉsốphổbiến đểđánh giáchất lượng phân
-đánh giátrực quan chất lượng của
-Cách sử dụng biểu đồ để đánh giá chất lượng phân cụm:
-nên được nhóm lại gần nhau và tách biệt với các điểm dữ liệu của các cụm khác.
-elip) thường cho thấy sự phân nhóm hiệu quả hơn so với các cụm có hình dạng không
-➢Đánh giá sự chồng chéo giữa các cụm: Nếu có nhiều điểm dữ liệu nằm giữa các cụm
-phân cụm như Purity, Entropy và F1 Score để có đánh giá toàn diện hơn.
-•Mô hình: Mô hình đã được huấn luyện và đánh giá hiệu quả.
-•Mô hình được triển khai trên server và ứng dụng sẽ gửi yêu cầu đến server để thực hiện
-•Tạo API: API được tạo ra để nhận yêu cầu từ ứng dụng và gửi kết quả.
+BÆ°á»›c 1:Thutháº­p dá»¯liá»‡u
+BÆ°á»›c 2:Huáº¥n luyá»‡n mÃ´hÃ¬nh banÄ‘áº§u
+BÆ°á»›c 3:Dá»±Ä‘oÃ¡n nhÃ£n chodá»¯liá»‡uchÆ°a Ä‘Æ°á»£c gáº¯nnhÃ£n
+BÆ°á»›c 4:Cáº­pnháº­t mÃ´hÃ¬nh
+â—¦Sá»­dá»¥ng cÃ¡cdá»±Ä‘oÃ¡n tá»«bÆ°á»›c 3Ä‘á»ƒcáº­pnháº­t mÃ´hÃ¬nh.
+BÆ°á»›c 5:Láº·pláº¡icÃ¡cbÆ°á»›c 3vÃ 4
+â—¦Láº·pláº¡icÃ¡cbÆ°á»›c 3vÃ 4choÄ‘áº¿nkhiÄ‘áº¡tÄ‘Æ°á»£c hiá»‡u quáº£mong muá»‘n .
+learning Ä‘á»ƒhá»ccÃ¡ch tÆ°Æ¡ng tÃ¡cvá»›ingÆ°á»i dÃ¹ng vÃ Ä‘áº¡tÄ‘Æ°á»£c má»¥c tiÃªumong muá»‘n .
+dÃ¹ng Ä‘áº¡tÄ‘Æ°á»£c má»¥c tiÃªuvÃ bá»‹pháº¡t náº¿uhÃ nh Ä‘á»™ng khÃ´ng hiá»‡u quáº£.
+bÃ itoÃ¡n (nhiá»‡m vá»¥nguá»“n) Ä‘á»ƒgiáº£iquyáº¿t má»™tbÃ itoÃ¡n khÃ¡c (nhiá»‡m vá»¥má»¥c tiÃªu).
+giao sang mÃ´hÃ¬nh nhiá»‡m vá»¥má»¥c tiÃªu.
+â—¦Huáº¥n luyá»‡n mÃ´hÃ¬nh trÃªn nhiá»‡m vá»¥má»¥c tiÃªu:MÃ´hÃ¬nh nhiá»‡m vá»¥má»¥c tiÃªuÄ‘Æ°á»£c huáº¥n
+luyá»‡n trÃªnmá»™ttáº­pdá»¯liá»‡unhá»hÆ¡nchonhiá»‡m vá»¥má»¥c tiÃªu.
+â—¦Cáº£ithiá»‡n hiá»‡u quáº£mÃ´hÃ¬nh vá»›ilÆ°á»£ng dá»¯liá»‡uÃ­tchonhiá»‡m vá»¥má»¥c tiÃªu.
+â—¦CÃ³thá»ƒÃ¡pdá»¥ng chocÃ¡ctrÆ°á»ng há»£pdá»¯liá»‡uchonhiá»‡m vá»¥má»¥c tiÃªuÄ‘áº¯tÄ‘á»hoáº·c khÃ³thu
+âž¢BÆ°á»›c 1:Huáº¥n luyá»‡n mÃ´hÃ¬nh BERT trÃªntáº­pdá»¯liá»‡unguá»“n .
+âž¢BÆ°á»›c 2:Chuyá»ƒn giao kiáº¿n thá»©c tá»«mÃ´hÃ¬nh BERT sang mÃ´hÃ¬nh nhiá»‡m vá»¥má»¥c
+âž¢BÆ°á»›c 3:Huáº¥n luyá»‡n mÃ´hÃ¬nh nhiá»‡m vá»¥má»¥c tiÃªuvá»›ilÆ°á»£ng dá»¯liá»‡unhá»hÆ¡n.
+â—¦Nhiá»‡m vá»¥má»¥c tiÃªu:PhÃ¢n loáº¡icÃ¢utráº£lá»itrÃªnforum lÃ tÃ­chcá»±chaytiÃªucá»±c.
+â—¦Táº­p dá»¯liá»‡umá»¥c tiÃªu:10.000cÃ¢utráº£lá»itrÃªnforum vá»›inhÃ£n tÃ­chcá»±choáº·c tiÃªucá»±c.
+â—¦BÆ°á»›c 1:Huáº¥n luyá»‡n mÃ´hÃ¬nh BERT trÃªntáº­pdá»¯liá»‡utweet .
+â—¦BÆ°á»›c 2:Chuyá»ƒn giao kiáº¿n thá»©c tá»«mÃ´hÃ¬nh BERT sang mÃ´hÃ¬nh phÃ¢n loáº¡icÃ¢utráº£lá»iforum .
+â—¦BÆ°á»›c 3:Huáº¥n luyá»‡n mÃ´hÃ¬nh phÃ¢n loáº¡icÃ¢utráº£lá»iforum vá»›i10.000cÃ¢utráº£lá»itrÃªnforum .
+nhÃ£nHiá»‡u quáº£ cao, dá»… hiá»ƒuYÃªu cáº§u dá»¯ liá»‡u cÃ³
+trong dá»¯ liá»‡uKhÃ³ Ä‘Ã¡nh giÃ¡ hiá»‡u
+4.ÄÃ¡nh giÃ¡hiá»‡u quáº£
+tÆ°á»£ng vÃ o cÃ¡c nhÃ³m dá»±a trÃªn cÃ¡c Ä‘áº·c
+nhÃ£n sáºµn(training data) .
+loáº¡i Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ kháº£ nÄƒng tráº£ ná»£ cá»§a ngÆ°á»i vay.Há»‡ thá»‘ng phÃ¢n
+phÃ¢n loáº¡iÄÃ¡nh giÃ¡ hiá»‡u
+1. XÃ¡c Ä‘á»‹nh má»¥c tiÃªu vÃ  yÃªu cáº§u
+BÆ°á»›c Ä‘áº§u tiÃªn lÃ  xÃ¡c Ä‘á»‹nh má»¥c tiÃªu vÃ  yÃªu cáº§u cá»§a há»‡ thá»‘ng phÃ¢n loáº¡i. Cáº§n xÃ¡c
+BÆ°á»›c tiáº¿p theo lÃ  thu tháº­p dá»¯ liá»‡u Ä‘á»ƒ huáº¥n luyá»‡n thuáº­t toÃ¡n phÃ¢n loáº¡i. Dá»¯ liá»‡u thu
+6. ÄÃ¡nh giÃ¡ hiá»‡u quáº£
+Hiá»‡u quáº£ cá»§a thuáº­t toÃ¡n phÃ¢n loáº¡i Ä‘Æ°á»£c Ä‘Ã¡nh giÃ¡ trÃªn táº­p kiá»ƒm tra vÃ  táº­p xÃ¡c thá»±c. Náº¿u
+hiá»‡u quáº£ khÃ´ng Ä‘áº¡t yÃªu cáº§u, cáº§n Ä‘iá»u chá»‰nh cÃ¡c tham sá»‘ cá»§a thuáº­t toÃ¡n hoáº·c thá»­ má»™t
+vÃ  Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£. Há»‡ thá»‘ng phÃ¢n loáº¡i cÃ³ thá»ƒ Ä‘Æ°á»£c triá»ƒn khai dÆ°á»›i dáº¡ng má»™t
+Cáº§n cáº­p nháº­t dá»¯ liá»‡u huáº¥n luyá»‡n vÃ  Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£ cá»§a há»‡ thá»‘ng phÃ¢n loáº¡i
+Hiá»‡u quáº£ vá»›i táº­p dá»¯ liá»‡u nhá» . Ãt yÃªu cáº§u vá» dá»¯ liá»‡u .
+Ãt yÃªu cáº§u vá» dá»¯ liá»‡u . Ãt bá»‹ áº£nh hÆ°á»Ÿng bá»Ÿi nhiá»…u .
+Ãt yÃªu cáº§u vá» dá»¯ liá»‡u . Tá»‘c Ä‘á»™ huáº¥n luyá»‡n vÃ  dá»± Ä‘oÃ¡n nhanh .
+Hiá»‡u quáº£ vá»›i táº­p dá»¯ liá»‡u nhá» . Ãt yÃªu cáº§u vá» dá»¯ liá»‡u .
+Sá»­ dá»¥ng cÃ¡c ká»¹ thuáº­t tá»‘i Æ°u hÃ³a Ä‘á»ƒ tÄƒng tá»‘c Ä‘á»™ huáº¥n luyá»‡n vÃ  hiá»‡u suáº¥t . Sá»­ dá»¥ng Category -aware features .
+Sá»­ dá»¥ng Category -aware features Ä‘á»ƒ xá»­ lÃ½ dá»¯ liá»‡u phi sá»‘ .
+NhÆ°á»£c Ä‘iá»ƒm YÃªu cáº§u lÆ°á»£ng dá»¯ liá»‡u lá»›n Ä‘á»ƒ huáº¥n luyá»‡n hiá»‡u quáº£ .
+Ã tÆ°á»Ÿng Há»c má»‘i quan há»‡ tuáº§n tá»± giá»¯a cÃ¡c pháº§n tá»­ trong dá»¯ liá»‡u .
+Æ¯u Ä‘iá»ƒm Hiá»‡u quáº£ cao vá»›i dá»¯ liá»‡u tuáº§n tá»±.
+NhÆ°á»£c Ä‘iá»ƒm YÃªu cáº§u lÆ°á»£ng dá»¯ liá»‡u lá»›n Ä‘á»ƒ huáº¥n luyá»‡n hiá»‡u quáº£ .
+4. ÄÃ¡nh giÃ¡ hiá»‡u quáº£
+â€¢CÃ³ kháº£ nÄƒng thanh toÃ¡n trong mÃ´ hÃ¬nh Ä‘Ã¡nh giÃ¡ tÃ­n dá»¥ng.
+â€¢KhÃ´ng cÃ³ kháº£ nÄƒng thanh toÃ¡n trong mÃ´ hÃ¬nh Ä‘Ã¡nh giÃ¡ tÃ­n dá»¥ng.
+Viá»‡c xÃ¡c Ä‘á»‹nh lá»›p tÃ­ch cá»±c vÃ  tiÃªu cá»±c phá»¥ thuá»™c vÃ o má»¥c tiÃªu cá»¥ thá»ƒ cá»§a bÃ i toÃ¡n phÃ¢n loáº¡i.
+(PPV) Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ toÃ n diá»‡n hiá»‡u quáº£ mÃ´ hÃ¬nh
+â€¢F1 Score tÃ­ch há»£p thÃ´ng tin tá»« cáº£ Precision vÃ  Recall, giÃºp Ä‘Ã¡nh giÃ¡ kháº£ nÄƒng tá»•ng thá»ƒ cá»§a mÃ´ hÃ¬nh trong
+â€¢F1 Score giÃºp giáº£i quyáº¿t váº¥n Ä‘á» thiÃªn vá»‹ (bias) trong viá»‡c Ä‘Ã¡nh giÃ¡ mÃ´ hÃ¬nh, thÆ°á»ng xáº£y ra khi sá»­ dá»¥ng chá»‰
+NgÆ°á»¡ng phÃ¢n loáº¡i chia cÃ¡c máº«u dá»¯ liá»‡u thÃ nh hai nhÃ³m:
+â€¢NhÃ³m tÃ­ch cá»±c náº¿u giÃ¡ trá»‹ dá»± Ä‘oÃ¡n lá»›n hÆ¡n hoáº·c báº±ng ngÆ°á»¡ng phÃ¢n loáº¡i.
+â€¢NhÃ³m tiÃªu cá»±c náº¿u giÃ¡ trá»‹ dá»± Ä‘oÃ¡n nhá» hÆ¡n ngÆ°á»¡ng phÃ¢n loáº¡i.
+â€¢CÃ³ thá»ƒ sá»­ dá»¥ng Ä‘Æ°á»ng cong ROC (ROC Curve) Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£ cá»§a mÃ´ hÃ¬nh phÃ¢n loáº¡i
+CÃ¡ch Ä‘Ã¡nh giÃ¡ mÃ´ hÃ¬nh phÃ¢n loáº¡i Ä‘a lá»›p dá»±a trÃªn Macro -F1:
+CÃ¡ch Ä‘Ã¡nh giÃ¡ mÃ´ hÃ¬nh phÃ¢n loáº¡i Ä‘a lá»›p dá»±a trÃªn Micro -F1:
+LÃ má»™t chá»‰sá»‘Ä‘Ã¡nh giÃ¡hiá»‡u suáº¥t cá»§amÃ´hÃ¬nh phÃ¢n loáº¡iÄ‘alá»›p, Ä‘áº·cbiá»‡thá»¯u Ã­chtrong cÃ¡c
+CÃ¡ch Ä‘Ã¡nh giÃ¡ mÃ´ hÃ¬nh phÃ¢n loáº¡i Ä‘a lá»›p dá»±a trÃªn Weighted -F1:
+âž¢CÃ³ thá»ƒ Ä‘iá»u chá»‰nh trá»ng sá»‘ cá»§a cÃ¡c lá»›p Ä‘á»ƒ phÃ¹ há»£p vá»›i má»¥c Ä‘Ã­ch Ä‘Ã¡nh giÃ¡.
+â€¢MÃ´ hÃ¬nh phÃ¢n loáº¡i: MÃ´ hÃ¬nh phÃ¢n loáº¡i Ä‘Ã£ Ä‘Æ°á»£c huáº¥n luyá»‡n vÃ  Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£.
+â€¢MÃ´ hÃ¬nh phÃ¢n loáº¡i Ä‘Æ°á»£c triá»ƒn khai trÃªn server vÃ  á»©ng dá»¥ng sáº½ gá»­i yÃªu cáº§u Ä‘áº¿n server Ä‘á»ƒ
+â€¢Táº¡o API: API Ä‘Æ°á»£c táº¡o ra Ä‘á»ƒ nháº­n yÃªu cáº§u tá»« á»©ng dá»¥ng vÃ  gá»­i káº¿t quáº£ phÃ¢n loáº¡i.
+â€¢Gá»i API: á»¨ng dá»¥ng gá»­i yÃªu cáº§u Ä‘áº¿n API vÃ  nháº­n káº¿t quáº£ phÃ¢n loáº¡i .
+phÃ¢n hoáº·c Ä‘a lá»›p. ÄÃ¡nh giÃ¡ hiá»‡u quáº£ cá»§a mÃ´ hÃ¬nh phÃ¢n lá»›p.
+âž¢Váº­n dá»¥ng vÃ o táº­p dá»¯ liá»‡u khai thÃ¡c cá»§a nhÃ³m.
+Há»‡ thá»‘ng phÃ¢n tÃ­ch, gom nhÃ³m vÃ 
+4.ÄÃ¡nh giÃ¡hiá»‡u quáº£
+nhÃ³m riÃªng biá»‡t (gá»i lÃ  cá»¥m) mÃ 
+nhÃ³m cÃ¡cdá»¯liá»‡u tÆ°Æ¡ng Ä‘á»“ng vÃ o cÃ¹ng má»™t
+âž¢PhÃ¢n chia dá»¯liá»‡uthÃ nh cÃ¡cnhÃ³m cÃ³Ã½nghÄ©a .
+âž¢PhÃ¢n khÃºc khÃ¡ch hÃ ng :PhÃ¢n chia khÃ¡ch hÃ ng thÃ nh cÃ¡cnhÃ³m cÃ³Ä‘áº·cÄ‘iá»ƒm, sá»Ÿ
+nháº¯m má»¥c tiÃªu quáº£ng cÃ¡ovÃ chiáº¿n lÆ°á»£c tiáº¿p thá»‹hiá»‡u quáº£hÆ¡n, Ä‘á»“ng thá»i phÃ¡t
+triá»ƒn sáº£npháº©m vÃ dá»‹ch vá»¥phÃ¹há»£pvá»›inhucáº§ucá»§atá»«ng nhÃ³m khÃ¡ch hÃ ng .
+cá»¥m cÃ³thá»ƒphÃ¡t hiá»‡n raráº±ng má»™t nhÃ³m khÃ¡ch hÃ ng nháº¥t Ä‘á»‹nh Ä‘ang mua nhiá»u
+phÃ¢n cá»¥m cÃ³thá»ƒphÃ¡t hiá»‡n raráº±ng má»™tsá»‘khÃ¡ch hÃ ng Ä‘Ã£ná»™pnhiá»u yÃªucáº§ubáº£o
+phÃ¢n cá»¥mÄÃ¡nh giÃ¡ hiá»‡u
+1. XÃ¡c Ä‘á»‹nh  má»¥c tiÃªu vÃ  yÃªu cáº§u:
+âž¢XÃ¡c Ä‘á»‹nh rÃµ má»¥c tiÃªu sá»­ dá»¥ng  há»‡ thá»‘ng  phÃ¢n  cá»¥m. Má»¥c tiÃªu nÃ y sáº½ giÃºp lá»±a
+âž¢XÃ¡c Ä‘á»‹nh cÃ¡c yÃªu cáº§u vá» hiá»‡u suáº¥t, Ä‘á»™ chÃ­nh  xÃ¡c, kháº£ nÄƒng  má»Ÿ rá»™ng,  v.v. cá»§a há»‡
+âž¢Lá»±a chá»n thuáº­t toÃ¡n phÃ¹há»£pdá»±atrÃªn má»¥c tiÃªusá»­dá»¥ng, Ä‘áº·cÄ‘iá»ƒm cá»§adá»¯liá»‡u
+âž¢Chia dá»¯liá»‡uthÃ nh táº­phuáº¥n luyá»‡n vÃ táº­pÄ‘Ã¡nh giÃ¡.
+6.ÄÃ¡nh giÃ¡hiá»‡u quáº£:
+âž¢ÄÃ¡nh giÃ¡hiá»‡u quáº£cá»§amÃ´hÃ¬nh phÃ¢n cá»¥m trÃªntáº­pÄ‘Ã¡nh giÃ¡.
+âž¢Sá»­dá»¥ng cÃ¡cchá»‰sá»‘Ä‘Ã¡nh giÃ¡nhÆ° Silhouette Coefficient, Calinski -Harabasz
+Index, Davies -Bouldin Index, v.v.Ä‘á»ƒÄ‘Ã¡nh giÃ¡cháº¥t lÆ°á»£ng cá»§acÃ¡ccá»¥m.
+triá»ƒn khaiYÃªu cáº§u sá»‘ lÆ°á»£ng cá»¥m Ä‘Æ°á»£c xÃ¡c
+4. ÄÃ¡nh giÃ¡ hiá»‡u quáº£
+ÄÃ¡nh giÃ¡ ná»™i
+ÄÃ¡nh giÃ¡ bÃªn
+Phá»¥ thuá»™c vÃ o nhiá»u yáº¿u tá»‘ : loáº¡i dá»¯ liá»‡u, má»¥c tiÃªu phÃ¢n
+nhÃ³m vÃ  thÃ´ng tin cÃ³ sáºµn .
+1.Sá»­dá»¥ng thuáº­t toÃ¡n gom nhÃ³m :
+âž¢CÃ³thá»ƒsá»­dá»¥ng má»™tthuáº­t toÃ¡n gom nhÃ³m Ä‘á»ƒphÃ¢n chia táº­pdá»¯liá»‡uthÃ nh cÃ¡ccá»¥m vÃ gÃ¡n
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+cá»¥m cá»§anÃ³sová»›icÃ¡ccá»¥m lÃ¢ncáº­n.GiÃ¡trá»‹caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘t
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+cá»¥m cá»§anÃ³sová»›icÃ¡ccá»¥m lÃ¢ncáº­n.GiÃ¡trá»‹caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘t
+âž¢s(i)<0:Äiá»ƒm icÃ³thá»ƒÄ‘Æ°á»£c phÃ¢n nhÃ³m tá»‘thÆ¡nvÃ omá»™tcá»¥m khÃ¡c .
+chotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+cÃ¡cÄ‘iá»ƒm dá»¯liá»‡utrong má»—icá»¥m.GiÃ¡trá»‹caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+Äá»ƒtÃ­nhtoÃ¡n CHI chomá»™ttáº­pdá»¯liá»‡uÄ‘Æ°á»£c phÃ¢n nhÃ³m thÃ nh kcá»¥m,tathá»±c hiá»‡n
+cÃ¡cbÆ°á»›c sau:
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+cÃ¡cÄ‘iá»ƒm dá»¯liá»‡utrong má»—icá»¥m.GiÃ¡trá»‹caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+Ä‘iá»ƒm dá»¯liá»‡utrong má»—icá»¥m.GiÃ¡trá»‹tháº¥p hÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+Äá»ƒtÃ­nhtoÃ¡n DBI chomá»™ttáº­pdá»¯liá»‡uÄ‘Æ°á»£c phÃ¢n nhÃ³m thÃ nh kcá»¥m,tathá»±c hiá»‡n
+cÃ¡cbÆ°á»›c sau:
+ÄÃ¡nh giÃ¡ ná»™i bá»™
+Ä‘iá»ƒm dá»¯liá»‡utrong má»—icá»¥m.GiÃ¡trá»‹tháº¥p hÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+caohÆ¡nchotháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+tháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+tháº¥y sá»±phÃ¢n nhÃ³m tá»‘thÆ¡n.
+âž¢Entropy cÃ³thá»ƒphÃ¡t hiá»‡n cÃ¡ctrÆ°á»ng há»£pphÃ¢n nhÃ³m khÃ´ng hiá»‡u quáº£, ngay cáº£
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+nhÃ³m trong viá»‡c phÃ¢n loáº¡icÃ¡cÄ‘iá»ƒm dá»¯liá»‡u.GiÃ¡trá»‹caohÆ¡n chotháº¥y sá»±phÃ¢n
+nhÃ³m tá»‘thÆ¡n.
+ÄÃ¡nh giÃ¡ bÃªn ngoÃ i
+nhÃ³m trong viá»‡c phÃ¢n loáº¡icÃ¡cÄ‘iá»ƒm dá»¯liá»‡u.GiÃ¡trá»‹caohÆ¡n chotháº¥y sá»±phÃ¢n
+nhÃ³m tá»‘thÆ¡n.
+âž¢F1Score, Purity vÃ Entropy lÃ bachá»‰sá»‘phá»•biáº¿n Ä‘á»ƒÄ‘Ã¡nh giÃ¡cháº¥t lÆ°á»£ng phÃ¢n
+Ä‘Ã¡nh giÃ¡trá»±c quan cháº¥t lÆ°á»£ng cá»§a
+CÃ¡ch sá»­ dá»¥ng biá»ƒu Ä‘á»“ Ä‘á»ƒ Ä‘Ã¡nh giÃ¡ cháº¥t lÆ°á»£ng phÃ¢n cá»¥m:
+nÃªn Ä‘Æ°á»£c nhÃ³m láº¡i gáº§n nhau vÃ  tÃ¡ch biá»‡t vá»›i cÃ¡c Ä‘iá»ƒm dá»¯ liá»‡u cá»§a cÃ¡c cá»¥m khÃ¡c.
+elip) thÆ°á»ng cho tháº¥y sá»± phÃ¢n nhÃ³m hiá»‡u quáº£ hÆ¡n so vá»›i cÃ¡c cá»¥m cÃ³ hÃ¬nh dáº¡ng khÃ´ng
+âž¢ÄÃ¡nh giÃ¡ sá»± chá»“ng chÃ©o giá»¯a cÃ¡c cá»¥m: Náº¿u cÃ³ nhiá»u Ä‘iá»ƒm dá»¯ liá»‡u náº±m giá»¯a cÃ¡c cá»¥m
+phÃ¢n cá»¥m nhÆ° Purity, Entropy vÃ  F1 Score Ä‘á»ƒ cÃ³ Ä‘Ã¡nh giÃ¡ toÃ n diá»‡n hÆ¡n.
+â€¢MÃ´ hÃ¬nh: MÃ´ hÃ¬nh Ä‘Ã£ Ä‘Æ°á»£c huáº¥n luyá»‡n vÃ  Ä‘Ã¡nh giÃ¡ hiá»‡u quáº£.
+â€¢MÃ´ hÃ¬nh Ä‘Æ°á»£c triá»ƒn khai trÃªn server vÃ  á»©ng dá»¥ng sáº½ gá»­i yÃªu cáº§u Ä‘áº¿n server Ä‘á»ƒ thá»±c hiá»‡n
+â€¢Táº¡o API: API Ä‘Æ°á»£c táº¡o ra Ä‘á»ƒ nháº­n yÃªu cáº§u tá»« á»©ng dá»¥ng vÃ  gá»­i káº¿t quáº£.
 
 MATCH_COUNT_WRITTEN: 260
+
 

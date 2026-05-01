@@ -151,6 +151,127 @@ Sản phẩm chạy (model, báo cáo đánh giá, artifacts) đặt tại `repo
 
 ---
 
+## 🔬 Kết Quả Thực Nghiệm – FIXED 28-Day Window
+
+### Mô Tả Kịch Bản Thực Nghiệm
+
+**Bài Toán:** Dự đoán mức độ tham gia học tập (Low/Medium/High) của sinh viên trên MOOCCubeX, sử dụng đặc trưng hành vi được trích xuất từ 28 ngày đầu tiên đăng ký khóa học.
+
+**Lý Do Chọn 28 Ngày:**
+- 28 ngày (4 tuần) là khoảng thời gian hợp lý để quan sát hành vi học tập
+- Đủ dài để bắt được các mẫu hành vi ổn định (stabilized patterns)
+- Đủ sớm để can thiệp kịp thời trước khi kết thúc khóa học
+
+**Chỉ Tiêu Chính:** Recall cao cho lớp Low_Engagement (phát hiện sớm sinh viên có nguy cơ)
+
+---
+
+### Quy Trình Xử Lý Dữ Liệu (Pipeline 5 Stage)
+
+| Stage | Mục Đích | Input | Output | Số Dòng |
+|:---|:---|:---|:---|---:|
+| **1. Ground Truth** | Sinh nhãn mục tiêu từ dữ liệu toàn khóa học | JSON files | `ground_truth_labels.csv` | 129,516 |
+| **2. Time Windows** | Trích đặc trưng từ 28 ngày đầu | Raw events | `user_features_28days.csv` | 129,516 |
+| **3. Split & SMOTE** | Chia tập train/valid/test, cân bằng lớp | Features + Labels | `train_smote.csv`, `valid_original.csv`, `test_original.csv` | 60K / 35K / 35K |
+| **4. Model Training** | Huấn luyện 5 mô hình, chọn best | Split datasets | `best_model_3w.pkl` + metrics | — |
+| **5. Evaluation** | Đánh giá trên test set | Best model + test data | `final_test_metrics.csv` | — |
+
+---
+
+### Kết Quả Dữ Liệu
+
+**Nhãn Mục Tiêu (Ground Truth - 28 ngày đầu tiên):**
+
+| Mức Độ | Số Sinh Viên | Tỷ Lệ % | Định Nghĩa |
+|:---|---:|---:|:---|
+| **Low_Engagement** | 77,710 | 59.9% | Điểm engagement ≤ 60th percentile (có nguy cơ) |
+| **Medium_Engagement** | 32,378 | 25.0% | Điểm engagement ∈ [60th, 85th] percentile |
+| **High_Engagement** | 19,428 | 15.0% | Điểm engagement > 85th percentile (tốt) |
+
+**Đặc Trưng (Features) - Được Tính Từ 28 Ngày Đầu:**
+- `attempts_3w`: Số lần làm bài
+- `is_correct_3w`: Số câu trả lời đúng
+- `score_3w`: Tổng điểm
+- `accuracy_rate_3w`: Tỷ lệ độ chính xác
+- `num_courses`: Số khóa học tham gia
+- `age`: Tuổi sinh viên
+- `school_encoded`: Trường đại học (mã hóa)
+- `gender`: Giới tính
+
+**Tập Huấn Luyện (sau SMOTE):**
+- Tổng: 60,000 mẫu (cân bằng 1:1:1 cho 3 lớp)
+- Validation: 35,000 mẫu (phân bố tự nhiên)
+- Test: 35,000 mẫu (phân bố tự nhiên)
+
+---
+
+### Mô Hình & Kết Quả
+
+**Lựa Chọn Mô Hình (Validation Set):**
+
+Xếp hạng theo: **Recall_Low_Engagement (ưu tiên 1)** → Accuracy (ưu tiên 2)
+
+| Hạng | Mô Hình | Accuracy | Recall_Low | Precision_Low | Lý Do |
+|:---|:---|---:|---:|---:|:---|
+| **🥇 1** | **Linear SVC** | **0.6488** | **0.9229** | 0.7338 | Recall cao nhất → chọn |
+| 🥈 2 | Logistic Regression | 0.6634 | 0.8794 | 0.8807 | Recall thấp hơn |
+| 🥉 3 | Decision Tree | 0.6654 | 0.8662 | 0.9227 | Recall thấp hơn |
+| 4 | Random Forest | 0.7176 | 0.8633 | 0.9268 | Recall thấp nhất |
+| 5 | XGBoost | 0.6670 | 0.8646 | 0.9260 | Recall thấp nhất |
+
+**Tại Sao Chọn Linear SVC?**
+- **Recall_Low_Engagement = 0.9229**: Cao nhất (phát hiện 92.29% sinh viên có nguy cơ)
+- Giảm thiểu False Negative (bỏ sót), vì chi phí tổn thất của việc không can thiệp cao
+- Đánh đổi: Precision thấp hơn (7.62% False Positive) nhưng chấp nhận được
+
+**Kết Quả Test Set (Linear SVC):**
+
+| Chỉ Tiêu | Giá Trị | Diễn Giải |
+|:---|---:|:---|
+| **Accuracy** | 0.6391 | 63.91% dự đoán đúng |
+| **Recall_Low** | 0.9147 | Phát hiện 91.47% sinh viên nguy cơ |
+| **Precision_Low** | 0.7285 | 72.85% sinh viên được cảnh báo thực sự có nguy cơ |
+
+---
+
+### Sản Phẩm Thực Nghiệm
+
+Tất cả các file sản phẩm được lưu tại **`dataset/`** và **`experiment/deployment_models/`**:
+
+| Sản Phẩm | Vị Trí | Mô Tả |
+|:---|:---|:---|
+| **Mô hình chiến thắng** | `deployment_models/best_model_3w.pkl` | Linear SVC đã huấn luyện |
+| **Metrics validation** | `deployment_models/evaluation_metrics.csv` | Kết quả so sánh 5 mô hình |
+| **Metrics test** | `deployment_models/final_test_metrics.csv` | Kết quả đánh giá cuối Linear SVC |
+| **Nhãn dự đoán test** | `model_data/test_predictions.csv` (nếu có) | Dự đoán + ground truth |
+| **Nhãn ground truth** | `dataset/ground_truth_labels.csv` | 129,516 sinh viên + nhãn |
+| **Đặc trưng 28 ngày** | `dataset/user_features_28days.csv` | Features cho mỗi sinh viên |
+| **Dữ liệu tiền xử lý** | `dataset/pre-processing_dataset.csv` | Dataset hoàn chỉnh (10 cột) để sử dụng lại |
+| **Báo cáo so sánh** | `reports/benchmark_results/COMPARISON_TABLE.md` | Bảng so sánh Fixed vs Relative (tham khảo) |
+
+---
+
+### Giải Thích Kết Quả
+
+**Độ Chính Xác (63.91%):**
+- Không quá cao vì:
+  1. Mất cân bằng lớp (60% Low, 25% Medium, 15% High)
+  2. Features hiện tại chưa bắt được tất cả yếu tố ảnh hưởng hành vi
+  3. 28 ngày có thể chưa đủ để phân biệt rõ ràng
+
+**Recall cao (91.47%):**
+- ✅ Ưu tiên phát hiện sớm (tốt cho cảnh báo)
+- ✅ Ít bỏ sót sinh viên có nguy cơ
+- ✅ Phù hợp cho mục tiêu "early warning system"
+
+**Kỳ Vọng Tương Lai:**
+1. Thêm features tương tác (interaction features)
+2. Tối ưu hyperparameter của Linear SVC (C, kernel)
+3. Thử weighted sampling hoặc cost-sensitive learning
+4. Kết hợp ensemble của nhiều mô hình
+
+---
+
 ## Chạy trên Kaggle
 
 Code đã được upload tại: https://www.kaggle.com/datasets/thaile2024/experiment

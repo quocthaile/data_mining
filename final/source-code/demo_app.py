@@ -112,7 +112,7 @@ HTML_TEMPLATE = """
 </head>
 <body>
     <div class="container">
-        <h1>🎓 Demo Dự đoán Mức độ Tham gia MOOC</h1>
+        <h1>Demo Du doan Muc do Tham gia MOOC</h1>
         <div class="info">
             <h3>Đồ án Khai phá Dữ liệu - DS317</h3>
             <p>Ứng dụng demo dự đoán mức độ tham gia của học viên dựa trên các đặc trưng hoạt động.</p>
@@ -264,7 +264,7 @@ def health():
     })
 
 if __name__ == '__main__':
-    print("🚀 Khởi động ứng dụng demo MOOC Engagement Prediction")
-    print("📱 Truy cập: http://localhost:5000")
-    print("ℹ️  Endpoint health: http://localhost:5000/health")
+    print("[INFO] Khoi dong ung dung demo MOOC Engagement Prediction")
+    print("[INFO] Truy cap: http://localhost:5000")
+    print("[INFO] Endpoint health: http://localhost:5000/health")
     app.run(debug=True, host='0.0.0.0', port=5000)

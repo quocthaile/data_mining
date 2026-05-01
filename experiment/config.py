@@ -14,10 +14,14 @@ PRIMARY_KEY = "user_id"
 # Time windows suggested for early warning / time series modeling
 TIME_WINDOWS_DAYS = [14, 21, 28]
 DEFAULT_OBSERVATION_DAYS = 28
+# FIXED MODE: Use 28-day fixed observation window (no relative/percentage-based windows)
+TIME_WINDOW_MODE = "fixed"
 
 MODEL_DATA_DIR = DATASET_DIR / "model_data"
 FEATURES_WINDOW_FILE = DATASET_DIR / f"user_features_{DEFAULT_OBSERVATION_DAYS}days.csv"
 FEATURES_COMPAT_FILE = DATASET_DIR / "user_features_and_wes.csv"
+RELATIVE_FEATURES_OUTPUT_PATTERN = DATASET_DIR / "user_features_relative_{pct}.csv"
+TIME_WINDOW_COMPARE_SUMMARY_FILE = DATASET_DIR / "time_window_comparison.csv"
 EXPERIMENTAL_DATASET_FILE = DATASET_DIR / "experimental_dataset.csv"
 TRAIN_FILE = MODEL_DATA_DIR / "train_smote.csv"
 VALID_FILE = MODEL_DATA_DIR / "valid_original.csv"
